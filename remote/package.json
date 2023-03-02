@@ -8,7 +8,9 @@
     "react-scripts": "5.0.1"
   },
   "scripts": {
-    "start": "PORT=3001 react-app-rewired start",
+    "start": "run-script-os",
+    "start:win32" : "set PORT=3001 && react-app-rewired start",
+    "start:default" : "export PORT=3001 && react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
