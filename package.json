@@ -11,7 +11,7 @@
   "scripts": {
     "start": "run-script-os",
     "start:win32": "concurrently \"cd host && yarn start\" \"cd remote && yarn start\"",
-    "start:default": "concurrently 'cd ./host && yarn serve' 'cd ./remote && yarn serve",
+    "start:default": "concurrently 'cd ./host && yarn start' 'cd ./remote && yarn start'",
     "build": "concurrently 'cd ./host && yarn build' 'cd ./remote && yarn build'",
     "test": "concurrently 'cd ./host && yarn serve' 'cd ./remote && yarn serve'"
   },
