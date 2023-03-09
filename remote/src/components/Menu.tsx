@@ -1,15 +1,20 @@
-import React from 'react';
-import Maps from './Maps/Maps'
+import { Suspense } from 'react';
+import styled from 'styled-components';
+
+import Maps from 'components/Maps/Maps';
 
 export const Menu = () => {
+  const Div = styled.div`
+    background-color: green;
+  `;
   // let MapsComponent = React.lazy(() => import('./components/Maps'));
   return (
-    <div style={{ backgroundColor: 'green' }}>
-      <React.Suspense fallback={<div>Loading...</div>}>
+    <Div>
+      <Suspense fallback={<div>Loading...</div>}>
         <div> 여기가 Remote </div>
         <Maps />
-      </React.Suspense>
-    </div>
-  )
-}
+      </Suspense>
+    </Div>
+  );
+};
 export default Menu;
