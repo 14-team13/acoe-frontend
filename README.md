@@ -20,3 +20,4 @@ Run `yarn start`. This will build and serve both `host` and `remote` on ports 30
 
 ## History 
 🔗 [Init Setting](./docs/InitSetting.md)
+🔗 [Commit Convention](https://github.com/14-team13/acoe-frontend/wiki/Commit-Message-Style-Guide)
