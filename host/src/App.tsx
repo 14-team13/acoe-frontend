@@ -1,32 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import loadable from '@loadable/component';
+import { Routes, Route} from 'react-router-dom';
 
-// Module Federation - importing this from application 2
-const Card = React.lazy(() =>
-    // @ts-ignore
-    import("remote/Card").then((module) => {
-        return {
-            default: module.Card,
-        };
-    })
+const Main = loadable(() => import('@pages/Main'));
+const LogIn = loadable(() => import('@pages/LogIn'));
+const SignUp = loadable(() => import('@pages/SignUp'));
+const Menu = loadable(() => import('@layouts/Menu'));
+
+const App = () => (
+  <Routes>
+    <Route path="/" element={<Main />} />
+    <Route path="/login" element={<LogIn />} />
+    <Route path="/signup" element={<SignUp/>} />
+    <Route path="/menu" element={<Menu/>} />
+  </Routes>
 );
-
-function App() {
-    return (
-        <div className="App">
-            <header className="App-header">
-                <div>
-                    This is the host application.
-                </div>
-                <div style={{margin: 20}}>
-                    <React.Suspense fallback={<div>Loading...</div>}>
-                        <Card />
-                    </React.Suspense>
-                </div>
-            </header>
-        </div>
-    );
-}
 
 export default App;
