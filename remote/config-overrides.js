@@ -11,7 +11,7 @@ module.exports = function (config, env) {
       (module.exports = {
         name: "remote",
         exposes: {
-          "./Card": "./src/components/Card",
+          "./Menu": "./src/components/Menu"
         },
         filename: "remoteEntry.js",
         shared: {
