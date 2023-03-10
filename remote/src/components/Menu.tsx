@@ -1,7 +1,7 @@
-import { Suspense } from 'react';
 import styled from 'styled-components';
 
 import Maps from 'components/Maps/Maps';
+import { MixedBoundary } from 'components/Common';
 
 export const Menu = () => {
   const Div = styled.div`
@@ -12,9 +12,9 @@ export const Menu = () => {
   // let MapsComponent = React.lazy(() => import('./components/Maps'));
   return (
     <Div>
-      <Suspense fallback={<div>Loading...</div>}>
+      <MixedBoundary>
         <Maps />
-      </Suspense>
+      </MixedBoundary>
     </Div>
   );
 };
