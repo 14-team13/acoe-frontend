@@ -1,19 +1,19 @@
-import { Suspense } from 'react';
 import styled from 'styled-components';
 
 import Maps from 'components/Maps/Maps';
+import { MixedBoundary } from 'components/Common';
 
 export const Menu = () => {
   const Div = styled.div`
-    background-color: green;
+    height: calc(var(--vh, 1vh) * 100 - 63px);
+    width: calc(var(--vw, 1vw) * 100);
   `;
   // let MapsComponent = React.lazy(() => import('./components/Maps'));
   return (
     <Div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <div> 여기가 Remote </div>
+      <MixedBoundary>
         <Maps />
-      </Suspense>
+      </MixedBoundary>
     </Div>
   );
 };
