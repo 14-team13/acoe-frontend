@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-
 import Maps from 'components/Maps/Maps';
 import { MixedBoundary } from 'components/Common';
+import { Counter } from './Maps/LeftModal';
 
 export const Menu = () => {
   const Div = styled.div`
@@ -10,11 +10,14 @@ export const Menu = () => {
   `;
   // let MapsComponent = React.lazy(() => import('./components/Maps'));
   return (
-    <Div>
-      <MixedBoundary>
-        <Maps />
-      </MixedBoundary>
-    </Div>
+    <div style = {{display : "flex"}}>
+      <Counter/>
+      <Div>
+        <MixedBoundary>
+          <Maps />
+        </MixedBoundary>
+      </Div>
+    </div>
   );
 };
 export default Menu;
