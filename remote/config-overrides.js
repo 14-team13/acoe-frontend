@@ -10,6 +10,9 @@ module.exports = function (config, env) {
     new ModuleFederationPlugin(
       (module.exports = {
         name: "remote",
+        remotes: {
+          host: `host@http://localhost:3000/remoteEntry.js`,
+        },
         exposes: {
           "./Menu": "./src/components/Menu"
         },
