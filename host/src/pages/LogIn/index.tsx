@@ -6,20 +6,30 @@ import React, { useCallback, useState } from 'react';
 import useSWR from 'swr';
 
 const LogIn = () => {
-  const { data: userData, error, mutate } = useSWR('/api/users', fetcher);
+  // const { data: userData, error, mutate } = useSWR('/api/users', fetcher);
   const [logInError, setLogInError] = useState(false);
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
-  const onSubmit = useCallback( (e) => {
-      e.preventDefault();
-      setLogInError(false);
-      axios.post('/api/users/login',{ email, password },{ withCredentials: true})
-        .then(() => { mutate();})
-        .catch((error) => {
-          setLogInError(error.response?.data?.code === 401);
-        });
-    },
-    [email, password, mutate],
+
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
+    setLogInError(false);
+    axios.post('/login', // 임시 server 
+      { email, password }, {
+      withCredentials: true
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          // axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+          window.open('/', '_self')
+        }
+      })
+      .catch((error) => {
+        console.log("error")
+        setLogInError(error.response?.data?.code === 401);
+      });
+  },
+    [email, password],
   );
 
   return (
