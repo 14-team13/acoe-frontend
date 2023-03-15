@@ -1,4 +1,9 @@
-import axios from 'axios';
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios';
 // import jwt_decode from 'jwt-decode';
 
 import { API_HOST } from 'constant';
@@ -44,18 +49,33 @@ request.interceptors.response.use(
 
 export default request; //axios 인스턴스를 내보낸다.
 
-export const Axios = () => {
-  let instance, session;
+interface InstanceResponse {
+  (url: string, config?: AxiosRequestConfig<unknown> | undefined):
+    | Promise<AxiosResponse<any, any>>
+    | undefined;
+}
 
-  const init = () => {
-    if (!session) {
-      session.axios.create({ baseURL: API_HOST });
+interface Instance {
+  get: InstanceResponse;
+  post: InstanceResponse;
+  put: InstanceResponse;
+  patch: InstanceResponse;
+  delete: InstanceResponse;
+}
+
+export const Axios = () => {
+  let instance: Instance | null = null;
+  let session: AxiosInstance | null = null;
+
+  const init = (): Instance => {
+    if (session === null) {
+      session = axios.create({ baseURL: API_HOST });
 
       session.defaults.timeout = 2500;
       session.defaults.withCredentials = true;
 
       session.interceptors.request.use(
-        async (config) => {
+        async (config: InternalAxiosRequestConfig<any>) => {
           // 권한 관련 설정
           // const { url }: { url: string } = config;
           // if (주소로 검사) return config;
@@ -92,16 +112,21 @@ export const Axios = () => {
       );
     }
     return {
-      get: (...params) => session.get(...params),
-      post: (...params) => session.post(...params),
-      put: (...params) => session.put(...params),
-      patch: (...params) => session.patch(...params),
-      delete: (...params) => session.delete(...params),
+      get: (...params: Parameters<AxiosInstance['get']>) =>
+        session?.get(...params),
+      post: (...params: Parameters<AxiosInstance['post']>) =>
+        session?.post(...params),
+      put: (...params: Parameters<AxiosInstance['put']>) =>
+        session?.put(...params),
+      patch: (...params: Parameters<AxiosInstance['patch']>) =>
+        session?.patch(...params),
+      delete: (...params: Parameters<AxiosInstance['delete']>) =>
+        session?.delete(...params),
     };
   };
 
   return {
-    getInstance: () => {
+    getInstance: (): Instance => {
       if (!instance) {
         instance = init();
       }
