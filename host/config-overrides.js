@@ -7,10 +7,14 @@ module.exports = function (config, env) {
   config.plugins.push(
     new ModuleFederationPlugin(
       (module.exports = {
-        name: "remote",
+        name: "host",
         remotes: {
           remote: `remote@http://localhost:3001/remoteEntry.js`,
         },
+        exposes: {
+          "./atoms": "./src/store/atoms",
+        },
+        filename: "remoteEntry.js",
         shared: {
           ...dependencies,
           react: {
@@ -21,6 +25,7 @@ module.exports = function (config, env) {
             singleton: true,
             requiredVersion: dependencies["react-dom"],
           },
+          
         },
       })
     ),
