@@ -39,6 +39,7 @@ module.exports = function (config, env) {
         "@layouts": path.resolve(__dirname, "src/layouts"),
         "@hooks": path.resolve(__dirname, "src/hooks"),
         "@utils": path.resolve(__dirname, "src/utils"),
+        "@api": path.resolve(__dirname, "src/api")
      }),
     )(config, env)
   );

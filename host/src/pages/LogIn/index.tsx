@@ -4,22 +4,23 @@ import fetcher from '@utils/fetcher';
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import useSWR from 'swr';
+import { login } from "@api/main"
 
 const LogIn = () => {
-  const { data: userData, error, mutate } = useSWR('/api/users', fetcher);
+  // const { data: userData, error, mutate } = useSWR('/api/users', fetcher);
   const [logInError, setLogInError] = useState(false);
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
-  const onSubmit = useCallback( (e) => {
-      e.preventDefault();
-      setLogInError(false);
-      axios.post('/api/users/login',{ email, password },{ withCredentials: true})
-        .then(() => { mutate();})
-        .catch((error) => {
-          setLogInError(error.response?.data?.code === 401);
-        });
-    },
-    [email, password, mutate],
+
+  const onSubmit = useCallback(async (e) => {
+    e.preventDefault();
+    setLogInError(false);
+    const response = await login(email, password)
+    if (response.status === 200) {
+      window.open('/', '_self')
+    }
+  },
+    [email, password],
   );
 
   return (

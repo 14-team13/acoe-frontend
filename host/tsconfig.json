@@ -26,6 +26,7 @@
       "@pages/*": ["pages/*"],
       "@utils/*": ["utils/*"],
       "@hooks/*": ["hooks/*"],
+      "@api/*": ["api/*"]
     }
   },
   "include": [
