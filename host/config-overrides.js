@@ -2,15 +2,23 @@ var path = require("path");
 const { dependencies } = require("./package.json");
 const ModuleFederationPlugin = require("webpack").container.ModuleFederationPlugin;
 const { override, addWebpackAlias, babelInclude} = require("customize-cra");
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = function (config, env) {
   config.plugins.push(
     new ModuleFederationPlugin(
       (module.exports = {
-        name: "remote",
+        name: "host",
         remotes: {
-          remote: `remote@http://localhost:3001/remoteEntry.js`,
+          remote: 
+          isDevelopment? 
+          'remote@http://localhost:3001/remoteEntry.js' :
+          'remote@https://acoe-remote.vercel.app/remoteEntry.js'
         },
+        exposes: {
+          "./atoms": "./src/store/atoms",
+        },
+        filename: "remoteEntry.js",
         shared: {
           ...dependencies,
           react: {
@@ -21,6 +29,7 @@ module.exports = function (config, env) {
             singleton: true,
             requiredVersion: dependencies["react-dom"],
           },
+          
         },
       })
     ),
@@ -39,6 +48,7 @@ module.exports = function (config, env) {
         "@layouts": path.resolve(__dirname, "src/layouts"),
         "@hooks": path.resolve(__dirname, "src/hooks"),
         "@utils": path.resolve(__dirname, "src/utils"),
+        "@api": path.resolve(__dirname, "src/api")
      }),
     )(config, env)
   );

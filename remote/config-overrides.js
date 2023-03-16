@@ -4,12 +4,19 @@ const ModuleFederationPlugin =
   require("webpack").container.ModuleFederationPlugin;
 
 const { override, babelInclude } = require("customize-cra");
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = function (config, env) {
   config.plugins.push(
     new ModuleFederationPlugin(
       (module.exports = {
         name: "remote",
+        remotes: {
+          host: 
+          isDevelopment?  
+          'host@http://localhost:3000/remoteEntry.js' :
+          `host@https://acoe.vercel.app/remoteEntry.js` 
+        },
         exposes: {
           "./Menu": "./src/components/Menu"
         },
