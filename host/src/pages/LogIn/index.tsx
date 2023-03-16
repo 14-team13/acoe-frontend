@@ -1,3 +1,6 @@
+import { useCallback, useState } from 'react';
+import { useRecoilState } from 'recoil';
+
 import useInput from '@hooks/useInput';
 import {
   Button,
@@ -8,14 +11,15 @@ import {
   Label,
   LinkContainer,
 } from '@pages/SignUp/styles';
-import { useCallback, useState } from 'react';
 import { login } from '@api/main';
+import { authState } from 'atoms/auth';
 
 const LogIn = () => {
   // const { data: userData, error, mutate } = useSWR('/api/users', fetcher);
   const [logInError, setLogInError] = useState(false);
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
+  const [userInfo, setUserInfo] = useRecoilState(authState);
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,11 +27,15 @@ const LogIn = () => {
       setLogInError(false);
       const response = await login(email, password);
       if (response.status === 200) {
+        // localStorage에 유저 정보 저장
+        setUserInfo(response.data.userInfo);
         window.open('/', '_self');
       }
     },
-    [email, password]
+    [email, password, setUserInfo]
   );
+
+  console.dir(userInfo);
 
   return (
     <div id='container'>
