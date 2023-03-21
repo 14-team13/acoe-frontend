@@ -12,7 +12,7 @@ import {
   LinkContainer,
 } from '@pages/SignUp/styles';
 import { login } from '@api/main';
-import { authState } from 'atoms/auth';
+import { authState } from 'store/auth';
 
 const LogIn = () => {
   // const { data: userData, error, mutate } = useSWR('/api/users', fetcher);
