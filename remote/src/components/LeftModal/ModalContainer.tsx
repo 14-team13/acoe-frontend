@@ -41,11 +41,16 @@ const ModalContainer = () => {
     isModalOpenState('second'),
   );
 
+  const closeAllModal = () => {
+    setIsModalOpen(false);
+    isDetailOpen && setIsDetailOpen(false);
+  };
+
   return (
     <Container>
       {isModalOpen && (
         <ModalWrap>
-          <button onClick={() => setIsModalOpen(false)}>모달1 닫기</button>
+          <button onClick={closeAllModal}>모달1 닫기</button>
           <p>모달1</p>
           {Array.from({ length: 100 }).map((_, i) => (
             <Card key={i} onClick={() => setIsDetailOpen(true)}>
