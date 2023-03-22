@@ -1,4 +1,7 @@
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
+
+import { isModalOpenState } from 'store';
 
 const HeaderWrap = styled.div`
   height: 30px;
@@ -22,12 +25,15 @@ const SearchWrap = styled.div`
 `;
 
 export default function Header() {
+  const setIsModalOpen = useSetRecoilState(isModalOpenState('first'));
+
   return (
     <HeaderWrap>
       <LogoWrap>logo</LogoWrap>
       <SearchWrap>
         <input type="text" placeholder="검색어를 입력하세욘" />
       </SearchWrap>
+      <button onClick={() => setIsModalOpen(true)}>모달 열기</button>
     </HeaderWrap>
   );
 }
