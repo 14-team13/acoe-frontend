@@ -1,6 +1,8 @@
 import { useRecoilState } from 'recoil';
-import { isModalOpenState } from 'store';
 import styled from 'styled-components';
+import { isMobile } from 'react-device-detect';
+
+import { isModalOpenState } from 'store';
 
 const Container = styled.section`
   height: calc(var(--vh, 1vh) * 100);
@@ -18,6 +20,10 @@ const ModalWrap = styled.div`
   height: 100%;
   background-color: skyblue;
   padding: 0.5rem;
+  overflow-y: auto;
+  @media screen and (max-width: 767px) {
+    width: calc(var(--vw, 1vw) * 100 - 1rem);
+  }
 `;
 
 const Card = styled.div`
@@ -46,6 +52,11 @@ const ModalContainer = () => {
     isDetailOpen && setIsDetailOpen(false);
   };
 
+  const toggleDetail = () => {
+    setIsDetailOpen(prev => !prev);
+    isMobile && setIsModalOpen(prev => !prev);
+  };
+
   return (
     <Container>
       {isModalOpen && (
@@ -53,7 +64,7 @@ const ModalContainer = () => {
           <button onClick={closeAllModal}>모달1 닫기</button>
           <p>모달1</p>
           {Array.from({ length: 100 }).map((_, i) => (
-            <Card key={i} onClick={() => setIsDetailOpen(true)}>
+            <Card key={i} onClick={toggleDetail}>
               <p>클릭하면 모달2 나옴</p>
             </Card>
           ))}
@@ -61,7 +72,7 @@ const ModalContainer = () => {
       )}
       {isDetailOpen && (
         <ModalWrap>
-          <button onClick={() => setIsDetailOpen(false)}>모달2 닫기</button>
+          <button onClick={toggleDetail}>모달2 닫기</button>
           <p>모달2</p>
         </ModalWrap>
       )}
