@@ -25,9 +25,9 @@ const Maps = () => {
 
     const mapObj = new Map({
       view: new View({
-        center: fromLonLat([126.92054263154023, 37.56311839665308]),
+        center: fromLonLat([126.930583, 37.566801]),
         zoom: 16,
-      }), 
+      }),
       layers: [
         new TileLayer({
           source: new XYZ({ url: "http://xdworld.vworld.kr:8080/2d/Base/202002/{z}/{x}/{y}.png" }),
@@ -40,13 +40,13 @@ const Maps = () => {
     const vectorLayer = new VectorLayer({
       source: vectorSource,
     });
-    mapObj.addLayer(vectorLayer);
+
 
     // Add markers to the vector layer
     const newMarkers = [
-      { lon: 126.92054263154023, lat: 37.56311839665308, name: 'Marker 1' },
-      { lon: 127.92054263154023, lat: 36, name: 'Marker 2' },
-      { lon: -0.118092, lat: 51.509865, name: 'Marker 3' },
+      { lon: 126.9327183, lat: 37.570655, name: '공간커피' },
+      { lon: 126.9263647, lat: 37.5630577, name: '테일러커피 연남점' },
+      { lon: 126.930583, lat: 37.566801, name: '스타벅스 연희동점' },
     ];
 
     const markerStyle = new Style({
@@ -65,7 +65,24 @@ const Maps = () => {
       feature.setStyle(markerStyle);
       return feature;
     });
+
+
+    mapObj.on('click', (evt) => {
+      let feature = mapObj.forEachFeatureAtPixel(evt.pixel,
+        (feature) => {
+          return feature;
+        });
+
+      if (feature) {
+        // console.log(feature)
+        alert(feature.get('name'));
+      }
+    });
+
+
     vectorSource.addFeatures(newFeatures);
+
+    mapObj.addLayer(vectorLayer);
     mapObj.setTarget(mapRef.current);
 
     return () => mapObj.setTarget('');
