@@ -53,6 +53,8 @@ const ModalContainer = () => {
   };
 
   const toggleDetail = () => {
+    if (isDetailOpen) return;
+
     setIsDetailOpen(prev => !prev);
     isMobile && setIsModalOpen(prev => !prev);
   };
