@@ -30,7 +30,9 @@ const Maps = () => {
       }),
       layers: [
         new TileLayer({
-          source: new XYZ({ url: "http://xdworld.vworld.kr:8080/2d/Base/202002/{z}/{x}/{y}.png" }),
+          source: new XYZ({ url: "https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}",
+          crossOrigin: 'anonymous'
+         }),
         }),
       ],
       target: mapRef.current
