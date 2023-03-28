@@ -1,5 +1,5 @@
 import 'ol/ol.css';
-import { useEffect, useState, useRef, ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Map, View } from 'ol';
 import { fromLonLat, get as getProjection } from 'ol/proj';
