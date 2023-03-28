@@ -68,7 +68,7 @@ const Maps = () => {
 
 
     mapObj.on('click', (evt) => {
-      let feature = mapObj.forEachFeatureAtPixel(evt.pixel,
+      const feature = mapObj.forEachFeatureAtPixel(evt.pixel,
         (feature) => {
           return feature;
         });
