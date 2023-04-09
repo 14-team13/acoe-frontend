@@ -17,12 +17,10 @@ const LogIn = () => {
   const keys = {
     redirectUri: "http://localhost:3000/oauth2/redirect",
     apiBaseUrl: "http://localhost:8080"
-    //https://localhost:8080/api/v1/auth/login
   };
   const API_BASE_URL = keys.apiBaseUrl;
   const ACCESS_TOKEN = "accessToken";
   const OAUTH2_REDIRECT_URI = keys.redirectUri;
-  //const GOOGLE_AUTH_URL = API_BASE_URL + "/oauth2/authorize/google?redirect_uri=" + OAUTH2_REDIRECT_URI;
   const GOOGLE_AUTH_URL = 'http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:3000/oauth/redirect'
 
 
@@ -42,14 +40,14 @@ const LogIn = () => {
 
   console.dir(userInfo);
 
-
+  
 
   return (
     <div id='container'>
       <Header>ACOE</Header>
       <div className="social-signup">
-        <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}>
-          <img src={googleLogo} alt="Google" /> Sign up with Google</a>
+          <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}>
+              <img src={googleLogo} alt="Google" /> Sign up with Google</a>
       </div>
     </div>
   );
