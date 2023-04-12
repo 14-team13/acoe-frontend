@@ -17,8 +17,12 @@ Run `yarn start`. This will build and serve both `host` and `remote` on ports 30
 - [localhost:3000](http://localhost:3000/) (HOST)
 - [localhost:3001](http://localhost:3001) (STANDALONE REMOTE)
 
+## Commit Convention
+🔗 [Commit Convention](https://github.com/14-team13/acoe-frontend/wiki/Commit-Message-Style-Guide)
+
+## git flow
+🔗 [Git flow to work on an issue](https://github.com/14-team13/acoe-frontend/wiki/Git-flow-to-work-on-an-issue)
 
 ## History 
 🔗 [Init Setting](./docs/InitSetting.md)
 
-🔗 [Commit Convention](https://github.com/14-team13/acoe-frontend/wiki/Commit-Message-Style-Guide)
