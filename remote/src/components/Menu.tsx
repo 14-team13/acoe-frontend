@@ -5,7 +5,8 @@ import {
   // Header,
   MixedBoundary,
 } from 'components/Common';
-import ModalContainer from 'components/LeftModal/ModalContainer';
+import { ModalContainer } from 'components/LeftModal';
+import { NavContainer } from 'components/Nav';
 
 const Container = styled.section`
   display: flex;
@@ -26,6 +27,7 @@ export const Menu = () => {
   return (
     <Container>
       {/* <Header /> */}
+      <NavContainer />
       <ModalContainer />
       <Wrap>
         <MixedBoundary>

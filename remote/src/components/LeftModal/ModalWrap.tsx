@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import { theme } from 'styles/theme';
-
 import searchImg from 'images/search.png';
 import xImg from 'images/x.png';
 import brandImg from 'images/brand.png';

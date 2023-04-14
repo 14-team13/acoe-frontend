@@ -15,7 +15,7 @@ const Container = styled.section`
   left: 22px;
   top: 22px;
   height: calc(var(--vh, 1vh) * 100 - 44px);
-  z-index: 2;
+  z-index: 3;
 `;
 
 const OpenBtn = styled.div`
@@ -26,7 +26,7 @@ const OpenBtn = styled.div`
   top: 454px;
   background: ${background};
   border-radius: 0px 12px 12px 0px;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   justify-content: center;
   align-items: center;
