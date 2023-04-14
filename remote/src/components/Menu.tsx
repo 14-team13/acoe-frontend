@@ -1,24 +1,31 @@
 import styled from 'styled-components';
 
 import { Maps } from 'components/Maps';
-import { Header, MixedBoundary } from 'components/Common';
+import {
+  // Header,
+  MixedBoundary,
+} from 'components/Common';
 import ModalContainer from 'components/LeftModal/ModalContainer';
 
 const Container = styled.section`
   display: flex;
   flex-direction: column;
   position: relative;
+  height: calc(var(--vh, 1vh) * 100);
+  width: calc(var(--vw, 1vw) * 100);
 `;
 
 const Wrap = styled.div`
-  height: calc(var(--vh, 1vh) * 100 - 40px);
-  width: calc(var(--vw, 1vw) * 100);
+  /* height: calc(var(--vh, 1vh) * 100);
+  width: calc(var(--vw, 1vw) * 100); */
+  height: 100%;
+  widht: 100%;
 `;
 
 export const Menu = () => {
   return (
     <Container>
-      <Header />
+      {/* <Header /> */}
       <ModalContainer />
       <Wrap>
         <MixedBoundary>
