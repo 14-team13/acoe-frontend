@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { theme } from 'styles/theme';
 import { Button } from 'styles/common';
+import { DiscountWrap } from 'components/Nav';
 import starbucksImg from 'images/starbucks.png';
 import lowImg from 'images/low.png';
 import mediumImg from 'images/medium.png';
@@ -29,7 +30,7 @@ const NavBox = styled.div`
   flex-direction: column;
 `;
 
-const DiscountWrap = styled.div`
+const NavWrap = styled.div`
   display: flex;
   flex-direction: row;
   > div + div {
@@ -54,7 +55,7 @@ const NavContainer = () => {
     <Wrap>
       <Search></Search>
       <NavBox>
-        <DiscountWrap>
+        <NavWrap>
           <Discount on>
             <img src={starbucksImg} />
             <span>프렌차이즈 할인</span>
@@ -71,7 +72,8 @@ const NavContainer = () => {
             <img src={highImg} />
             <span>1,000원 이상~</span>
           </Discount>
-        </DiscountWrap>
+        </NavWrap>
+        <DiscountWrap />
       </NavBox>
     </Wrap>
   );
