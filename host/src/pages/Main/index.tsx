@@ -1,10 +1,32 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 
 import { useRecoilState } from 'recoil';
 import { userState } from '../../store/atoms';
 import { loginsuccess, logout } from '@api/main';
 import { HostContainer, HostWrap } from './styles';
+
+// TODO
+const StartBtn = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 12px 16px;
+  position: absolute;
+  width: 193px;
+  height: 54px;
+  right: 22px;
+  top: 22px;
+  background: #2f44ff;
+  border-radius: 100px;
+  font-weight: 700;
+  line-height: 30px;
+  color: #ffffff;
+  z-index: 2;
+  font-size: 16px;
+`;
 
 const Main = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -51,10 +73,11 @@ const Main = () => {
               </button>
             </div>
           ) : (
-            <div>
-              <a href='/signup'>회원가입</a>
-              <a href='/login'>로그인</a>
-            </div>
+            // <div>
+            //   <a href='/signup'>회원가입</a>
+            //   <a href='/login'>로그인</a>
+            // </div>
+            <StartBtn>텀블러 여정 시작하기</StartBtn>
           )}
         </HostWrap>
         <div>
