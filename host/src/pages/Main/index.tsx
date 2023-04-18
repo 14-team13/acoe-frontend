@@ -1,36 +1,18 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import styled from '@emotion/styled';
-
+import acoeImg from 'images/acoe.svg';
+import googleImg from 'images/google.svg';
+import kakaoImg from 'images/kakao.svg';
 import { useRecoilState } from 'recoil';
 import { userState } from '../../store/atoms';
 import { loginsuccess, logout } from '@api/main';
-import { HostContainer, HostWrap } from './styles';
 
-// TODO
-const StartBtn = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 12px 16px;
-  position: absolute;
-  width: 193px;
-  height: 54px;
-  right: 22px;
-  top: 22px;
-  background: #2f44ff;
-  border-radius: 100px;
-  font-weight: 700;
-  line-height: 30px;
-  color: #ffffff;
-  z-index: 2;
-  font-size: 16px;
-`;
+
 
 const Main = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useRecoilState(userState);
+  const [showLogin, setShowLogin] = useState(false);
 
   const Menu = React.lazy(() =>
     // @ts-ignore
@@ -39,53 +21,71 @@ const Main = () => {
     })
   );
 
-  useEffect(() => {
-    (async () => {
-      const { data } = await loginsuccess();
-      try {
-        if (data) {
-          setIsLogin(true);
-          setUser({ email: data.email, username: data.username });
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [setUser]);
+  // useEffect(() => {
+  //   (async () => {
+  //     const { data } = await loginsuccess();
+  //     try {
+  //       if (data) {
+  //         setIsLogin(true);
+  //         setUser({ email: data.email, username: data.username });
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, [setUser]);
 
-  const logoutPage = async () => {
-    const data = await logout();
-    if (data.status === 200) {
-      window.open('/login', '_self');
-    }
-  };
+  // const logoutPage = async () => {
+  //   const data = await logout();
+  //   if (data.status === 200) {
+  //     window.open('/login', '_self');
+  //   }
+  // };
+
+  const startAcoe = () => {
+    console.log("startACOE")
+    setShowLogin(true);
+  }
+
+  const startMypage = () => {
+    console.log("startMypage")
+  }
+
+  const loginKakao = () => {
+    
+  }
+
+  const loginGoogle = () => {
+
+  }
 
   return (
     <div className='App'>
-      <HostContainer>
-        <HostWrap>
+      <div>
+        <div>
           {isLogin ? (
-            <div>
-              <span>{user.username}</span>
-
-              <button onClick={logoutPage} className='loginButton'>
-                Logout
-              </button>
+            <div className="discount" onClick={startMypage}>
+              <span>YERANG</span>
             </div>
           ) : (
-            // <div>
-            //   <a href='/signup'>회원가입</a>
-            //   <a href='/login'>로그인</a>
-            // </div>
-            <StartBtn>텀블러 여정 시작하기</StartBtn>
+            <div className="acoe-start" onClick={startAcoe}><span>텀블러 여정 시작하기</span></div>
           )}
-        </HostWrap>
+        </div>
         <div>
           <React.Suspense fallback={<div>Loading...</div>}>
             <Menu />
           </React.Suspense>
         </div>
-      </HostContainer>
+      </div>
+      {showLogin ? (
+        <div className="login-modal">
+          <div className = "login-box">
+            <img src={acoeImg}/>
+            <button className = "login-button kakao" onClick = {loginKakao}><img src={kakaoImg}/>카카오로 시작하기</button>
+            <button className = "login-button google" onClick = {loginGoogle}> <img src={googleImg}/>구글로 시작하기</button>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };
