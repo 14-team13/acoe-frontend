@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useEffect, useState } from 'react';
 import acoeImg from 'images/acoe.svg';
 import googleImg from 'images/google.svg';
@@ -42,6 +42,9 @@ const Main = () => {
   //   }
   // };
 
+  const KAKAO_AUTH_URL = 'http://localhost:8080/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/redirect'
+  const GOOGLE_AUTH_URL = 'http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:3000/oauth/redirect'
+
   const startAcoe = () => {
     console.log("startACOE")
     setShowLogin(true);
@@ -52,20 +55,30 @@ const Main = () => {
   }
 
   const loginKakao = () => {
-    
+    window.location.assign(KAKAO_AUTH_URL);
   }
 
   const loginGoogle = () => {
-
+    window.location.assign(GOOGLE_AUTH_URL);
   }
+
+  useLayoutEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    console.log(token)
+    if(token){
+      setIsLogin(true)
+    }else{
+      setIsLogin(false)
+    }
+  },[])
 
   return (
     <div className='App'>
       <div>
         <div>
           {isLogin ? (
-            <div className="discount" onClick={startMypage}>
-              <span>YERANG</span>
+            <div className="acoe-start " onClick={startMypage}>
+              <span>USER</span>
             </div>
           ) : (
             <div className="acoe-start" onClick={startAcoe}><span>텀블러 여정 시작하기</span></div>
