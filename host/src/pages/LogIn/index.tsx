@@ -1,18 +1,11 @@
 import { useCallback, useState } from 'react';
 import { useRecoilState } from 'recoil';
-
 import useInput from '@hooks/useInput';
-import {
-  Button,
-  Error,
-  Form,
-  Header,
-  Input,
-  Label,
-  LinkContainer,
-} from '@pages/SignUp/styles';
+import { Button, Error, Form, Header, Input, Label, LinkContainer } from '@pages/SignUp/styles';
 import { login } from '@api/main';
 import { authState } from 'store/auth';
+import googleLogo from '../../img/google-logo.png';
+
 
 const LogIn = () => {
   // const { data: userData, error, mutate } = useSWR('/api/users', fetcher);
@@ -20,6 +13,16 @@ const LogIn = () => {
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [userInfo, setUserInfo] = useRecoilState(authState);
+
+  const keys = {
+    redirectUri: "http://localhost:3000/oauth2/redirect",
+    apiBaseUrl: "http://localhost:8080"
+  };
+  const API_BASE_URL = keys.apiBaseUrl;
+  const ACCESS_TOKEN = "accessToken";
+  const OAUTH2_REDIRECT_URI = keys.redirectUri;
+  const GOOGLE_AUTH_URL = 'http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:3000/oauth/redirect'
+
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,43 +40,15 @@ const LogIn = () => {
 
   console.dir(userInfo);
 
+  
+
   return (
     <div id='container'>
       <Header>ACOE</Header>
-      <Form onSubmit={onSubmit}>
-        <Label id='email-label'>
-          <span>이메일 주소</span>
-          <div>
-            <Input
-              type='email'
-              id='email'
-              name='email'
-              value={email}
-              onChange={onChangeEmail}
-            />
-          </div>
-        </Label>
-        <Label id='password-label'>
-          <span>비밀번호</span>
-          <div>
-            <Input
-              type='password'
-              id='password'
-              name='password'
-              value={password}
-              onChange={onChangePassword}
-            />
-          </div>
-          {logInError && (
-            <Error>이메일과 비밀번호 조합이 일치하지 않습니다.</Error>
-          )}
-        </Label>
-        <Button type='submit'>로그인</Button>
-      </Form>
-      <LinkContainer>
-        아직 회원이 아니신가요?&nbsp;
-        <a href='/signup'>회원가입 하러가기</a>
-      </LinkContainer>
+      <div className="social-signup">
+          <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}>
+              <img src={googleLogo} alt="Google" /> Sign up with Google</a>
+      </div>
     </div>
   );
 };

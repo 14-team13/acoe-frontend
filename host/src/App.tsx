@@ -6,11 +6,12 @@ const LogIn = loadable(() => import('@pages/LogIn'));
 const SignUp = loadable(() => import('@pages/SignUp'));
 const Menu = loadable(() => import('@layouts/Menu'));
 
+
 const App = () => (
   <Routes>
     <Route path='/' element={<Main />} />
     <Route path='/login' element={<LogIn />} />
-    <Route path='/signup' element={<SignUp />} />
+    <Route path='/oauth/redirect' element={<SignUp />} />
     <Route path='/menu' element={<Menu />} />
   </Routes>
 );
