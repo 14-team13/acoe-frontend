@@ -6,13 +6,15 @@ import kakaoImg from 'images/kakao.svg';
 import { useRecoilState } from 'recoil';
 import { userState } from '../../store/atoms';
 import { loginsuccess, logout } from '@api/main';
+import MyInfo from '@pages/components/MyInfo';
 
 
 
 const Main = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true); // false
   const [user, setUser] = useRecoilState(userState);
-  const [showLogin, setShowLogin] = useState(false);
+  const [showLogin, setShowLogin] = useState(false); 
+  const [showMyPage, setShowMyPage]= useState(false);
 
   const Menu = React.lazy(() =>
     // @ts-ignore
@@ -51,7 +53,7 @@ const Main = () => {
   }
 
   const startMypage = () => {
-    console.log("startMypage")
+    setShowMyPage(!showMyPage)
   }
 
   const loginKakao = () => {
@@ -63,12 +65,12 @@ const Main = () => {
   }
 
   useLayoutEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      setIsLogin(true)
-    } else {
-      setIsLogin(false)
-    }
+    // const token = localStorage.getItem('accessToken');
+    // if (token) {
+    //   setIsLogin(true)
+    // } else {
+    //   setIsLogin(false)
+    // }
   }, [])
 
   const closeLogin = () => {
@@ -80,11 +82,16 @@ const Main = () => {
       <div>
         <div>
           {isLogin ? (
-            <div className="acoe-start " onClick={startMypage}>
-              <span>USER</span>
+            <div>
+              <div className="acoe-start" onClick={startMypage}>
+                <div>USER</div>
+              </div>
+            {showMyPage?  (<MyInfo/>): null }
             </div>
           ) : (
-            <div className="acoe-start" onClick={startAcoe}><span>텀블러 여정 시작하기</span></div>
+            <div className="acoe-start" onClick={startAcoe}>
+              <div>텀블러 여정 시작하기</div>
+            </div>
           )}
         </div>
         <div>

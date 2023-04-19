@@ -4,6 +4,10 @@
   background: #2F44FF;
 }
 
+.primary_txt{
+  color : #2F44FF
+}
+
 .secondary {
   background: #5364FD;
 }
@@ -136,6 +140,110 @@
   font-size: 12px;
 }
 
+.pd5 {
+  padding: 5px
+}
+
+.pd10 {
+  padding: 10px
+}
+
+.pdl16{
+  padding-left : 16px
+}
+
+.pd20 {
+  padding: 10px
+}
+
+.pdt25{
+  padding-top:25px;
+}
+
+.mgl5 {
+  margin-left: 5px
+}
+
+.mgl10 {
+  margin-left: 10px
+}
+
+.mgl15 {
+  margin-left: 15px
+}
+
+.mgl16 {
+  margin-left: 16px
+}
+
+.mgt4 {
+  margin-top: 5px
+}
+
+.mgt5 {
+  margin-top: 5px
+}
+
+.mgt10 {
+  margin-top: 10px
+}
+
+.mgt15 {
+  margin-top: 15px
+}
+
+
+.mgt24 {
+  margin-top: 24px
+}
+
+
+.mgr5 {
+  margin-right: 5px
+}
+
+.mgr10 {
+  margin-right: 10px
+}
+
+.mgr15 {
+  margin-right: 15px
+}
+
+.mgb4 {
+  margin-bottom: 4px
+}
+
+
+.mgb5 {
+  margin-bottom: 5px
+}
+
+.mgb10 {
+  margin-bottom: 10px
+}
+
+.mgb15 {
+  margin-bottom: 15px
+}
+
+
+.mgb25 {
+  margin-bottom: 25px
+}
+
+.lh18{
+  line-height: 18px;
+}
+
+.lh30{
+  line-height: 30px;
+}
+.lh36 {
+  line-height: 36px;
+}
+
+
 .container {
   display: flex;
   flex-direction: column;
@@ -260,24 +368,7 @@
   line-height: 24px;
 }
 
-.pd5 { padding: 5px }
-.pd10 { padding: 10px }
-.pd20 { padding: 10px }
 
-.mgl5 { margin-left: 5px }
-.mgl10 { margin-left: 10px }
-.mgl15 { margin-left: 15px }
-.mgt5 { margin-top: 5px }
-.mgt10 { margin-top: 10px }
-.mgt15 { margin-top: 15px }
-.mgr5 { margin-right: 5px }
-.mgr10 { margin-right: 10px }
-.mgr15 { margin-right: 15px }
-.mgb5 { margin-bottom: 5px }
-.mgb10 { margin-bottom: 10px }
-.mgb15 { margin-bottom: 15px }
-.mgb25 { margin-bottom: 25px }
-.lh36{line-height: 36px;}
 
 .left-container {
   position: absolute;
@@ -452,7 +543,7 @@
 }
 
 .login-box {
-  display : flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   width: 510px;
@@ -465,17 +556,17 @@
   padding: 20px;
 }
 
-.login-box .acoe-image{
-  width : 312px;
+.login-box .acoe-image {
+  width: 312px;
   height: 252px;
 }
 
-.login-close{
+.login-close {
   float: right;
   font-size: 25px;
-  cursor : pointer;
+  cursor: pointer;
   position: absolute;
-  margin-left: 450px; 
+  margin-left: 450px;
 }
 
 .login-button {
@@ -485,29 +576,93 @@
   width: 406px;
   height: 76px;
   border-radius: 12px;
-  margin : 7px;
-  cursor : pointer;
+  margin: 7px;
+  cursor: pointer;
 }
 
 .login-button.kakao {
   background: #FEE500;
 }
 
-.login-button.google{
+.login-button.google {
   border: 1px solid #91909C;
   background: #FFFFFF;
 }
 
-.login-button .login-text{
+.login-button .login-text {
   font-weight: 500;
   font-size: 24px;
   line-height: 36px;
   text-align: center;
 }
 
-.login-button img{
+.login-button img {
   width: 28px;
   height: 26px;
-  position : absolute;
+  position: absolute;
   margin-right: 300px
+}
+
+.myinfo {
+  display: flex;
+  flex-direction: column;
+  width: 264px;
+  height: 272px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  position: absolute;
+  right: 22px;
+  top: 84px;
+  z-index: 3;
+}
+
+.myinfo .divide{
+  width: 232px;
+  height: 2px;
+  background: #F0F1F5;
+  margin : 16px;
+}
+
+.myinfo .myinfo-text{
+  margin-top: 24px;
+  margin-bottom : 16px;
+}
+
+.myinfo .commercial-text{
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: #91909C;
+  margin : 8px 0px 8px 16px 
+}
+
+.myinfo img{
+  width : 52px; 
+  height : 52px;
+  padding-left : 16px;
+  padding-top : 24px;
+}
+
+
+.small-btn{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  width: 65px;
+  background: #2F44FF;
+  border-radius: 100px;
+  color : #FFFFFF;
+  cursor : default;
+}
+
+.flex_row{
+  display: flex;
+  flex-direction: row;
+}
+
+.flex_column{
+  display: flex;
+  flex-direction :column;
 }
