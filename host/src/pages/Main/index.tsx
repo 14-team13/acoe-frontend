@@ -55,22 +55,25 @@ const Main = () => {
   }
 
   const loginKakao = () => {
-    window.location.assign(KAKAO_AUTH_URL);
+    //window.location.assign(KAKAO_AUTH_URL);
   }
 
   const loginGoogle = () => {
-    window.location.assign(GOOGLE_AUTH_URL);
+    //window.location.assign(GOOGLE_AUTH_URL);
   }
 
   useLayoutEffect(() => {
     const token = localStorage.getItem('accessToken');
-    console.log(token)
-    if(token){
+    if (token) {
       setIsLogin(true)
-    }else{
+    } else {
       setIsLogin(false)
     }
-  },[])
+  }, [])
+
+  const closeLogin = () => {
+    setShowLogin(false);
+  }
 
   return (
     <div className='App'>
@@ -92,10 +95,19 @@ const Main = () => {
       </div>
       {showLogin ? (
         <div className="login-modal">
-          <div className = "login-box">
-            <img src={acoeImg}/>
-            <button className = "login-button kakao" onClick = {loginKakao}><img src={kakaoImg}/>카카오로 시작하기</button>
-            <button className = "login-button google" onClick = {loginGoogle}> <img src={googleImg}/>구글로 시작하기</button>
+          <div className="login-box">
+            <div className="login-close" onClick={closeLogin}>&times;</div>
+            <img className="acoe-image" src={acoeImg} />
+            <div className="bold head6 mgt10 lh36">내 주변 텀블러 할인 금액</div>
+            <div className="bold head6 mgb25 lh36">ACOE에서 찾아보세요!</div>
+            <div className="login-button kakao" onClick={loginKakao}>
+              <img src={kakaoImg} />
+              <div className="login-text">카카오로 시작하기</div>
+            </div>
+            <div className="login-button google" onClick={loginGoogle}>
+              <img src={googleImg} />
+              <div className="login-text">Google로 시작하기</div>
+            </div>
           </div>
         </div>
       ) : null}
