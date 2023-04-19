@@ -86,7 +86,6 @@ const Main = () => {
               <div className="acoe-start" onClick={startMypage}>
                 <div>USER</div>
               </div>
-            {showMyPage?  (<MyInfo/>): null }
             </div>
           ) : (
             <div className="acoe-start" onClick={startAcoe}>
@@ -100,6 +99,7 @@ const Main = () => {
           </React.Suspense>
         </div>
       </div>
+      {showMyPage?  <MyInfo/>: null }
       {showLogin ? (
         <div className="login-modal">
           <div className="login-box">
