@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import searchImg from 'images/search.png';
-import xImg from 'images/x.png';
+import searchSvg from 'images/search.svg';
+import xSvg from 'images/x.svg';
 import brandImg from 'images/brand.png';
 import leftImg from 'images/left.png';
 import acoeImg from 'images/acoe.svg';
@@ -39,10 +39,6 @@ const ModalWrap = (props : any) => {
     setLogoCafes(cafes)
   },[])
 
-  useEffect(() => {
-    console.log(searchCafeTxt)
-  },[searchCafeTxt])
-
   const clickDetailCafe = (a : any) => {
     console.log(a)
   }
@@ -51,9 +47,9 @@ const ModalWrap = (props : any) => {
     <React.Fragment>
     <div className="cafe-modal">
       <div className="search">
-        <img src={searchImg} />
-        <input type="text" value ={searchCafeTxt} onChange = {(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" />
-        {searchCafeTxt !== ''? <img onClick = {() => setSearchCafeTxt('')} src={xImg} /> : null}
+        <img className = "serach-image" src={searchSvg} />
+        <input className = "mgl10" type="text" value ={searchCafeTxt} onChange = {(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" />
+        {searchCafeTxt !== ''? <img className = "mgl10 close-image" onClick = {() => setSearchCafeTxt('')} src={xSvg} /> : null}
       </div>
       <div className="cafes">
         {logoCafes.map((logoCafe, i) => (
