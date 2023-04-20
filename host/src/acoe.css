@@ -368,7 +368,9 @@
   line-height: 24px;
 }
 
+.left-modal{
 
+}
 
 .left-container {
   position: absolute;
@@ -383,14 +385,14 @@
   position: absolute;
   width: 44px;
   height: 100px;
-  top: 439px;
-  left: 22px;
+  top : calc(50% - 50px);
   border-radius: 0px 12px 12px 0px;
   z-index: 3;
   display: flex;
   justify-content: center;
   align-items: center;
   background: #FFFFFF;
+  cursor : pointer;
 }
 
 .openButton.open {
@@ -410,6 +412,7 @@
   padding: 18px 20px;
   border-radius: 20px;
   position: relative;
+  overflow-x : hidden;
   /* @media screen and (max-width: 767px) {
     width: calc(var(--vw, 1vw) * 100 - 1rem);
   } */
@@ -447,11 +450,14 @@
   box-sizing: border-box;
   border-top: 1px solid rgb(240, 241, 245);
   padding: 12px 4px;
+  display : flex; 
 }
 
 .cafe-modal .cafes img {
   width: 56px;
   height: 56px;
+  cursor : pointer;   
+  padding-right : 12px;
 }
 
 .cafe-modal .summary {
@@ -668,4 +674,22 @@
 .flex_column{
   display: flex;
   flex-direction :column;
+}
+
+.cafe-list{
+  overflow-y: scroll;
+  height: 100%;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.cafe-card{
+  width: 100%;
+  box-sizing: border-box;
+  width: 350px;
+  height: 190px;
+  background: #FFFFFF;
+  border: 1px solid #F0F1F5;
+  border-radius: 20px;
+  cursor : pointer;
 }
