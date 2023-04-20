@@ -374,14 +374,10 @@
   line-height: 24px;
 }
 
-.left-modal{
-
-}
-
 .left-container {
   position: absolute;
   display: flex;
-  left: 22px;
+  left: 22px; 
   top: 22px;
   height: calc(var(--vh, 1vh) * 100 - 44px);
   z-index: 3;
@@ -401,9 +397,15 @@
   cursor : pointer;
 }
 
-.openButton.open {
+.openButton.openState1 {
   left: 390px;
 }
+
+
+.openButton.openState2 {
+  left: 780px;
+}
+
 
 .openButton img {
   width: 13px;
@@ -422,6 +424,10 @@
   /* @media screen and (max-width: 767px) {
     width: calc(var(--vw, 1vw) * 100 - 1rem);
   } */
+}
+
+.cafe-modal.openstate1{
+  left: 22px;
 }
 
 .cafe-modal .search {
