@@ -19,7 +19,7 @@ interface logoCafes {
   src: string;
 }
 
-const ModalWrap = (props : any) => {
+const ModalWrap = (props: any) => {
 
   const [logoCafes, setLogoCafes] = useState<logoCafes[]>([]);
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
@@ -27,52 +27,56 @@ const ModalWrap = (props : any) => {
 
   useEffect(() => {
     const cafes = [
-      { title : "starbucks", src : starbucksSvg},
-      { title : "paulbassett" , src : paulbassettSvg},
-      { title : "angelinus" , src : angelinusSvg},
-      { title : "hollys" , src : hollysSvg},
-      { title : "passcucci" , src : passcucciSvg},
-      { title : "ediya" , src : ediyaSvg},
-      { title : "coffeebean" , src : coffeebeanSvg},
-      { title : "twosome" , src : twosomeSvg},
+      { title: "starbucks", src: starbucksSvg },
+      { title: "paulbassett", src: paulbassettSvg },
+      { title: "angelinus", src: angelinusSvg },
+      { title: "hollys", src: hollysSvg },
+      { title: "passcucci", src: passcucciSvg },
+      { title: "ediya", src: ediyaSvg },
+      { title: "coffeebean", src: coffeebeanSvg },
+      { title: "twosome", src: twosomeSvg },
     ]
     setLogoCafes(cafes)
-  },[])
+  }, [])
 
-  const clickDetailCafe = (a : any) => {
+  const clickDetailCafe = (a: any) => {
     console.log(a)
   }
 
   return (
     <React.Fragment>
-    <div className="cafe-modal">
-      <div className="search">
-        <img className = "serach-image" src={searchSvg} />
-        <input className = "mgl10" type="text" value ={searchCafeTxt} onChange = {(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" />
-        {searchCafeTxt !== ''? <img className = "mgl10 close-image" onClick = {() => setSearchCafeTxt('')} src={xSvg} /> : null}
+      <div className="cafe-modal">
+        <div className="search">
+          <img className="serach-image" src={searchSvg} />
+          <input className="mgl10" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" />
+          {searchCafeTxt !== '' ? <img className="mgl10 close-image" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
+        </div>
+        <div className="cafes">
+          {logoCafes.map((logoCafe, i) => (
+            <img key={i} src={logoCafe.src}
+            // onClick = {logoCafe.onClick}
+            />
+          ))}
+        </div>
+        <div className="summary">10 개의 카페지롱</div>
+        <div className="cafe-list">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <CafeCard
+              key={i}
+              cafeTitle={"Twosome place"}
+              cafeAddress={"서울특별시 관악구 은천로 12길"}
+              naverRoadFinder={true}
+              appOrderPossible={true}
+              kioskDiscountPossible={true}
+              priceOfAmericano={"5000"}
+              tumblerDiscount={"500"}
+              cafeId = {'1002010'}
+            />
+          ))}
+        </div>
+        {/* <CardWrap /> */}
       </div>
-      <div className="cafes">
-        {logoCafes.map((logoCafe, i) => (
-          <img key={i} src ={logoCafe.src} 
-          // onClick = {logoCafe.onClick}
-          />
-        ))}
-      </div>
-      <div className="summary">38개의 카페</div>
-      <div className = "cafe-list"> 
-          <CafeCard
-            cafeTitle = {"twosome place"}
-            cafeAddress = {"seoul"}
-            naverRoadFinder = {true}
-            appOrderPossible = {true}
-            kioskDiscountPossible = {true}
-            priceOfAmericano = {"5000"}
-            tumblerDiscount = {"500"}
-          /> 
-      </div>
-      {/* <CardWrap /> */}
-    </div>
-    {/* <div className="cafe-modal">
+      {/* <div className="cafe-modal">
       <div className="search">
         <img src={leftImg} />
         <h1>Bottle Lounge</h1>
