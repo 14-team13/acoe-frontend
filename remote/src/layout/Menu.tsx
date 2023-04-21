@@ -1,30 +1,49 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Maps } from 'components/Maps';
 import { MixedBoundary } from 'components/Common';
 import { NavContainer } from 'layout/Nav';
-import leftImg from 'images/left.png';
-import { isModalOpenState } from 'store';
-import { useRecoilState } from 'recoil';
+import leftModalSvg from 'images/leftModal.svg';
 import ModalWrap from './LeftModal/ModalWrap'
 
-export const Menu: React.FC =  () => {
-  const [isModalOpen] = useRecoilState(isModalOpenState('first'));
-  const [isShowingLeftModal, setIsShowingLeftModal] = useState(false);
-  const navContainerRef = useRef<Node>(null);
+export const Menu: React.FC = () => {
+
+  const [modalState, setModalState] = useState(1);
+  const leftModalComponent = useRef<HTMLDivElement>(null);
 
   const showLeftModal = () => {
-    setIsShowingLeftModal(!isShowingLeftModal)
-    console.log(navContainerRef.current)
-    console.log("aa")
+    if(modalState === 0){
+      setModalState(1);
+    }else{
+      setModalState(0);
+    }
+  }
+
+  const setButtonState = () => {
+    let state = '' 
+    if(modalState === 1){
+      state = 'openState1'
+    }else if(modalState === 2){
+      state = 'openState2'
+    }
+    return state
   }
 
   return (
-    <section className="container">
-      <NavContainer ref ={navContainerRef} />
-      <div>
-        <div className="left-container">{isShowingLeftModal && <ModalWrap />}</div>
-        <div className={`openButton ${isShowingLeftModal && "open"}`} onClick={showLeftModal}>
-          <img src={leftImg} />
+    <div className="container">
+      {modalState === 2 ? null :
+        <div>
+          <NavContainer />
+        </div>
+      }
+      <div className="left-modal" ref={leftModalComponent}>å
+        <div className="left-container ">{modalState !== 0? 
+          <ModalWrap
+            setModalState = {setModalState}
+            modalState = {modalState}/> 
+          : null}
+        </div>
+        <div className={`openButton ${setButtonState()}`} onClick={showLeftModal}>
+          <img src={leftModalSvg} />
         </div>
       </div>
       <div className="maps">
@@ -32,7 +51,7 @@ export const Menu: React.FC =  () => {
           <Maps />
         </MixedBoundary>
       </div>
-    </section>
+    </div>
   );
 };
 export default Menu;

@@ -128,4 +128,7 @@ html,
 body {
   margin: 0;
   height: 100%;
+  font-family: 'Pretendard'; /* 기본 공통 */
+  letter-spacing: -0.02em;
+  font-style: normal;
 }
