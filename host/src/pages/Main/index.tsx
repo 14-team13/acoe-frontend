@@ -11,7 +11,7 @@ import MyInfo from '@pages/components/MyInfo';
 
 
 const Main = () => {
-  const [isLogin, setIsLogin] = useState(true); // false
+  const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useRecoilState(userState);
   const [showLogin, setShowLogin] = useState(false); 
   const [showMyPage, setShowMyPage]= useState(false);
@@ -48,7 +48,6 @@ const Main = () => {
   const GOOGLE_AUTH_URL = 'http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:3000/oauth/redirect'
 
   const startAcoe = () => {
-    console.log("startACOE")
     setShowLogin(true);
   }
 
@@ -58,10 +57,14 @@ const Main = () => {
 
   const loginKakao = () => {
     //window.location.assign(KAKAO_AUTH_URL);
+    setShowLogin(false);
+    setIsLogin(true)
   }
 
   const loginGoogle = () => {
     //window.location.assign(GOOGLE_AUTH_URL);
+    setShowLogin(false);
+    setIsLogin(true)
   }
 
   useLayoutEffect(() => {
@@ -105,8 +108,8 @@ const Main = () => {
           <div className="login-box">
             <div className="login-close" onClick={closeLogin}>&times;</div>
             <img className="acoe-image" src={acoeImg} />
-            <div className="bold head6 mgt10 lh36">내 주변 텀블러 할인 금액</div>
-            <div className="bold head6 mgb25 lh36">ACOE에서 찾아보세요!</div>
+            <div className="fw700 fs24 mgt10 lh36">내 주변 텀블러 할인 금액</div>
+            <div className="fw700 fs24 mgb25 lh36">ACOE에서 찾아보세요!</div>
             <div className="login-button kakao" onClick={loginKakao}>
               <img src={kakaoImg} />
               <div className="login-text">카카오로 시작하기</div>
