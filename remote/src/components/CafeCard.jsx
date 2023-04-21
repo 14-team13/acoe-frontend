@@ -7,7 +7,7 @@ import naverFinder from 'images/naverFinder.svg';
 const CafeCard = (props) => {
 
   const findCafe = (item) => {
-    props.setCurrentCafe({...item})
+    props.setCafeID(item.cafeId)
   }
 
   return (
