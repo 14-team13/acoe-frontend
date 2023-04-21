@@ -1,5 +1,40 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flex-row-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.flex-row-space {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
 .primary {
   background: #2F44FF;
 }
@@ -12,8 +47,8 @@
   background: #5364FD;
 }
 
-.thrid {
-  background: #959FFF;
+.third-txt {
+  color: #959FFF;
 }
 
 .button {
@@ -94,6 +129,10 @@
 
 .fc-gray {
   color: #91909C;
+}
+
+.fc-third {
+  color: #959FFF;
 }
 
 .fw700 {
@@ -184,6 +223,8 @@
   margin-left: 8px
 }
 
+
+
 .mgl10 {
   margin-left: 10px
 }
@@ -199,6 +240,11 @@
 .mgl25 {
   margin-left: 25px
 }
+
+.mgt1 {
+  margin-top: 1px
+}
+
 
 .mgt3 {
   margin-top: 3px
@@ -238,9 +284,19 @@
   margin-top: 24px
 }
 
+.mgr4 {
+  margin-right: 4px
+}
+
+
 
 .mgr5 {
   margin-right: 5px
+}
+
+
+.mgr9 {
+  margin-right: 9px
 }
 
 .mgr10 {
@@ -535,13 +591,7 @@
 }
 
 .cafe-modal .summary {
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 21px;
-  color: rgb(145, 144, 156);
-  padding: 24px 0px 24px 16p;
   margin: 24px 0px 24px 16px;
-  /* -webkit-box-align: center; */
 }
 
 .cafe-modal .card-modal {
@@ -739,21 +789,7 @@
   cursor: default;
 }
 
-.flex_row {
-  display: flex;
-  flex-direction: row;
-}
 
-.flex_column {
-  display: flex;
-  flex-direction: column;
-}
-
-.flex_column_center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 .cafe-list {
   overflow-y: auto;
@@ -768,42 +804,13 @@
 .cafe-card {
   box-sizing: border-box;
   width: 350px;
-  height: 190px;
+  min-height: 190px;
   background: #FFFFFF;
   border: 1px solid #F0F1F5;
   border-radius: 20px;
   cursor: pointer;
   padding: 24px 16px;
   margin-bottom: 16px
-}
-
-.cafe-card .cafe-title {
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 30px;
-  color: #101722;
-}
-
-.cafe-card .cafe-address {
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 18px;
-  color: #101722;
-}
-
-.cafe-card .cafe-naver {
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 18px;
-  color: #39C848;
-  display: flex;
-  align-items: center;
-}
-
-.cafe-card .cafe-naver img {
-  width: 13px;
-  height: 13px;
-  margin: 0px 4px;
 }
 
 .cafe-card .bottom-wrap {
@@ -854,6 +861,6 @@
   margin: 0px auto;
 }
 
-.cafe-modal .cafe-detail .cafe-menu {}
-
-.cafe-modal .cafe-detail .cafe-blog {}
+.w70 {
+  width: 70%
+}

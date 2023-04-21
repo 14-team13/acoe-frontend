@@ -14,10 +14,10 @@ import leftModalSvg from 'images/leftModal.svg';
 import acoeSvg from 'images/acoe.svg';
 import MenusComponent from 'components/MenusComponent';
 import BlogReviewComponent from 'components/BlogReviewComponent';
-import naverFinder from 'images/naverFinder.svg';
-import appDiscountSvg from 'images/appDiscount.svg';
-import kioskDiscount from 'images/kioskDiscount.svg';
-import {getData} from 'store/cafeData'; 
+import NaverFinderComponent from 'components/NaverFinderComponent';
+import AppOrderDiscountComponent from 'components/AppOrderDiscountComponent';
+import KioskOrderDiscountComponent from 'components/KioskOrderDiscountComponent';
+import { getData } from 'store/cafeData';
 
 interface logoCafes {
   title: string;
@@ -27,7 +27,7 @@ interface logoCafes {
 interface menu {
   menu: string;
   price: number;
-  discount : number
+  discount: number
 }
 interface infoCafes {
   number: number;
@@ -57,7 +57,7 @@ const ModalWrap = (props: any) => {
   const [cafeID, setCafeID] = useState<number>()
   const [selectedCafe, setSelectedCafe] = useState<infoCafes>();
   const [cafeData, setCafeData] = useState<infoCafes[]>([]);
-  const [selectedMenu, setSelectedMenu]  = useState<menu[]>([]);
+  const [selectedMenu, setSelectedMenu] = useState<menu[]>([]);
 
   useEffect(() => {
     const cafes = [
@@ -79,9 +79,9 @@ const ModalWrap = (props: any) => {
       const cafe = cafeData.filter((item) => item.number === cafeID)
       setSelectedCafe(cafe[0])
       const menus = [
-        {menu : cafe[0].menu1, price : cafe[0].menu1_price, discount : cafe[0].discountprice}, 
-        {menu : cafe[0].menu2, price : cafe[0].menu2_price, discount : cafe[0].discountprice},
-        {menu : cafe[0].menu3, price : cafe[0].menu3_price, discount : cafe[0].discountprice}
+        { menu: cafe[0].menu1, price: cafe[0].menu1_price, discount: cafe[0].discountprice },
+        { menu: cafe[0].menu2, price: cafe[0].menu2_price, discount: cafe[0].discountprice },
+        { menu: cafe[0].menu3, price: cafe[0].menu3_price, discount: cafe[0].discountprice }
       ]
       setSelectedMenu(menus)
     }
@@ -97,7 +97,7 @@ const ModalWrap = (props: any) => {
         <div className="cafe-modal">
           <div className="search">
             <img className="serach-image" src={searchSvg} />
-            <input className="mgl10" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" onKeyDown={(e) => {if (e.key === 'Enter') { search() }}} />
+            <input className="mgl10" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
             {searchCafeTxt !== '' ? <img className="mgl10 close-image" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
           </div>
           <div className="cafes">
@@ -106,7 +106,7 @@ const ModalWrap = (props: any) => {
               />
             ))}
           </div>
-          <div className="summary">{cafeData.length > 0? `${cafeData.length}개의 카페` : null}</div>
+          <div className="summary fw700 fs14 lh21 fc-gray">{cafeData.length > 0 ? `${cafeData.length}개의 카페` : null}</div>
           <div className="cafe-list">
             {cafeData.map((cafe, i) => (
               <CafeCard
@@ -116,8 +116,9 @@ const ModalWrap = (props: any) => {
                 naverRoadFinder={true}
                 appOrderPossible={true}
                 kioskDiscountPossible={true}
-                priceOfAmericano={cafe.menu1_price}
-                tumblerDiscount={cafe.discountprice}
+                menu1={cafe.menu1}
+                menu1_price={cafe.menu1_price}
+                discountprice={cafe.discountprice}
                 cafeId={cafe.number}
                 setCafeID={setCafeID}
               />
@@ -129,7 +130,7 @@ const ModalWrap = (props: any) => {
         <div className="cafe-modal">
           <div className="search">
             <img className="" src={leftModalSvg} onClick={() => setModalState(1)} />
-            <div className="fw700 fs24 lh36 mgl25">{selectedCafe? selectedCafe.title : ''}</div>
+            <div className="fw700 fs24 lh36 mgl25">{selectedCafe ? selectedCafe.title : ''}</div>
           </div>
           <div className="cafe-detail">
             <div className="cafe-typical">
@@ -139,24 +140,28 @@ const ModalWrap = (props: any) => {
               <div className="fw700 fs24 lh36 mgt15">{selectedCafe?.title}</div>
               <div className="fw700 fs12 lh18 mgt8">텀블러 {selectedCafe?.discountprice}원 할인</div>
               <div className="fw400 fs12 lh18 mgt20">{selectedCafe?.address}</div>
-              <div className="fw700 fs12 lh18 fc-naver mgt4"><img src={naverFinder}/>네이버 길찾기</div>
-              <div className="flex_row mgt19">
-                <div className="fw700 fs12 lh18 fc-gray"><img src={appDiscountSvg}/>앱 주문 할인 가능</div>
-                <div className="fw700 fs12 lh18 fc-gray"><img src={kioskDiscount}/>키오스크 할인 가능</div>
+              <NaverFinderComponent />
+              <div className="flex-row mgt19">
+                <div>
+                  <AppOrderDiscountComponent />
+                </div>
+                <div className="mgl25">
+                  <KioskOrderDiscountComponent />
+                </div>
               </div>
             </div>
             <div className="cafe-detail-component">
               <div className="fw700 fs16 lh24">메뉴</div>
-                  {selectedMenu.map((item, i) => (
-                  <MenusComponent
-                    key={i}
-                    menu={item.menu}
-                    price={item.price}
-                    discountprice = {item.discount}
-                    naverRoadFinder={true}
-                  />
-                ))}
-              <div className="flex_column_center">
+              {selectedMenu.map((item, i) => (
+                <MenusComponent
+                  key={i}
+                  menu={item.menu}
+                  price={item.price}
+                  discountprice={item.discount}
+                  naverRoadFinder={true}
+                />
+              ))}
+              <div className="flex-column-center">
                 <div className="fw400 fs12 lh18 fc-gray">메뉴 항목과 가격 및 텀블러 할인 가격은</div>
                 <div className="fw400 fs12 lh18 fc-gray">각 매장의 사정에 따라 기재된 내용과 다를 수 있음</div>
               </div>

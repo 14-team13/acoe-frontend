@@ -9,9 +9,9 @@ const MyInfo = (props) => {
 
   return (
     <div className="myinfo">
-      <div className="flex_row">
+      <div className="flex-row">
         <img src={myImage} />
-        <div className="flex_column mgl16">
+        <div className="flex-column mgl16">
           <div className="myinfo-text">
             <div className="fw700 fs20 lh30 mgb4">예랑님</div>
             <div className="fw400 fs14 lh18 " >텀블러 한잔으로 오늘도</div>
