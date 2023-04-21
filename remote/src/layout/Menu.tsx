@@ -7,7 +7,7 @@ import ModalWrap from './LeftModal/ModalWrap'
 
 export const Menu: React.FC = () => {
 
-  const [modalState, setModalState] = useState(2);
+  const [modalState, setModalState] = useState(1);
   const leftModalComponent = useRef<HTMLDivElement>(null);
 
   const showLeftModal = () => {

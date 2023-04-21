@@ -71,6 +71,9 @@ const ModalWrap = (props: any) => {
       { title: "twosome", src: twosomeSvg },
     ]
     setLogoCafes(cafes)
+
+    //데이터 초기화
+    setCafeData(getData)
   }, [])
 
   useEffect(() => {

@@ -864,3 +864,8 @@
 .w70 {
   width: 70%
 }
+
+.navOpen{
+  position: absolute;
+  left : 412px;
+}
