@@ -31,11 +31,11 @@ export const Menu: React.FC = () => {
   return (
     <div className="container">
       {modalState === 2 ? null :
-        <div>
+        <div className= {modalState === 1? 'navOpen'  : ''}>
           <NavContainer />
         </div>
       }
-      <div className="left-modal" ref={leftModalComponent}>å
+      <div className="left-modal" ref={leftModalComponent}>
         <div className="left-container ">{modalState !== 0? 
           <ModalWrap
             setModalState = {setModalState}
