@@ -10,7 +10,13 @@ import passcucciSvg from 'images/passcucci.svg';
 import ediyaSvg from 'images/ediya.svg';
 import coffeebeanSvg from 'images/coffeebean.svg';
 import twosomeSvg from 'images/twosome.svg';
-
+import leftModalSvg from 'images/leftModal.svg';
+import acoeSvg from 'images/acoe.svg';
+import MenusComponent from 'components/MenusComponent';
+import BlogReviewComponent from 'components/BlogReviewComponent';
+import naverFinder from 'images/naverFinder.svg';
+import appDiscountSvg from 'images/appDiscount.svg';
+import kioskDiscount from 'images/kioskDiscount.svg';
 interface logoCafes {
   title: string;
   src: string;
@@ -85,27 +91,46 @@ const ModalWrap = (props: any) => {
       }
       {modalState === 2 &&
         <div className="cafe-modal">
+          <div className="search">
+            <img className="" src={leftModalSvg} onClick={() => setModalState(1)} />
+            <input className="mgl10" type="text" defaultValue={"cafe name"} />
+          </div>
+          <div className="cafe-detail">
+            <div className="cafe-typical">
+              <div className="cafe-typical-img">
+                <img className="" src={acoeSvg} />
+              </div>
+              <div className="fw700 fs24 lh36 mgt15">보틀라운지</div>
+              <div className="fw700 fs12 lh18 mgt8">텀블러 300원 할인</div>
+              <div className="fw400 fs12 lh18 mgt20">서울 서대문구 홍연길 26 1층</div>
+              <div className="fw700 fs12 lh18 fc-naver mgt4"><img src={naverFinder} /> 네이버 길찾기</div>
+              <div className="flex_row mgt19">
+                <div className="fw700 fs12 lh18 fc-gray"><img src={appDiscountSvg} />앱 주문 할인 가능</div>
+                <div className="fw700 fs12 lh18 fc-gray"><img src={kioskDiscount} />키오스크 할인 가능</div>
+              </div>
+            </div>
 
-
-
+            <div className="cafe-detail-component">
+              <div className="fw700 fs16 lh24">메뉴</div>
+              <MenusComponent />
+              <MenusComponent />
+              <MenusComponent />
+              <div className="flex_column_center">
+                <div className="fw400 fs12 lh18 fc-gray">메뉴 항목과 가격 및 텀블러 할인 가격은</div>
+                <div className="fw400 fs12 lh18 fc-gray">각 매장의 사정에 따라 기재된 내용과 다를 수 있음</div>
+              </div>
+            </div>
+            <div className="cafe-detail-component">
+              <div className="fw700 fs16 lh24 mgb25">블로그 리뷰</div>
+              <BlogReviewComponent />
+              <BlogReviewComponent />
+              <BlogReviewComponent />
+              <BlogReviewComponent />
+              <BlogReviewComponent />
+            </div>
+          </div>
         </div>
       }
-      {/* <div className="cafe-modal">
-      <div className="search">
-        <img src={leftImg} />
-        <h1>Bottle Lounge</h1>
-      </div>
-      <img src={acoeImg}/>
-      <div>
-      </div>
-      <div className = "divide"></div>
-      <div>
-        <h1>MENU</h1>
-      </div>
-      <div>
-        <h1>BLOG REVIEW</h1>
-      </div>
-    </div> */}
     </React.Fragment>
   );
 };
