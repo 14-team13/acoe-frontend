@@ -86,12 +86,12 @@ const Main = () => {
         <div>
           {isLogin ? (
             <div>
-              <div className="acoe-start" onClick={startMypage}>
+              <div className="user fw700 fs20 lh30" onClick={startMypage}>
                 <div>USER</div>
               </div>
             </div>
           ) : (
-            <div className="acoe-start" onClick={startAcoe}>
+            <div className="acoe-start fw700 fs20 lh30 on" onClick={startAcoe}>
               <div>텀블러 여정 시작하기</div>
             </div>
           )}
@@ -112,11 +112,11 @@ const Main = () => {
             <div className="fw700 fs24 mgb25 lh36">ACOE에서 찾아보세요!</div>
             <div className="login-button kakao" onClick={loginKakao}>
               <img src={kakaoImg} />
-              <div className="login-text">카카오로 시작하기</div>
+              <div className="fw500 fs24 lh36 mgl15">카카오로 시작하기</div>
             </div>
             <div className="login-button google" onClick={loginGoogle}>
               <img src={googleImg} />
-              <div className="login-text">Google로 시작하기</div>
+              <div className="fw500 fs24 lh36 mgl15">Google로 시작하기</div>
             </div>
           </div>
         </div>

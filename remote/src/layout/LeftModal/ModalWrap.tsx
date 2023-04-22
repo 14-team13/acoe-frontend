@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import searchSvg from 'images/search.svg';
 import xSvg from 'images/x.svg';
-import CafeCard from '../../components/CafeCard';
+import CafeCard from 'components/CafeCard';
 import starbucksSvg from 'images/starbucks.svg';
 import paulbassettSvg from 'images/paul.svg';
 import angelinusSvg from 'images/angelinus.svg';
