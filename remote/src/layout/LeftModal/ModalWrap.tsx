@@ -78,7 +78,7 @@ const ModalWrap = (props: any) => {
 
   useEffect(() => {
     if (cafeID && cafeData.length > 0) {
-      setModalState(2);
+      // setModalState(2);
       const cafe = cafeData.filter((item) => item.number === cafeID)
       setSelectedCafe(cafe[0])
       const menus = [
@@ -124,6 +124,7 @@ const ModalWrap = (props: any) => {
                 discountprice={cafe.discountprice}
                 cafeId={cafe.number}
                 setCafeID={setCafeID}
+                setModalState = {setModalState}
               />
             ))}
           </div>
@@ -132,7 +133,7 @@ const ModalWrap = (props: any) => {
       {modalState === 2 &&
         <div className="cafe-modal">
           <div className="search">
-            <img className="" src={leftModalSvg} onClick={() => setModalState(1)} />
+            <img className="" src={leftModalSvg} onClick={(modalState) => setModalState(1)} />
             <div className="fw700 fs24 lh36 mgl25">{selectedCafe ? selectedCafe.title : ''}</div>
           </div>
           <div className="cafe-detail">

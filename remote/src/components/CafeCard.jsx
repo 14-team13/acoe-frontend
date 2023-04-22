@@ -8,7 +8,8 @@ const CafeCard = (props) => {
 
   const findCafe = (item) => {
     console.log(item)
-    props.setCafeID(item.cafeId)
+    props.setCafeID((props) => item.cafeId)
+    props.setModalState(2);
   }
 
   return (
