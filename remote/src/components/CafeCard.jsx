@@ -7,7 +7,7 @@ import KioskOrderDiscountComponent from 'components/KioskOrderDiscountComponent'
 const CafeCard = (props) => {
 
   const findCafe = (item) => {
-    console.log(item)
+    // console.log(item)
     props.setCafeID((props) => item.cafeId)
     props.setModalState(2);
   }
