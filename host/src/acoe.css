@@ -105,6 +105,11 @@
   font-size: 12px;
 }
 
+.fs10 {
+  font-size: 10px;
+}
+
+
 .pd5 {
   padding: 5px
 }
@@ -127,6 +132,10 @@
 
 .mgl5 {
   margin-left: 5px
+}
+
+.mg8 {
+  margin: 8px
 }
 
 .mg16 {
@@ -264,7 +273,7 @@
 }
 
 .lh24 {
-  line-height: 14px;
+  line-height: 24px;
 }
 
 .lh30 {
@@ -415,7 +424,7 @@
 .openButton {
   position: absolute;
   width: 44px;
-  height: 100px;
+  height: 85px;
   top: calc(50% - 50px);
   border-radius: 0px 12px 12px 0px;
   z-index: 3;
@@ -427,12 +436,12 @@
 }
 
 .openButton.openState1 {
-  left: 390px;
+  left: 340px;
 }
 
 
 .openButton.openState2 {
-  left: 780px;
+  left: 660px;
 }
 
 
@@ -443,8 +452,9 @@
 
 .cafe-modal {
   box-sizing: border-box;
-  width: 390px;
+  width: 320px;
   background-color: white;
+  border-left: 1px solid rgb(240, 241, 245);
   overflow-y: hidden;
   /* padding: 18px 20px; */
   border-radius: 20px;
@@ -460,53 +470,54 @@
 }
 
 .cafe-modal .search {
-  /* height: 50px; */
+  height: 33px;
   width: 100%;
   display: flex;
   align-items: center;
   /* justify-content: space-between; */
-  padding: 16px 0px 16px 25px
+  padding: 12px 0px 12px 20px;
+  border-bottom: 1px solid rgb(240, 241, 245);
 }
 
 .cafe-modal .search input {
   border: none;
-  width: 270px;
+  width: 180px;
   height: 36px;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   line-height: 36px;
   color: #101722;
 }
 
 .cafe-modal .serach-image {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
 }
 
 .cafe-modal .close-image {
-  width: 15px;
-  height: 15px;
+  width: 12px;
+  height: 12px;
 }
 
 .cafe-modal .cafes {
   height: 80px;
   width: 100%;
   box-sizing: border-box;
-  border-top: 1px solid rgb(240, 241, 245);
   border-bottom: 1px solid rgb(240, 241, 245);
-  padding: 12px 24px;
+  padding: 12px 16px;
   display: flex;
+  overflow-x: overlay;
 }
 
 .cafe-modal .cafes img {
-  width: 56px;
-  height: 56px;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
   padding-right: 12px;
 }
 
 .cafe-modal .summary {
-  margin: 24px 0px 24px 16px;
+  margin: 16px 0px 16px 16px
 }
 
 .cafe-modal .card-modal {
@@ -607,14 +618,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 510px;
-  height: 604px;
+  width: 450px;
+  height: 500px;
   background: #FFFFFF;
   border-radius: 24px;
   position: relative;
   box-sizing: border-box;
   margin: 90px auto;
-  padding: 20px;
+  padding: 30px;
 }
 
 .login-box .acoe-image {
@@ -627,14 +638,14 @@
   font-size: 25px;
   cursor: pointer;
   position: absolute;
-  margin-left: 450px;
+  margin-left: 370px;
 }
 
 .login-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 406px;
+  width: 350px;
   height: 76px;
   border-radius: 12px;
   margin: 7px;
@@ -661,14 +672,14 @@
   width: 28px;
   height: 26px;
   position: absolute;
-  margin-right: 300px
+  margin-right: 250px
 }
 
 .myinfo {
   display: flex;
   flex-direction: column;
-  width: 264px;
-  min-height: 272px;
+  width: 240px;
+  min-height: 250px;
   background: #FFFFFF;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
@@ -683,7 +694,7 @@
 }
 
 .myinfo .divide {
-  width: 232px;
+  width: inherit;
   height: 2px;
   background: #F0F1F5;
   margin: 16px 0px;
@@ -709,12 +720,13 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 12px 8px;
+  padding: 8px 4px;
   background: #2F44FF;
   border-radius: 100px;
   color: #FFFFFF;
   cursor: default;
   width: 65px;
+  margin-top : 5px;
 }
 
 
@@ -731,18 +743,20 @@
 
 .cafe-card {
   box-sizing: border-box;
-  width: 350px;
+  width: inherit;
   min-height: 190px;
   background: #FFFFFF;
   border: 1px solid #F0F1F5;
   border-radius: 20px;
   cursor: pointer;
-  padding: 24px 16px;
-  margin-bottom: 16px
+  padding: 20px 14px;
+  margin-bottom: 16px;
+  margin-right: 12px;
+  border-left: 1px solid rgb(240, 241, 245);
 }
 
 .cafe-card .bottom-wrap {
-  width: 318px;
+  width: inherit;
   height: 56px;
   display: flex;
   justify-content: space-between;
@@ -758,7 +772,7 @@
   width: inherit;
   background: #FAFAFC;
   border-radius: 20px;
-  margin: 24px 24px 8px 24px;
+  margin: 16px 16px 8px 16px;
   padding: 16px;
 }
 
@@ -772,9 +786,9 @@
 
 .cafe-modal .cafe-detail .cafe-typical {
   display: flex;
-  align-items: center;
   justify-content: center;
-  flex-direction: column
+  flex-direction: column;
+  margin-left: 16px;
 }
 
 .cafe-modal .cafe-detail .cafe-typical-img {
