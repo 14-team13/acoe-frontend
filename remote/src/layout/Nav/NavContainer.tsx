@@ -53,19 +53,19 @@ const NavContainer = (props: any) => {
       <div className="search">
         <div className="nav-box">
           <div className="nav-wrap">
-            <div className={`discount fw700 fs20 lh30 ${isShowDiscount && "on"}`} onClick={showFranchiseDiscount} >
+            <div className={`discount fw700 fs16 lh30 ${isShowDiscount && "on"}`} onClick={showFranchiseDiscount} >
               <img src={starbucksImg} />
               <span>프렌차이즈 할인</span>
             </div>
-            <div className={`discount fw700 fs20 lh30 ${isShowMore300 && "on"}`} onClick={showMore300Discount}>
+            <div className={`discount fw700 fs16 lh30 ${isShowMore300 && "on"}`} onClick={showMore300Discount}>
               <img src={lowImg} />
               <span>300원 이상~</span>
             </div>
-            <div className={`discount fw700 fs20 lh30 ${isShowMore500 && "on"}`} onClick={showMore500Discount}>
+            <div className={`discount fw700 fs16 lh30 ${isShowMore500 && "on"}`} onClick={showMore500Discount}>
               <img src={mediumImg} />
               <span>500원 이상~</span>
             </div>
-            <div className={`discount fw700 fs20 lh30 ${isShowMore1000 && "on"}`} onClick={showMore1000Discount}>
+            <div className={`discount fw700 fs16 lh30 ${isShowMore1000 && "on"}`} onClick={showMore1000Discount}>
               <img src={highImg} />
               <span>1,000원 이상~</span>
             </div>
