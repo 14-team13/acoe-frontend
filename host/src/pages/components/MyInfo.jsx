@@ -13,8 +13,8 @@ const MyInfo = (props) => {
         <div className="flex-row">
           <img src={myImage} />
           <div className="flex-column mgl16">
-            <div className = "mgb16">
-              <div className="fw700 fs20 lh30 mgb4">예랑님</div>
+            <div className = "mb10">
+              <div className="fw700 fs18 lh30 mgb4">예랑님</div>
               <div className="fw400 fs12 lh18 " >텀블러 한잔으로 오늘도</div>
               <div className="fw400 fs12 lh18 fc-primary">탄소배출을 00g 줄였어요! </div>
             </div>

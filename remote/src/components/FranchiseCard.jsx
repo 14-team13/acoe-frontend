@@ -6,8 +6,8 @@ const FranchiseCard = (props) => {
         <img src={props.src} />
       </div>
       <div className = "pd10">
-        <div className = "franchise-name">{props.name}</div>
-        <div className = "franchise-price">{props.discountInfo}</div>
+        <div className = "fw400 fs12 lh18 fc-gray">{props.name}</div>
+        <div className = "fw700 fs14 lh24">{props.discountInfo}</div>
       </div>
     </div>
   );

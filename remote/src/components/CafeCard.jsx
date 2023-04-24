@@ -14,9 +14,9 @@ const CafeCard = (props) => {
 
   return (
     <div className="cafe-card" onClick={() => findCafe(props)}>
-      <div className="fw700 fs20 lh30">{props.cafeTitle}</div>
+      <div className="fw700 fs18 lh30">{props.cafeTitle}</div>
       <div className="flex-row-space mgt4 mgb35">
-        <div className="w70 fw400 fs12 lh18">{props.cafeAddress}</div>
+        <div className="w70 fw400 fs10 lh18">{props.cafeAddress}</div>
         <div className = "flex-row-end "><NaverFinderComponent /></div>
       </div>
       <div className="bottom-wrap">
@@ -29,8 +29,8 @@ const CafeCard = (props) => {
           </div>
         </div>
         <div>
-          <div className = "flex-row-end fw400 fs12 lh18 fc-gray"> {props.menu1} | {props.menu1_price}원</div>
-          <div className = "flex-row-end fw700 fs24 lh36 fc-third"> {props.discountprice}원 할인   </div>
+          <div className = "flex-row-end fw400 fs10 lh18 fc-gray"> {props.menu1} | {props.menu1_price}원</div>
+          <div className = "flex-row-end fw700 fs20 lh36 fc-third"> {props.discountprice}원 할인   </div>
         </div>
       </div>
     </div>

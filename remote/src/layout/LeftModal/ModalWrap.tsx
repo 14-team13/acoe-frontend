@@ -100,7 +100,7 @@ const ModalWrap = (props: any) => {
         <div className="cafe-modal">
           <div className="search">
             <img className="serach-image" src={searchSvg} />
-            <input className="mgl10" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
+            <input className="mgl15" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
             {searchCafeTxt !== '' ? <img className="mgl10 close-image" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
           </div>
           <div className="cafes">
@@ -134,18 +134,15 @@ const ModalWrap = (props: any) => {
         <div className="cafe-modal">
           <div className="search">
             <img className="" src={leftModalSvg} onClick={(modalState) => setModalState(1)} />
-            <div className="fw700 fs24 lh36 mgl25">{selectedCafe ? selectedCafe.title : ''}</div>
+            <div className="fw700 fs20 lh36 mgl25">{selectedCafe ? selectedCafe.title : ''}</div>
           </div>
           <div className="cafe-detail">
             <div className="cafe-typical">
-              <div className="cafe-typical-img">
-                <img className="" src={acoeSvg} />
-              </div>
-              <div className="fw700 fs24 lh36 mgt15">{selectedCafe?.title}</div>
-              <div className="fw700 fs12 lh18 mgt8">텀블러 {selectedCafe?.discountprice}원 할인</div>
-              <div className="fw400 fs12 lh18 mgt20">{selectedCafe?.address}</div>
+              <div className="fw700 fs10 lh18 mgt5">텀블러 {selectedCafe?.discountprice}원 할인</div>
+              <div className="fw700 fs20 lh36 mgt5">{selectedCafe?.title}</div>
+              <div className="fw400 fs10 lh18 mgt5">{selectedCafe?.address}</div>
               <NaverFinderComponent />
-              <div className="flex-row mgt19">
+              <div className="flex-row mgt5">
                 <div>
                   <AppOrderDiscountComponent />
                 </div>
@@ -155,7 +152,7 @@ const ModalWrap = (props: any) => {
               </div>
             </div>
             <div className="cafe-detail-component">
-              <div className="fw700 fs16 lh24">메뉴</div>
+              <div className="fw700 fs14 lh24">메뉴</div>
               {selectedMenu.map((item, i) => (
                 <MenusComponent
                   key={i}
@@ -166,12 +163,12 @@ const ModalWrap = (props: any) => {
                 />
               ))}
               <div className="flex-column-center">
-                <div className="fw400 fs12 lh18 fc-gray">메뉴 항목과 가격 및 텀블러 할인 가격은</div>
-                <div className="fw400 fs12 lh18 fc-gray">각 매장의 사정에 따라 기재된 내용과 다를 수 있음</div>
+                <div className="fw400 fs10 lh18 fc-gray">메뉴 항목과 가격 및 텀블러 할인 가격은</div>
+                <div className="fw400 fs10 lh18 fc-gray">각 매장의 사정에 따라 기재된 내용과 다를 수 있습니다.</div>
               </div>
             </div>
             <div className="cafe-detail-component">
-              <div className="fw700 fs16 lh24 mgb25">블로그 리뷰</div>
+              <div className="fw700 fs14 lh24 mgb25">블로그 리뷰</div>
               <BlogReviewComponent />
               <BlogReviewComponent />
               <BlogReviewComponent />
