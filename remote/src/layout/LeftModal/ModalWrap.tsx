@@ -101,7 +101,7 @@ const ModalWrap = (props: any) => {
           <div className="search">
             <img className="serach-image" src={searchSvg} />
             <input className="mgl15" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
-            {searchCafeTxt !== '' ? <img className="mgl10 close-image" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
+            {searchCafeTxt !== '' ? <img className="mgl15 close-image" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
           </div>
           <div className="cafes">
             {logoCafes.map((logoCafe, i) => (
@@ -134,15 +134,15 @@ const ModalWrap = (props: any) => {
         <div className="cafe-modal">
           <div className="search">
             <img className="" src={leftModalSvg} onClick={(modalState) => setModalState(1)} />
-            <div className="fw700 fs20 lh36 mgl25">{selectedCafe ? selectedCafe.title : ''}</div>
+            <div className="fw700 fs20 lh36 mgl25 mgr40 txt-overflow">{selectedCafe ? selectedCafe.title : ''}</div>
           </div>
           <div className="cafe-detail">
             <div className="cafe-typical">
-              <div className="fw700 fs10 lh18 mgt5">텀블러 {selectedCafe?.discountprice}원 할인</div>
-              <div className="fw700 fs20 lh36 mgt5">{selectedCafe?.title}</div>
-              <div className="fw400 fs10 lh18 mgt5">{selectedCafe?.address}</div>
+              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountprice}원 할인</div>
+              <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.title}</div>
+              <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.address}</div>
               <NaverFinderComponent />
-              <div className="flex-row mgt5">
+              <div className="flex-row-center mgt15">
                 <div>
                   <AppOrderDiscountComponent />
                 </div>

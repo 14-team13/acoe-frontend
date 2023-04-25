@@ -4,6 +4,8 @@ import { MixedBoundary } from 'components/Common';
 import { NavContainer } from 'layout/Nav';
 import leftModalSvg from 'images/leftModal.svg';
 import ModalWrap from './LeftModal/ModalWrap'
+import ShortCutAppOrder from 'components/ShortCutAppOrder';
+import ShortCutKioskOrder from 'components/ShortCutKioskOrder';
 
 export const Menu: React.FC = () => {
 
@@ -43,13 +45,17 @@ export const Menu: React.FC = () => {
           : null}
         </div>
         <div className={`openButton ${setButtonState()}`} onClick={showLeftModal}>
-          <img src={leftModalSvg} />
+          <div className = {`left ${modalState !== 0 ?'move' : '' }`}></div>
         </div>
       </div>
       <div className="maps">
         <MixedBoundary>
           <Maps />
         </MixedBoundary>
+      </div>
+      <div className = "short-cut">
+        <ShortCutAppOrder/>
+        <ShortCutKioskOrder/>
       </div>
     </div>
   );

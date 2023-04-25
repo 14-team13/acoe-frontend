@@ -1,5 +1,31 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
+/* Set the width and height of the scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Set the background color of the scrollbar */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Set the color and rounded corners of the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #E8EBF1;
+  border-radius: 10px;
+  -webkit-border-radius : 9px;
+  /* border : 6px solid transparent; */
+  background-clip : content-box;
+  opacity: 0.2;
+}
+
+/* Set the color of the scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #E8EBF1;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -33,6 +59,7 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
 .fc-primary {
   color: #2F44FF;
 }
@@ -84,6 +111,12 @@
 .fs24 {
   font-size: 24px;
 }
+
+.fs22 {
+  font-size: 22px;
+}
+
+
 
 .fs20 {
   font-size: 20px;
@@ -188,8 +221,17 @@
   margin-top: 10px
 }
 
+.mgt12 {
+  margin-top: 12px
+}
+
+
 .mgt15 {
   margin-top: 15px
+}
+
+.mgt17 {
+  margin-top: 17px
 }
 
 .mgt19 {
@@ -226,6 +268,10 @@
 
 .mgr15 {
   margin-right: 15px
+}
+
+.mgr40 {
+  margin-right: 40px
 }
 
 .mgb4 {
@@ -309,7 +355,7 @@
 }
 
 .search img {
-  cursor: pointer
+  cursor: pointer;
 }
 
 .nav-box {
@@ -329,7 +375,7 @@
   align-items: center;
   padding: 12px;
   gap: 8px;
-  margin-right : 12px;
+  margin-right: 12px;
   background: #FFFFFF;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 100px;
@@ -367,7 +413,7 @@
   box-sizing: border-box;
   width: 554px;
   height: 320px;
-  position : relative; 
+  position: relative;
   background: rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px;
   border-radius: 24px;
@@ -427,21 +473,34 @@
   height: 85px;
   top: calc(50% - 50px);
   border-radius: 0px 12px 12px 0px;
-  z-index: 3;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   background: #FFFFFF;
   cursor: pointer;
+
+}
+
+.openButton .left{
+  background-image: url('./images/leftModal.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: rotate(180deg);
+  width: 32px;
+  height: 32px;
+}
+
+.openButton .left.move{
+  transform: rotate(360deg);
 }
 
 .openButton.openState1 {
-  left: 340px;
+  left: 360px;
 }
 
-
 .openButton.openState2 {
-  left: 660px;
+  left: 698px;
 }
 
 
@@ -452,7 +511,7 @@
 
 .cafe-modal {
   box-sizing: border-box;
-  width: 320px;
+  width: 340px;
   background-color: white;
   border-left: 1px solid rgb(240, 241, 245);
   overflow-y: hidden;
@@ -467,6 +526,7 @@
 
 .cafe-modal.openstate1 {
   left: 22px;
+
 }
 
 .cafe-modal .search {
@@ -481,13 +541,22 @@
 
 .cafe-modal .search input {
   border: none;
-  width: 180px;
+  width: 220px;
   height: 36px;
   font-size: 20px;
   font-weight: 700;
   line-height: 36px;
   color: #101722;
 }
+
+.cafe-modal .search input::placeholder {
+  color : #DDDFE3;
+}
+
+.cafe-modal .search input:focus {
+  outline: none;
+}
+
 
 .cafe-modal .serach-image {
   width: 24px;
@@ -583,7 +652,7 @@
   color: #FFFFFF;
 }
 
-.user{
+.user {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -689,8 +758,8 @@
   z-index: 3;
 }
 
-.myinfo .myinfo-user{
-  padding : 24px 16px 
+.myinfo .myinfo-user {
+  padding: 24px 16px
 }
 
 .myinfo .divide {
@@ -726,14 +795,14 @@
   color: #FFFFFF;
   cursor: default;
   width: 65px;
-  margin-top : 5px;
+  margin-top: 5px;
 }
 
 
 
 .cafe-list {
   overflow-y: auto;
-  height: 100%;
+  height: 75%;
   margin-left: 16px;
   -ms-overflow-style: none;
   /* IE and Edge */
@@ -803,11 +872,91 @@
   margin: 0px auto;
 }
 
-.w70 {
-  width: 70%
+.navOpen {
+  position: absolute;
+  left: 412px;
 }
 
-.navOpen{
+.discount-badge {
+  padding: 4px;
+  border-radius: 4px;
+  background: #959FFF;
+  width: fit-content;
+  gap: 10px;
+  color: #FFFFFF;
+}
+
+.badge {
+  background-blend-mode: overlay;
+  width: 16px;
+  height: 16px;
+  padding: 4px;
+  border-radius: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.badge.app-badge {
+  background-image: url('./images/appDiscount.svg');
+  background-color: rgba(119, 140, 195, 0.2);
+}
+
+.badge.kiosk-badge {
+  background-image: url('./images/kioskDiscount.svg');
+  background-color: rgba(255, 191, 96, 0.2);
+}
+
+.discount-rec {
+  background: #959FFF;
+  opacity: 0.8;
+  border-radius: 100px;
+  width: 48px;
+  position: relative;
+  height: 5px;
+  bottom: 15px;
+}
+
+.txt-overflow{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.short-cut{
   position: absolute;
-  left : 412px;
+  right: 22px;
+  top: 580px;
+  width : 50px;
+}
+
+.short-cut .short-cut-component{
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 2px;
+  text-align: center;
+  cursor: pointer;
+  /* width: 64px;
+  height: 94px; */
+}
+
+.app-svg{
+  background-image: url('./images/appDiscount.svg');
+  width : 32px;
+  height : 32px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.kiosk-svg{
+  background-image: url('./images/kioskDiscount.svg');
+  width : 32px;
+  height : 32px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
