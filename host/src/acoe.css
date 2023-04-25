@@ -342,7 +342,7 @@
 .wrap {
   position: absolute;
   top: 22px;
-  /* left: 22px; */
+  left: 22px;
   width: calc(100% - 300px);
   z-index: 2;
   box-sizing: border-box;
