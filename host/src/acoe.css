@@ -475,12 +475,25 @@
   align-items: center;
   background: #FFFFFF;
   cursor: pointer;
+
+}
+
+.openButton .left{
+  background-image: url('./images/leftModal.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: rotate(180deg);
+  width: 32px;
+  height: 32px;
+}
+
+.openButton .left.move{
+  transform: rotate(360deg);
 }
 
 .openButton.openState1 {
   left: 360px;
 }
-
 
 .openButton.openState2 {
   left: 698px;
@@ -509,6 +522,7 @@
 
 .cafe-modal.openstate1 {
   left: 22px;
+
 }
 
 .cafe-modal .search {

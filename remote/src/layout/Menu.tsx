@@ -43,7 +43,8 @@ export const Menu: React.FC = () => {
           : null}
         </div>
         <div className={`openButton ${setButtonState()}`} onClick={showLeftModal}>
-          <img src={leftModalSvg} />
+          <div className = {`left ${modalState !== 0 ?'move' : '' }`}></div>
+          {/* <img src={leftModalSvg} /> */}
         </div>
       </div>
       <div className="maps">
