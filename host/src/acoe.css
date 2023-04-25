@@ -33,6 +33,7 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
 .fc-primary {
   color: #2F44FF;
 }
@@ -84,6 +85,12 @@
 .fs24 {
   font-size: 24px;
 }
+
+.fs22 {
+  font-size: 22px;
+}
+
+
 
 .fs20 {
   font-size: 20px;
@@ -188,8 +195,17 @@
   margin-top: 10px
 }
 
+.mgt12 {
+  margin-top: 12px
+}
+
+
 .mgt15 {
   margin-top: 15px
+}
+
+.mgt17 {
+  margin-top: 17px
 }
 
 .mgt19 {
@@ -309,7 +325,7 @@
 }
 
 .search img {
-  cursor: pointer
+  cursor: pointer;
 }
 
 .nav-box {
@@ -329,7 +345,7 @@
   align-items: center;
   padding: 12px;
   gap: 8px;
-  margin-right : 12px;
+  margin-right: 12px;
   background: #FFFFFF;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 100px;
@@ -367,7 +383,7 @@
   box-sizing: border-box;
   width: 554px;
   height: 320px;
-  position : relative; 
+  position: relative;
   background: rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px;
   border-radius: 24px;
@@ -436,12 +452,12 @@
 }
 
 .openButton.openState1 {
-  left: 340px;
+  left: 360px;
 }
 
 
 .openButton.openState2 {
-  left: 660px;
+  left: 700px;
 }
 
 
@@ -452,7 +468,7 @@
 
 .cafe-modal {
   box-sizing: border-box;
-  width: 320px;
+  width: 340px;
   background-color: white;
   border-left: 1px solid rgb(240, 241, 245);
   overflow-y: hidden;
@@ -481,7 +497,7 @@
 
 .cafe-modal .search input {
   border: none;
-  width: 180px;
+  width: 220px;
   height: 36px;
   font-size: 20px;
   font-weight: 700;
@@ -583,7 +599,7 @@
   color: #FFFFFF;
 }
 
-.user{
+.user {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -689,8 +705,8 @@
   z-index: 3;
 }
 
-.myinfo .myinfo-user{
-  padding : 24px 16px 
+.myinfo .myinfo-user {
+  padding: 24px 16px
 }
 
 .myinfo .divide {
@@ -726,7 +742,7 @@
   color: #FFFFFF;
   cursor: default;
   width: 65px;
-  margin-top : 5px;
+  margin-top: 5px;
 }
 
 
@@ -803,11 +819,46 @@
   margin: 0px auto;
 }
 
-.w70 {
-  width: 70%
+.navOpen {
+  position: absolute;
+  left: 412px;
 }
 
-.navOpen{
-  position: absolute;
-  left : 412px;
+.discount-badge {
+  padding: 4px;
+  border-radius: 4px;
+  background: #959FFF;
+  width: fit-content;
+  gap: 10px;
+  color: #FFFFFF;
+}
+
+.badge {
+  background-blend-mode: overlay;
+  width: 16px;
+  height: 16px;
+  padding: 4px;
+  border-radius: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.badge.app-badge {
+  background-image: url('./images/appDiscount.svg');
+  background-color: rgba(119, 140, 195, 0.2);
+}
+
+.badge.kiosk-badge {
+  background-image: url('./images/kioskDiscount.svg');
+  background-color: rgba(255, 191, 96, 0.2);
+}
+
+.discount-rec {
+  background: #959FFF;
+  opacity: 0.8;
+  border-radius: 100px;
+  width: 48px;
+  position: relative;
+  height: 5px;
+  bottom: 15px;
 }
