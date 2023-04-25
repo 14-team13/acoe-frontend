@@ -342,7 +342,7 @@
 .wrap {
   position: absolute;
   top: 22px;
-  left: 22px;
+  /* left: 22px; */
   width: calc(100% - 300px);
   z-index: 2;
   box-sizing: border-box;
@@ -802,7 +802,7 @@
 
 .cafe-list {
   overflow-y: auto;
-  height: 70%;
+  height: 75%;
   margin-left: 16px;
   -ms-overflow-style: none;
   /* IE and Edge */
@@ -920,4 +920,43 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.short-cut{
+  position: absolute;
+  right: 22px;
+  top: 580px;
+  width : 50px;
+}
+
+.short-cut .short-cut-component{
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 2px;
+  text-align: center;
+  cursor: pointer;
+  /* width: 64px;
+  height: 94px; */
+}
+
+.app-svg{
+  background-image: url('./images/appDiscount.svg');
+  width : 32px;
+  height : 32px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.kiosk-svg{
+  background-image: url('./images/kioskDiscount.svg');
+  width : 32px;
+  height : 32px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
