@@ -549,6 +549,15 @@
   color: #101722;
 }
 
+.cafe-modal .search input::placeholder {
+  color : #DDDFE3;
+}
+
+.cafe-modal .search input:focus {
+  outline: none;
+}
+
+
 .cafe-modal .serach-image {
   width: 24px;
   height: 24px;
