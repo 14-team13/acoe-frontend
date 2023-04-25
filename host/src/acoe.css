@@ -270,6 +270,10 @@
   margin-right: 15px
 }
 
+.mgr40 {
+  margin-right: 40px
+}
+
 .mgb4 {
   margin-bottom: 4px
 }
@@ -901,4 +905,10 @@
   position: relative;
   height: 5px;
   bottom: 15px;
+}
+
+.txt-overflow{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

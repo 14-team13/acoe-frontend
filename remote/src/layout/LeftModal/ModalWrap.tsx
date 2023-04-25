@@ -134,7 +134,7 @@ const ModalWrap = (props: any) => {
         <div className="cafe-modal">
           <div className="search">
             <img className="" src={leftModalSvg} onClick={(modalState) => setModalState(1)} />
-            <div className="fw700 fs20 lh36 mgl25">{selectedCafe ? selectedCafe.title : ''}</div>
+            <div className="fw700 fs20 lh36 mgl25 mgr40 txt-overflow">{selectedCafe ? selectedCafe.title : ''}</div>
           </div>
           <div className="cafe-detail">
             <div className="cafe-typical">
