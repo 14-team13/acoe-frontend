@@ -851,6 +851,12 @@
   padding: 16px;
 }
 
+.cafe-blog:not(:last-child){
+  width: inherit;
+  border-bottom: 1px solid #E8EBF1;
+}
+
+
 .cafe-modal .cafe-detail {
   overflow-y: scroll;
   overflow-x: hidden;
