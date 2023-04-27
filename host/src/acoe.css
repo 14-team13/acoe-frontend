@@ -412,17 +412,17 @@
 .franchise {
   box-sizing: border-box;
   width: 554px;
-  height: 320px;
   position: relative;
   background: rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px;
   border-radius: 24px;
   margin-top: 8px;
-  padding: 16px;
+  padding: 16px 16px 8px 16px;
   display: flex;
   flex-wrap: wrap;
   align-content: space-between;
   cursor: default;
+  height: auto
 }
 
 .franchise-card {
@@ -431,7 +431,13 @@
   background: #fafafc;
   border-radius: 12px;
   display: flex;
+  margin-bottom: 8px;
 }
+
+.franchise-card:nth-child(even) {
+  margin-left : 20px;
+}
+
 
 .franchise-card .franchise-img {
   position: inherit;
