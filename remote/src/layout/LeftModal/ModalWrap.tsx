@@ -168,7 +168,7 @@ const ModalWrap = (props: any) => {
               </div>
             </div>
             <div className="cafe-detail-component">
-              <div className="fw700 fs14 lh24 mgb25">블로그 리뷰</div>
+              <div className="fw700 fs14 lh24">블로그 리뷰</div>
               <BlogReviewComponent />
               <BlogReviewComponent />
               <BlogReviewComponent />
