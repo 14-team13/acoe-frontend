@@ -15,9 +15,9 @@
 ::-webkit-scrollbar-thumb {
   background-color: #E8EBF1;
   border-radius: 10px;
-  -webkit-border-radius : 9px;
+  -webkit-border-radius: 9px;
   /* border : 6px solid transparent; */
-  background-clip : content-box;
+  background-clip: content-box;
   opacity: 0.2;
 }
 
@@ -341,12 +341,18 @@
 
 .wrap {
   position: absolute;
-  top: 22px;
-  left: 22px;
+  top: 1rem;
+  left: 1rem;
   width: calc(100% - 300px);
   z-index: 2;
   box-sizing: border-box;
   display: flex;
+}
+
+@media only screen and (max-width: 860px) {
+  .wrap {
+    display: none;
+  }
 }
 
 .search {
@@ -412,17 +418,17 @@
 .franchise {
   box-sizing: border-box;
   width: 554px;
-  height: 320px;
   position: relative;
   background: rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px;
   border-radius: 24px;
   margin-top: 8px;
-  padding: 16px;
+  padding: 16px 16px 8px 16px;
   display: flex;
   flex-wrap: wrap;
   align-content: space-between;
   cursor: default;
+  height: auto
 }
 
 .franchise-card {
@@ -431,7 +437,13 @@
   background: #fafafc;
   border-radius: 12px;
   display: flex;
+  margin-bottom: 8px;
 }
+
+.franchise-card:nth-child(even) {
+  margin-left: 20px;
+}
+
 
 .franchise-card .franchise-img {
   position: inherit;
@@ -461,9 +473,9 @@
 .left-container {
   position: absolute;
   display: flex;
-  left: 22px;
-  top: 22px;
-  height: calc(var(--vh, 1vh) * 100 - 44px);
+  left: 1rem;
+  top: 1rem;
+  height: calc(var(--vh, 1vh) * 100 - 2rem);
   z-index: 3;
 }
 
@@ -482,7 +494,7 @@
 
 }
 
-.openButton .left{
+.openButton .left {
   background-image: url('./images/leftModal.svg');
   background-repeat: no-repeat;
   background-position: center;
@@ -491,16 +503,16 @@
   height: 32px;
 }
 
-.openButton .left.move{
+.openButton .left.move {
   transform: rotate(360deg);
 }
 
 .openButton.openState1 {
-  left: 360px;
+  left: 22rem;
 }
 
 .openButton.openState2 {
-  left: 698px;
+  left: 43.5rem;
 }
 
 
@@ -550,7 +562,7 @@
 }
 
 .cafe-modal .search input::placeholder {
-  color : #DDDFE3;
+  color: #DDDFE3;
 }
 
 .cafe-modal .search input:focus {
@@ -647,8 +659,8 @@
   border-radius: 100px;
   cursor: pointer;
   z-index: 2;
-  right: 22px;
-  top: 22px;
+  right: 1rem;
+  top: 1rem;
   color: #FFFFFF;
 }
 
@@ -845,6 +857,12 @@
   padding: 16px;
 }
 
+.cafe-blog:not(:last-child) {
+  width: inherit;
+  border-bottom: 1px solid #E8EBF1;
+}
+
+
 .cafe-modal .cafe-detail {
   overflow-y: scroll;
   overflow-x: hidden;
@@ -916,20 +934,20 @@
   bottom: 15px;
 }
 
-.txt-overflow{
+.txt-overflow {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
-.short-cut{
+.short-cut {
   position: absolute;
-  right: 22px;
-  top: 580px;
-  width : 50px;
+  width: 3em;
+  bottom: 6rem;
+  right: 1rem;
 }
 
-.short-cut .short-cut-component{
+.short-cut .short-cut-component {
   background: #FFFFFF;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
@@ -945,18 +963,65 @@
   height: 94px; */
 }
 
-.app-svg{
+.app-svg {
   background-image: url('./images/appDiscount.svg');
-  width : 32px;
-  height : 32px;
+  width: 32px;
+  height: 32px;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.kiosk-svg{
+.kiosk-svg {
   background-image: url('./images/kioskDiscount.svg');
-  width : 32px;
-  height : 32px;
+  width: 32px;
+  height: 32px;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.map-wrap {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* openlayers */
+/* .ol-zoom {
+  bottom: 0.5em !important;
+  right: 1em !important;
+} */
+
+/* .ol-zoom .ol-zoom-in {
+  width: 3em;
+  height: 3em;
+} */
+
+/* .ol-control{
+  bottom: 0.5em !important;
+  right: 1em !important;
+} */
+
+.ol-zoom-in {
+  width: 2.5em !important;
+  height: 2.5em !important;
+  position: fixed;
+  bottom: 2.5rem;
+  right: 1.2rem;
+  margin-bottom: 10px !important;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px !important;
+  color: black !important;
+}
+
+.ol-zoom-out {
+  width: 2.5em !important;
+  height: 2.5em !important;
+  position: fixed;
+  bottom: 0.3rem;
+  right: 1.2rem;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px !important;
+  color: black !important;
 }

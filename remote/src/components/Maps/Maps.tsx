@@ -1,5 +1,4 @@
-import 'ol/ol.css';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Map, View } from 'ol';
 import { fromLonLat, get as getProjection } from 'ol/proj';
@@ -10,12 +9,6 @@ import VectorSource from 'ol/source/Vector';
 import { Icon, Style, Circle as CircleStyle, Fill, Stroke } from "ol/style";
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-
-const MapWrap = styled.div`
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-`;
 
 const Maps = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -30,9 +23,10 @@ const Maps = () => {
       }),
       layers: [
         new TileLayer({
-          source: new XYZ({ url: "https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}",
-          crossOrigin: 'anonymous'
-         }),
+          source: new XYZ({
+            url: "https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}",
+            crossOrigin: 'anonymous'
+          }),
         }),
       ],
       target: mapRef.current
@@ -69,6 +63,7 @@ const Maps = () => {
     });
 
 
+
     mapObj.on('click', (evt) => {
       const feature = mapObj.forEachFeatureAtPixel(evt.pixel,
         (feature) => {
@@ -86,11 +81,14 @@ const Maps = () => {
 
     mapObj.addLayer(vectorLayer);
     mapObj.setTarget(mapRef.current);
-
     return () => mapObj.setTarget('');
   }, []);
 
-  return <MapWrap ref={mapRef} />;
+  return (
+    <div className="map-wrap" ref={mapRef} >
+    </div>
+  )
+
 };
 
 export default Maps;
