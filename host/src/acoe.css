@@ -195,6 +195,10 @@
   margin-left: 25px
 }
 
+.mgl50 {
+  margin-left: 50px
+}
+
 .mgt1 {
   margin-top: 1px
 }
@@ -272,6 +276,10 @@
 
 .mgr40 {
   margin-right: 40px
+}
+
+.mgr50 {
+  margin-right: 50px
 }
 
 .mgb4 {
@@ -358,6 +366,9 @@
 .search {
   width: 390px;
   margin-right: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
 }
 
 .search img {
@@ -485,7 +496,7 @@
   height: 85px;
   top: calc(50% - 50px);
   border-radius: 0px 12px 12px 0px;
-  z-index: 1;
+  z-index: 3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -551,9 +562,9 @@
   border-bottom: 1px solid rgb(240, 241, 245);
 }
 
-.cafe-modal .search input {
+.search input {
   border: none;
-  width: 220px;
+  /* width: 220px; */
   height: 36px;
   font-size: 20px;
   font-weight: 700;
@@ -561,11 +572,11 @@
   color: #101722;
 }
 
-.cafe-modal .search input::placeholder {
+.search input::placeholder {
   color: #DDDFE3;
 }
 
-.cafe-modal .search input:focus {
+.search input:focus {
   outline: none;
 }
 
@@ -580,7 +591,7 @@
   height: 12px;
 }
 
-.cafe-modal .cafes {
+.cafes {
   height: 80px;
   width: 100%;
   box-sizing: border-box;
@@ -590,7 +601,7 @@
   overflow-x: overlay;
 }
 
-.cafe-modal .cafes img {
+.cafes img {
   width: 50px;
   height: 50px;
   cursor: pointer;
@@ -945,6 +956,7 @@
   width: 3em;
   bottom: 6rem;
   right: 1rem;
+  z-index : 5; 
 }
 
 .short-cut .short-cut-component {
@@ -980,6 +992,7 @@
 }
 
 .map-wrap {
+  position: absolute;
   width: 100%;
   height: 100%;
   z-index: 1;
@@ -1012,6 +1025,7 @@
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px !important;
   color: black !important;
+  z-index : 3 !important
 }
 
 .ol-zoom-out {
@@ -1024,4 +1038,146 @@
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px !important;
   color: black !important;
+  z-index : 3 !important
 }
+
+.mb-wrap-search {
+  margin-right: 24px;
+}
+
+.mb-search input{
+  margin-right: 24px;
+  border : none;
+}
+
+.mb-search input::placeholder {
+  color: #DDDFE3;
+}
+
+.mb-search input:focus {
+  outline: none;
+}
+
+.mb-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  /* height: calc(var(--vh, 1vh) * 100);
+  width: calc(var(--vw, 1vw) * 100); */
+  z-index: 2;
+}
+
+.mb-container .mb-search {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  width: 90vw;
+  height: 54px;
+  left: 5vw;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.mb-wrap {
+  position: absolute;
+  top: 62px;
+  left: 5vw;
+}
+
+.mb-franchise {
+  width: 90vw;
+  /* height: 70vh; */
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  position: absolute;
+  top : 40px;
+}
+
+.mb-franchise-card {
+  height: 66px;
+  background: #fafafc;
+  border-radius: 12px;
+  display: flex;
+  margin : 8px 16px;
+}
+
+.mb-franchise-card .mb-franchise-img {
+  position: inherit;
+  padding: 12px;
+  width: 42px;
+  height: 42px;
+}
+
+.mb-franchise-card:first-child {
+  margin-top: 16px;
+}
+
+.mb-franchise-card:last-child {
+  margin-bottom: 16px;
+}
+
+.mb-nav-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.mb-nav-wrap {
+  display: flex;
+  position: relative;
+}
+
+.mb-nav-wrap img{
+  width : 16px;
+  height : 16px;
+}
+
+.mb-discount {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px;
+  gap: 4px;
+  margin-right: 4px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 100px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  cursor: pointer;
+}
+
+.mb-hambergerSvg{
+  background-image: url('./images/hamburger.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 32px;
+  height: 32px;
+}
+
+.mb-searchSvg{
+  background-image: url('./images/search.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 32px;
+  height: 32px;
+}
+
+.mb-cafe-modal{
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  border-left: 1px solid rgb(240, 241, 245);
+  overflow-y: hidden;
+  padding: 18px 20px;
+  /* border-radius: 20px; */
+  position: relative;
+  overflow-x: hidden;
+  z-index : 5
+}
+
