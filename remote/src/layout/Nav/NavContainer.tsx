@@ -4,6 +4,7 @@ import starbucksImg from 'images/starbucks.svg';
 import lowImg from 'images/low.png';
 import mediumImg from 'images/medium.png';
 import highImg from 'images/high.png';
+import { BrowserView, MobileView } from 'react-device-detect';
 
 const NavContainer = (props: any) => {
 
@@ -49,31 +50,62 @@ const NavContainer = (props: any) => {
 
 
   return (
-    <div className="wrap">
-      <div className="search">
-        <div className="nav-box">
-          <div className="nav-wrap">
-            <div className={`discount fw700 fs16 lh30 ${isShowDiscount && "on"}`} onClick={showFranchiseDiscount} >
-              <img src={starbucksImg} />
-              <span>프렌차이즈 할인</span>
-            </div>
-            <div className={`discount fw700 fs16 lh30 ${isShowMore300 && "on"}`} onClick={showMore300Discount}>
-              <img src={lowImg} />
-              <span>300원 이상~</span>
-            </div>
-            <div className={`discount fw700 fs16 lh30 ${isShowMore500 && "on"}`} onClick={showMore500Discount}>
-              <img src={mediumImg} />
-              <span>500원 이상~</span>
-            </div>
-            <div className={`discount fw700 fs16 lh30 ${isShowMore1000 && "on"}`} onClick={showMore1000Discount}>
-              <img src={highImg} />
-              <span>1,000원 이상~</span>
+    <>
+      <MobileView>
+        <div className="mb-wrap">
+          <div className="mb-wrap-search">
+            <div className="mb-nav-box">
+              <div className="mb-nav-wrap">
+                <div className={`mb-discount fw700 fs12 lh18 ${isShowDiscount && "on"}`} onClick={showFranchiseDiscount} >
+                  <img src={starbucksImg} />
+                  <span>프렌차이즈 할인</span>
+                </div>
+                <div className={`mb-discount fw700 fs12 lh18 ${isShowMore300 && "on"}`} onClick={showMore300Discount}>
+                  <img src={lowImg} />
+                  <span>300원 이상~</span>
+                </div>
+                <div className={`mb-discount fw700 fs12 lh18 ${isShowMore500 && "on"}`} onClick={showMore500Discount}>
+                  <img src={mediumImg} />
+                  <span>500원 이상~</span>
+                </div>
+                <div className={`mb-discount fw700 fs12 lh18 ${isShowMore1000 && "on"}`} onClick={showMore1000Discount}>
+                  <img src={highImg} />
+                  <span>1,000원 이상~</span>
+                </div>
+              </div>
+              {isShowDiscount ? <DiscountWrap /> : null}
             </div>
           </div>
-          {isShowDiscount ? <DiscountWrap /> : null}
         </div>
-      </div>
-    </div>
+      </MobileView>
+      <BrowserView>
+        <div className="wrap">
+          <div className="search">
+            <div className="nav-box">
+              <div className="nav-wrap">
+                <div className={`discount fw700 fs16 lh30 ${isShowDiscount && "on"}`} onClick={showFranchiseDiscount} >
+                  <img src={starbucksImg} />
+                  <span>프렌차이즈 할인</span>
+                </div>
+                <div className={`discount fw700 fs16 lh30 ${isShowMore300 && "on"}`} onClick={showMore300Discount}>
+                  <img src={lowImg} />
+                  <span>300원 이상~</span>
+                </div>
+                <div className={`discount fw700 fs16 lh30 ${isShowMore500 && "on"}`} onClick={showMore500Discount}>
+                  <img src={mediumImg} />
+                  <span>500원 이상~</span>
+                </div>
+                <div className={`discount fw700 fs16 lh30 ${isShowMore1000 && "on"}`} onClick={showMore1000Discount}>
+                  <img src={highImg} />
+                  <span>1,000원 이상~</span>
+                </div>
+              </div>
+              {isShowDiscount ? <DiscountWrap /> : null}
+            </div>
+          </div>
+        </div>
+      </BrowserView>
+    </>
   );
 };
 
