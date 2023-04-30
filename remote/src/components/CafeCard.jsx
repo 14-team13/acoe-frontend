@@ -1,6 +1,7 @@
 import NaverFinderComponent from 'components/NaverFinderComponent';
 import AppOrderDiscountComponent from 'components/AppOrderDiscountComponent';
 import KioskOrderDiscountComponent from 'components/KioskOrderDiscountComponent';
+import { isMobile } from 'react-device-detect';
 
 
 
@@ -9,7 +10,12 @@ const CafeCard = (props) => {
   const findCafe = (item) => {
     // console.log(item)
     props.setCafeID((props) => item.cafeId)
-    props.setModalState(2);
+    if(isMobile){
+      props.setMobileModalState(3);
+    }else{
+      props.setModalState(2);
+    }
+
   }
 
   return (

@@ -11,13 +11,14 @@ import ediyaSvg from 'images/ediya.svg';
 import coffeebeanSvg from 'images/coffeebean.svg';
 import twosomeSvg from 'images/twosome.svg';
 import leftModalSvg from 'images/leftModal.svg';
-import acoeSvg from 'images/acoe.svg';
 import MenusComponent from 'components/MenusComponent';
 import BlogReviewComponent from 'components/BlogReviewComponent';
 import NaverFinderComponent from 'components/NaverFinderComponent';
 import AppOrderDiscountComponent from 'components/AppOrderDiscountComponent';
 import KioskOrderDiscountComponent from 'components/KioskOrderDiscountComponent';
 import { getData } from 'store/cafeData';
+import { BrowserView, MobileView } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 
 interface logoCafes {
   title: string;
@@ -50,7 +51,7 @@ interface infoCafes {
 
 const ModalWrap = (props: any) => {
 
-  const { setModalState, modalState } = props;
+  const { setModalState, modalState, setMobileModalState, mobileModalState } = props;
 
   const [logoCafes, setLogoCafes] = useState<logoCafes[]>([]);
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
@@ -95,8 +96,90 @@ const ModalWrap = (props: any) => {
   }
 
   return (
-    <React.Fragment>
-      {modalState !== 0 ?
+    <>
+      {isMobile && mobileModalState === 2 ?
+        <div className="mb-cafe-modal">
+          <div className="search">
+            <img className="" src={leftModalSvg} onClick={() => setMobileModalState(1)} />
+            <input className="mgl50" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
+            {searchCafeTxt !== '' ? <img className="mgl20 close-image" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
+          </div>
+          <div className="cafes">
+            {logoCafes.map((logoCafe, i) => (
+              <img key={i} src={logoCafe.src} // onClick = {logoCafe.onClick}
+              />
+            ))}
+          </div>
+          <div className="summary fw700 fs14 lh21 fc-gray">{cafeData.length > 0 ? `${cafeData.length}개의 카페` : null}</div>
+          <div className="cafe-list">
+            {cafeData.map((cafe, i) => (
+              <CafeCard
+                key={i}
+                cafeTitle={cafe.title}
+                cafeAddress={cafe.address}
+                naverRoadFinder={true}
+                appOrderPossible={true}
+                kioskDiscountPossible={true}
+                menu1={cafe.menu1}
+                menu1_price={cafe.menu1_price}
+                discountprice={cafe.discountprice}
+                cafeId={cafe.number}
+                setCafeID={setCafeID}
+                setModalState={setModalState}
+                setMobileModalState={setMobileModalState}
+              />
+            ))}
+          </div>
+        </div> : null}
+      {isMobile && mobileModalState === 3 ?
+        <div className="mb-cafe-modal">
+          <div className="search">
+            <img className="" src={leftModalSvg} onClick={() => setMobileModalState(2)} />
+            <div className="fw700 fs20 lh36 mgl25 mgr40 txt-overflow">{selectedCafe ? selectedCafe.title : ''}</div>
+          </div>
+          <div className="cafe-detail">
+            <div className="cafe-typical">
+              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountprice}원 할인</div>
+              <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.title}</div>
+              <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.address}</div>
+              <NaverFinderComponent />
+              <div className="flex-row-center mgt15">
+                <div>
+                  <AppOrderDiscountComponent />
+                </div>
+                <div className="mgl25">
+                  <KioskOrderDiscountComponent />
+                </div>
+              </div>
+            </div>
+            <div className="cafe-detail-component">
+              <div className="fw700 fs14 lh24">메뉴</div>
+              {selectedMenu.map((item, i) => (
+                <MenusComponent
+                  key={i}
+                  menu={item.menu}
+                  price={item.price}
+                  discountprice={item.discount}
+                  naverRoadFinder={true}
+                />
+              ))}
+              <div className="flex-column-center">
+                <div className="fw400 fs10 lh18 fc-gray">메뉴 항목과 가격 및 텀블러 할인 가격은</div>
+                <div className="fw400 fs10 lh18 fc-gray">각 매장의 사정에 따라 기재된 내용과 다를 수 있습니다.</div>
+              </div>
+            </div>
+            <div className="cafe-detail-component">
+              <div className="fw700 fs14 lh24">블로그 리뷰</div>
+              <BlogReviewComponent />
+              <BlogReviewComponent />
+              <BlogReviewComponent />
+              <BlogReviewComponent />
+              <BlogReviewComponent />
+            </div>
+          </div>
+        </div>
+        : null}
+      {!isMobile && modalState !== 0 ?
         <div className="cafe-modal">
           <div className="search">
             <img className="serach-image" src={searchSvg} />
@@ -124,13 +207,13 @@ const ModalWrap = (props: any) => {
                 discountprice={cafe.discountprice}
                 cafeId={cafe.number}
                 setCafeID={setCafeID}
-                setModalState = {setModalState}
+                setModalState={setModalState}
               />
             ))}
           </div>
         </div> : null
       }
-      {modalState === 2 &&
+      {!isMobile && modalState === 2 &&
         <div className="cafe-modal">
           <div className="search">
             <img className="" src={leftModalSvg} onClick={(modalState) => setModalState(1)} />
@@ -178,7 +261,7 @@ const ModalWrap = (props: any) => {
           </div>
         </div>
       }
-    </React.Fragment>
+    </>
   );
 };
 
