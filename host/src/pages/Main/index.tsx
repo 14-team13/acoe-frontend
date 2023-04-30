@@ -7,14 +7,15 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../../store/atoms';
 import { loginsuccess, logout } from '@api/main';
 import MyInfo from '@pages/components/MyInfo';
+import { BrowserView, MobileView } from 'react-device-detect';
 
 
 
 const Main = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useRecoilState(userState);
-  const [showLogin, setShowLogin] = useState(false); 
-  const [showMyPage, setShowMyPage]= useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showMyPage, setShowMyPage] = useState(false);
 
   const Menu = React.lazy(() =>
     // @ts-ignore
@@ -81,47 +82,54 @@ const Main = () => {
   }
 
   return (
-    <div className='App'>
-      <div>
+    <>
+      <MobileView>
+        <React.Suspense fallback={<div>Loading...</div>}>
+          <Menu />
+        </React.Suspense>
+      </MobileView>
+      <BrowserView>
         <div>
-          {isLogin ? (
-            <div>
-              <div className="user fw700 fs16 lh30" onClick={startMypage}>
-                <div>USER</div>
+          <div>
+            {isLogin ? (
+              <div>
+                <div className="user fw700 fs16 lh30" onClick={startMypage}>
+                  <div>USER</div>
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="acoe-start fw700 fs16 lh30 on" onClick={startAcoe}>
-              <div>텀블러 여정 시작하기</div>
-            </div>
-          )}
-        </div>
-        <div>
-          <React.Suspense fallback={<div>Loading...</div>}>
-            <Menu />
-          </React.Suspense>
-        </div>
-      </div>
-      {showMyPage?  <MyInfo/>: null }
-      {showLogin ? (
-        <div className="login-modal">
-          <div className="login-box">
-            <div className="login-close" onClick={closeLogin}>&times;</div>
-            <img className="acoe-image" src={acoeImg} />
-            <div className="fw700 fs20 mgt10 lh24">내 주변 텀블러 할인 금액</div>
-            <div className="fw700 fs20 mgb15 lh24">ACOE에서 찾아보세요!</div>
-            <div className="login-button kakao" onClick={loginKakao}>
-              <img src={kakaoImg} />
-              <div className="fw500 fs16 lh36 mgl15">카카오로 시작하기</div>
-            </div>
-            <div className="login-button google" onClick={loginGoogle}>
-              <img src={googleImg} />
-              <div className="fw500 fs16 lh36 mgl15">Google로 시작하기</div>
-            </div>
+            ) : (
+              <div className="acoe-start fw700 fs16 lh30 on" onClick={startAcoe}>
+                <div>텀블러 여정 시작하기</div>
+              </div>
+            )}
+          </div>
+          <div>
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <Menu />
+            </React.Suspense>
           </div>
         </div>
-      ) : null}
-    </div>
+        {showMyPage ? <MyInfo /> : null}
+        {showLogin ? (
+          <div className="login-modal">
+            <div className="login-box">
+              <div className="login-close" onClick={closeLogin}>&times;</div>
+              <img className="acoe-image" src={acoeImg} />
+              <div className="fw700 fs20 mgt10 lh24">내 주변 텀블러 할인 금액</div>
+              <div className="fw700 fs20 mgb15 lh24">ACOE에서 찾아보세요!</div>
+              <div className="login-button kakao" onClick={loginKakao}>
+                <img src={kakaoImg} />
+                <div className="fw500 fs16 lh36 mgl15">카카오로 시작하기</div>
+              </div>
+              <div className="login-button google" onClick={loginGoogle}>
+                <img src={googleImg} />
+                <div className="fw500 fs16 lh36 mgl15">Google로 시작하기</div>
+              </div>
+            </div>
+          </div>
+        ) : null}
+      </BrowserView>
+    </>
   );
 };
 
