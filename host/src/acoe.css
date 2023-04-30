@@ -1025,6 +1025,7 @@
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px !important;
   color: black !important;
+  z-index : 3 !important
 }
 
 .ol-zoom-out {
@@ -1037,6 +1038,7 @@
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px !important;
   color: black !important;
+  z-index : 3 !important
 }
 
 .mb-wrap-search {
