@@ -171,6 +171,20 @@
   margin: 8px
 }
 
+.mg40 {
+  margin: 40px
+}
+
+
+.mg80 {
+  margin: 80px
+}
+
+.mg120 {
+  margin: 120px
+}
+
+
 .mg16 {
   margin: 16px
 }
@@ -956,7 +970,7 @@
   width: 3em;
   bottom: 6rem;
   right: 1rem;
-  z-index : 5; 
+  z-index: 5;
 }
 
 .short-cut .short-cut-component {
@@ -1025,7 +1039,7 @@
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px !important;
   color: black !important;
-  z-index : 3 !important
+  z-index: 3 !important
 }
 
 .ol-zoom-out {
@@ -1038,7 +1052,7 @@
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px !important;
   color: black !important;
-  z-index : 3 !important
+  z-index: 3 !important
 }
 
 .mb-wrap-search {
@@ -1047,9 +1061,9 @@
   width: 90vw;
 }
 
-.mb-search input{
+.mb-search input {
   margin-right: 24px;
-  border : none;
+  border: none;
 }
 
 .mb-search input::placeholder {
@@ -1096,7 +1110,7 @@
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 24px;
   position: absolute;
-  top : 40px;
+  top: 40px;
 }
 
 .mb-franchise-card {
@@ -1104,7 +1118,7 @@
   background: #fafafc;
   border-radius: 12px;
   display: flex;
-  margin : 8px 16px;
+  margin: 8px 16px;
 }
 
 .mb-franchise-card .mb-franchise-img {
@@ -1132,9 +1146,9 @@
   position: relative;
 }
 
-.mb-nav-wrap img{
-  width : 16px;
-  height : 16px;
+.mb-nav-wrap img {
+  width: 16px;
+  height: 16px;
 }
 
 .mb-discount {
@@ -1153,7 +1167,7 @@
   cursor: pointer;
 }
 
-.mb-hambergerSvg{
+.mb-hambergerSvg {
   background-image: url('./images/hamburger.svg');
   background-repeat: no-repeat;
   background-position: center;
@@ -1161,7 +1175,7 @@
   height: 32px;
 }
 
-.mb-searchSvg{
+.mb-searchSvg {
   background-image: url('./images/search.svg');
   background-repeat: no-repeat;
   background-position: center;
@@ -1169,7 +1183,7 @@
   height: 32px;
 }
 
-.mb-cafe-modal{
+.mb-cafe-modal {
   box-sizing: border-box;
   width: 100vw;
   /* height: 100vh; */
@@ -1180,6 +1194,9 @@
   /* border-radius: 20px; */
   position: relative;
   overflow-x: hidden;
-  z-index : 5
+  z-index: 5
 }
 
+.acoe-footer {
+  height: 100px;
+}
