@@ -1043,6 +1043,8 @@
 
 .mb-wrap-search {
   margin-right: 24px;
+  overflow-x: auto;
+  width: 90vw;
 }
 
 .mb-search input{
@@ -1170,7 +1172,7 @@
 .mb-cafe-modal{
   box-sizing: border-box;
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
   background-color: white;
   border-left: 1px solid rgb(240, 241, 245);
   overflow-y: hidden;
