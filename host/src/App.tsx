@@ -4,9 +4,10 @@ import { Routes, Route } from 'react-router-dom';
 const Main = loadable(() => import('@pages/Main'));
 const LogIn = loadable(() => import('@pages/LogIn'));
 const SignUp = loadable(() => import('@pages/SignUp'));
-const Acoe = loadable(() => import('@pages/Acoe'));
-const AcoePrivacy = loadable(() => import('./pages/components/AcoePrivacy'));
-const AcoeService = loadable(() => import('./pages/components/AcoeService'));
+const Acoe = loadable(() => import('@layouts/Acoe'));
+const AcoePrivacy = loadable(() => import('@pages/components/AcoePrivacy'));
+const AcoeService = loadable(() => import('@pages/components/AcoeService'));
+const AcoeAdmin = loadable(() => import('@layouts/AcoeAdmin'));
 
 const App = () => (
   <Routes>
@@ -16,6 +17,7 @@ const App = () => (
     <Route path='/acoe' element={<Acoe />} >
       <Route path="privacy" element={<AcoePrivacy />} />
        <Route path="service" element={<AcoeService />} />
+       <Route path="admin" element={<AcoeAdmin/>} />
     </Route>
   </Routes>
 );
