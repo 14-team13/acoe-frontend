@@ -1,6 +1,6 @@
 import React from 'react';
-import AcoeNavbar from '../components/AcoeNavbar'
-import AcoeFooter from '../components/AcoeFooter'
+import AcoeNavbar from '../pages/components/AcoeNavbar'
+import AcoeFooter from '../pages/components/AcoeFooter'
 import 'bootstrap/dist/css/bootstrap.css';
 import { Outlet } from 'react-router-dom';
 
