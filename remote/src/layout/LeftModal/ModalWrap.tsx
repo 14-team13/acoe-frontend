@@ -182,9 +182,9 @@ const ModalWrap = (props: any) => {
       {!isMobile && modalState !== 0 ?
         <div className="cafe-modal">
           <div className="search">
-            <img className="serach-image" src={searchSvg} />
+            <img className="img24" src={searchSvg} />
             <input className="mgl15" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
-            {searchCafeTxt !== '' ? <img className="mgl15 close-image" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
+            {searchCafeTxt !== '' ? <img className="mgl15 img12" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
           </div>
           <div className="cafes">
             {logoCafes.map((logoCafe, i) => (

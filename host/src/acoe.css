@@ -530,8 +530,8 @@
   background-repeat: no-repeat;
   background-position: center;
   transform: rotate(180deg);
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
 }
 
 .openButton .left.move {
@@ -578,13 +578,14 @@
   display: flex;
   align-items: center;
   /* justify-content: space-between; */
-  padding: 12px 0px 12px 20px;
+  padding: 15px 0px 12px 20px;
   border-bottom: 1px solid rgb(240, 241, 245);
 }
 
+
 .search input {
   border: none;
-  /* width: 220px; */
+  width: 65%;
   height: 36px;
   font-size: 20px;
   font-weight: 700;
@@ -600,13 +601,19 @@
   outline: none;
 }
 
+.cafe-modal .img28 {
+  width: 28px;
+  height: 28px;
+}
 
-.cafe-modal .serach-image {
+
+.cafe-modal .img24 {
   width: 24px;
   height: 24px;
 }
 
-.cafe-modal .close-image {
+
+.cafe-modal .img12 {
   width: 12px;
   height: 12px;
 }
