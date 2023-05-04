@@ -18,7 +18,7 @@ module.exports = function (config, env) {
           `host@https://acoe.vercel.app/remoteEntry.js` 
         },
         exposes: {
-          "./Menu": "./src/components/Menu"
+          "./Menu": "./src/layout/Menu"
         },
         filename: "remoteEntry.js",
         shared: {
