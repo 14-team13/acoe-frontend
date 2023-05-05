@@ -224,8 +224,8 @@ const ModalWrap = (props: any) => {
               <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountprice}원 할인</div>
               <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.title}</div>
               <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.address}</div>
-              <NaverFinderComponent />
-              <div className="flex-row-center mgt15">
+              <div className="mgb25"> <NaverFinderComponent /></div>
+              <div className="flex-row-center mgb30">
                 <div>
                   <AppOrderDiscountComponent />
                 </div>
