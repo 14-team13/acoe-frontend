@@ -998,8 +998,8 @@
   gap: 2px;
   text-align: center;
   cursor: pointer;
-  /* width: 64px;
-  height: 94px; */
+  width: 30px;
+  /*height: 94px; */
 }
 
 .app-svg {
@@ -1045,28 +1045,57 @@
   width: 2.5em !important;
   height: 2.5em !important;
   position: fixed;
-  bottom: 2.5rem;
+  bottom: 3.3rem;
   right: 1.2rem;
   margin-bottom: 10px !important;
   background: #FFFFFF;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px !important;
   color: black !important;
-  z-index: 3 !important
+  z-index: 3 !important;
+  font-size: inherit !important;
+}
+
+.ol-zoom-in:hover {
+  border: none !important;
+  outline: none !important;
+  cursor: pointer !important;
+  color: #2F44FF !important;
+}
+
+
+.ol-zoom-in:focus {
+  border: none !important;
+  outline: none !important;
 }
 
 .ol-zoom-out {
   width: 2.5em !important;
   height: 2.5em !important;
   position: fixed;
-  bottom: 0.3rem;
+  bottom: 1rem;
   right: 1.2rem;
   background: #FFFFFF;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px !important;
   color: black !important;
-  z-index: 3 !important
+  z-index: 3 !important;
+  font-size: inherit !important;
 }
+
+.ol-zoom-out:focus {
+  border: none !important;
+  outline: none !important;
+}
+
+
+.ol-zoom-out:hover {
+  border: none !important;
+  outline: none !important;
+  cursor: pointer !important;
+  color: #2F44FF !important;
+}
+
 
 .mb-wrap-search {
   margin-right: 24px;
