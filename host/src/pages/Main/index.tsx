@@ -1,20 +1,17 @@
 import React, { useLayoutEffect } from 'react';
 import { useEffect, useState } from 'react';
-import acoeImg from 'images/acoe.svg';
-import googleImg from 'images/google.svg';
-import kakaoImg from 'images/kakao.svg';
 import { useRecoilState } from 'recoil';
 import { userState } from '../../store/atoms';
 import { loginsuccess, logout } from '@api/main';
 import MyInfo from '@pages/components/MyInfo';
 import { BrowserView, MobileView } from 'react-device-detect';
-
-
+import AcoeLogin from '@pages/components/AcoeLogin';
 
 const Main = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useRecoilState(userState);
   const [showLogin, setShowLogin] = useState(false);
+  const [showMobileLogin, setShowMobileLogin] = useState(false);
   const [showMyPage, setShowMyPage] = useState(false);
 
   const Menu = React.lazy(() =>
@@ -79,14 +76,57 @@ const Main = () => {
 
   const closeLogin = () => {
     setShowLogin(false);
+    setShowMobileLogin(false);
   }
+
+  const mobileShowLogin = () => {
+    setShowLogin(true);
+  }
+
+  const tryMobileLogin = () => {
+    setShowMobileLogin(true);
+    setShowLogin(false);
+  }
+
 
   return (
     <>
       <MobileView>
         <React.Suspense fallback={<div>Loading...</div>}>
-          <Menu />
+          <Menu mobileShowLogin={mobileShowLogin} />
         </React.Suspense>
+        {showLogin ? (
+          <div className="bg-black">
+            <div className="start-with-acoe">
+              <div className="flex-row">
+                <div className="flex-column">
+                  <div className="flex-row fw700 fs16 lh24 "><div className="fc-primary">로그인 회원가입</div><div>하고</div></div>
+                  <div className="fw700 fs16 lh24">한잔의 지구, ACOE 여정을 시작해보세요</div>
+                  <div className="start-with-acoe-intro">
+                    <div className="fw700 fs12 lh18">
+                      <span>텀블러는 이산화탄소 발생량을 </span>
+                      <span className="fc-primary">일회용 플라스틱 컵보다 33배,일회용 종이컵보다 18배</span>
+                      <span>줄일 수 있어요!</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="left" onClick={tryMobileLogin} />
+              </div>
+              <div className="divide" />
+              <div className="">
+                <div className="mgb8 fw400 fs12 lh18 fc-gray">이용약관</div>
+                <div className="mgb8 fw400 fs12 lh18 fc-gray">개인정보처리방침</div>
+              </div>
+            </div>
+          </div>
+        ) : null}
+        {showMobileLogin ? (
+          <div className="bg-black">
+            <div className="mb-login-box">
+              <AcoeLogin closeLogin={closeLogin} loginKakao={loginKakao} loginGoogle={loginGoogle} />
+            </div>
+          </div>
+        ) : null}
       </MobileView>
       <BrowserView>
         <div>
@@ -111,20 +151,9 @@ const Main = () => {
         </div>
         {showMyPage ? <MyInfo /> : null}
         {showLogin ? (
-          <div className="login-modal">
+          <div className="bg-black">
             <div className="login-box">
-              <div className="login-close" onClick={closeLogin}>&times;</div>
-              <img className="acoe-image" src={acoeImg} />
-              <div className="fw700 fs20 mgt10 lh24">내 주변 텀블러 할인 금액</div>
-              <div className="fw700 fs20 mgb15 lh24">ACOE에서 찾아보세요!</div>
-              <div className="login-button kakao" onClick={loginKakao}>
-                <img src={kakaoImg} />
-                <div className="fw500 fs16 lh36 mgl15">카카오로 시작하기</div>
-              </div>
-              <div className="login-button google" onClick={loginGoogle}>
-                <img src={googleImg} />
-                <div className="fw500 fs16 lh36 mgl15">Google로 시작하기</div>
-              </div>
+              <AcoeLogin closeLogin={closeLogin} loginKakao={loginKakao} loginGoogle={loginGoogle} />
             </div>
           </div>
         ) : null}

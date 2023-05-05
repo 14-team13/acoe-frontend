@@ -7,8 +7,7 @@ import ShortCutAppOrder from 'components/ShortCutAppOrder';
 import ShortCutKioskOrder from 'components/ShortCutKioskOrder';
 import { BrowserView, MobileView } from 'react-device-detect';
 
-
-export const Menu: React.FC = () => {
+export const Menu: React.FC = (props : any) => {
 
   const [modalState, setModalState] = useState(1);
   const leftModalComponent = useRef<HTMLDivElement>(null);
@@ -44,7 +43,7 @@ export const Menu: React.FC = () => {
       <MobileView>
         <div className="mb-container">
           <div className="mb-search">
-            <div className="mg16 mb-hambergerSvg" />
+            <div className="mg16 mb-hambergerSvg" onClick={props.mobileShowLogin}/>
             <input className="fs16 fw700 lh24 mgr50" type="text"
               onFocus={() => setMobileModalState(2)}
               value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색하세요." onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />

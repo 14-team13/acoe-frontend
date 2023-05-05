@@ -25,7 +25,6 @@ const MyInfo = (props) => {
         <div className="">
           <div className = "mgb8 fw400 fs12 lh18 fc-gray">이용약관</div>
           <div className = "mgb8 fw400 fs12 lh18 fc-gray">개인정보처리방침</div>
-          <div className = "fw400 fs12 lh18 fc-gray">위치기반서비스 이용약관</div>
         </div>
       </div>
     </div>
