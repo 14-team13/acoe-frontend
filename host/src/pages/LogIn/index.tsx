@@ -21,8 +21,8 @@ const LogIn = () => {
   const API_BASE_URL = keys.apiBaseUrl;
   const ACCESS_TOKEN = "accessToken";
   const OAUTH2_REDIRECT_URI = keys.redirectUri;
-  const GOOGLE_AUTH_URL = 'http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:3000/oauth/redirect'
-
+  //const GOOGLE_AUTH_URL = 'http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:3000/oauth/redirect'
+  const GOOGLE_AUTH_URL = 'http://118.67.131.181:9090/oauth2/authorization/google?redirect_uri=https://acoe.vercel.app/oauth/redirect'
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
