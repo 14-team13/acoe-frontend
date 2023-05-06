@@ -131,4 +131,5 @@ body {
   font-family: 'Pretendard'; /* 기본 공통 */
   letter-spacing: -0.02em;
   font-style: normal;
+  font-display : block;
 }
