@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import acoeSvg from 'images/acoe.svg';
 import acoeWebp from 'images/acoe.webp';
 import kakaoSvg from 'images/kakao.svg';
 import kakaoWebp from 'images/kakao.webp';
 import googleSvg from 'images/google.svg';
 import googleWebp from 'images/google.webp';
-
+import FontFaceObserver from 'fontfaceobserver'
 
 const AcoeLogin = (props: any) => {
+  const [isFontLoaded, setIsFontLoaded] = useState(false); 
+
+  useEffect(() => {
+    const font = new FontFaceObserver('Pretendard')
+    font.load().then(() => {
+      setIsFontLoaded(true);
+    })
+  },[])
+  
   return (
     <React.Fragment>
-      <div className="login-close" onClick={props.closeLogin}>&times;</div>
+      <div className="login-close" onClick={props.closeLogin} style = {{opacity : isFontLoaded? 1: 0 , transition : 'opacity 0.5s ease' }}>&times;</div>
       <picture>
         <source srcSet={acoeWebp} type="image/webp" />
         <img className="acoe-image" src={acoeSvg} />
