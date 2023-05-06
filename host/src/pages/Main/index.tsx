@@ -98,19 +98,19 @@ const Main = () => {
         {showLogin ? (
           <div className="bg-black">
             <div className="start-with-acoe">
-              <div className="flex-row">
-                <div className="flex-column">
-                  <div className="flex-row fw700 fs16 lh24 "><div className="fc-primary">로그인 회원가입</div><div>하고</div></div>
-                  <div className="fw700 fs16 lh24">한잔의 지구, ACOE 여정을 시작해보세요</div>
-                  <div className="start-with-acoe-intro">
-                    <div className="fw700 fs12 lh18">
-                      <span>텀블러는 이산화탄소 발생량을 </span>
-                      <span className="fc-primary">일회용 플라스틱 컵보다 33배,일회용 종이컵보다 18배</span>
-                      <span>줄일 수 있어요!</span>
-                    </div>
+              <div className="flex-column">
+                <div className="flex-row-space fw700 fs16 lh24 ">
+                  <div><span className="fc-primary">로그인 회원가입</span><span>하고</span></div>
+                  <div className="left" onClick={tryMobileLogin} />
+                </div>
+                <div className="fw700 fs16 lh24">한잔의 지구, ACOE 여정을 시작해보세요</div>
+                <div className="start-with-acoe-intro mgt20">
+                  <div className="fw700 fs12 lh18">
+                    <span>텀블러는 이산화탄소 발생량을 </span>
+                    <span className="fc-primary">일회용 플라스틱 컵보다 33배, <br />일회용 종이컵보다 18배</span>
+                    <span>줄일 수 있어요!</span>
                   </div>
                 </div>
-                <div className="left" onClick={tryMobileLogin} />
               </div>
               <div className="divide" />
               <div className="">
