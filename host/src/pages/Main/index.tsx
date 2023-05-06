@@ -6,6 +6,7 @@ import { loginsuccess, logout } from '@api/main';
 import MyInfo from '@pages/components/MyInfo';
 import { BrowserView, MobileView } from 'react-device-detect';
 import AcoeLogin from '@pages/components/AcoeLogin';
+import FontFaceObserver from 'fontfaceobserver'
 
 const Main = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -13,6 +14,8 @@ const Main = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showMobileLogin, setShowMobileLogin] = useState(false);
   const [showMyPage, setShowMyPage] = useState(false);
+  const [isFontLoaded, setIsFontLoaded] = useState(false); 
+
 
   const Menu = React.lazy(() =>
     // @ts-ignore
@@ -20,6 +23,13 @@ const Main = () => {
       return { default: module.Menu };
     })
   );
+
+  useEffect(() => {
+    const font = new FontFaceObserver('Pretendard')
+    font.load().then(() => {
+      setIsFontLoaded(true);
+    })
+  },[])
 
   // useEffect(() => {
   //   (async () => {
@@ -90,7 +100,7 @@ const Main = () => {
 
 
   return (
-    <>
+    <div style = {{opacity : isFontLoaded? 1: 0 ,transition : 'opacity 0.3s ease' }}>
       <MobileView>
         <React.Suspense fallback={<div>Loading...</div>}>
           <Menu mobileShowLogin={mobileShowLogin} />
@@ -158,7 +168,7 @@ const Main = () => {
           </div>
         ) : null}
       </BrowserView>
-    </>
+    </div>
   );
 };
 
