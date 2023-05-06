@@ -52,8 +52,8 @@ const Main = () => {
   //   }
   // };
 
-  const KAKAO_AUTH_URL = 'http://localhost:8080/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/redirect'
-  const GOOGLE_AUTH_URL = 'http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:3000/oauth/redirect'
+  const KAKAO_AUTH_URL = 'http://118.67.131.181:9090/oauth2/authorization/kakao?redirect_uri=https://acoe.vercel.app/oauth/redirect'
+  const GOOGLE_AUTH_URL = 'http://118.67.131.181:9090/oauth2/authorization/google?redirect_uri=https://acoe.vercel.app/oauth/redirect'
 
   const startAcoe = () => {
     setShowLogin(true);
@@ -64,13 +64,13 @@ const Main = () => {
   }
 
   const loginKakao = () => {
-    //window.location.assign(KAKAO_AUTH_URL);
+    window.location.assign(KAKAO_AUTH_URL);
     setShowLogin(false);
     setIsLogin(true)
   }
 
   const loginGoogle = () => {
-    //window.location.assign(GOOGLE_AUTH_URL);
+    window.location.assign(GOOGLE_AUTH_URL);
     setShowLogin(false);
     setIsLogin(true)
   }
