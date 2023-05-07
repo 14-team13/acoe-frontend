@@ -24,15 +24,31 @@ export const loginsuccess = () => {
 export const logout = () => {
   return request({
     method: 'POST',
-    url: '/logout' 
+    url: '/logout'
   });
 }
 
 export const getFranchises = () => {
   return request({
     method: 'GET',
-    url: '/main/franchise/franchises' 
+    url: '/main/franchise/franchises'
   });
-
 }
 
+export const getCafesList = () => {
+  return request({
+    method: 'GET',
+    url: '/main/cafe/cafes/3120000'
+  });
+}
+
+
+export const getCafeInfo = (cafeId: number) => {
+  return request({
+    method: 'GET',
+    url: '/main/cafe/' + cafeId, // 수정필요
+    // data: {
+    //   cafeId: cafeId,
+    // }
+  });
+}

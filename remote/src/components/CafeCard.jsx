@@ -10,9 +10,9 @@ const CafeCard = (props) => {
   const findCafe = (item) => {
     // console.log(item)
     props.setCafeID((props) => item.cafeId)
-    if(isMobile){
+    if (isMobile) {
       props.setMobileModalState(3);
-    }else{
+    } else {
       props.setModalState(2);
     }
 
@@ -26,15 +26,15 @@ const CafeCard = (props) => {
       <div className="bottom-wrap mgt24">
         <div>
           <div className="mgb8">
-            <AppOrderDiscountComponent />
+            {props.appOrderYn ? <AppOrderDiscountComponent /> : null}
           </div>
           <div>
-            <KioskOrderDiscountComponent />
+            {props.kioskYn ? <KioskOrderDiscountComponent /> : null}
           </div>
         </div>
         <div className="mgt4">
           <div className="flex-row-end fw400 fs12 lh18 fc-gray mgt3"> {props.menu1} | {props.menu1_price}원</div>
-          <div className="flex-row-end fw700 fs22 lh36 fc-third"> {props.discountprice}원 할인   </div>
+          <div className="flex-row-end fw700 fs22 lh36 fc-third"> {props.discountprice ? props.discountprice : 0}원 할인   </div>
         </div>
       </div>
     </div>

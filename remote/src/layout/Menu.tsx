@@ -14,12 +14,9 @@ import passcucciSvg from 'images/passcucci.svg';
 import ediyaSvg from 'images/ediya.svg';
 import coffeebeanSvg from 'images/coffeebean.svg';
 import twosomeSvg from 'images/twosome.svg';
-import { getFranchises } from 'api/main';
-
+import { getFranchises, getCafesList } from 'api/main';
 
 interface logoCafes {
-  // title: string;
-  // src: string;
   rmk: null;
   regrId: number;
   regDttm: Date;
@@ -34,7 +31,32 @@ interface logoCafes {
   src: string;
 }
 
-export const Menu: React.FC = (props : any) => {
+interface cafe {
+  rmk: string | null,
+  regrId: string | null,
+  regDttm: string | null,
+  modrId: string | null,
+  modDttm: string | null,
+  cafeId: string | null,
+  cafeNm: string | null,
+  areaCd: number,
+  trdStateCd: number,
+  dtlStateCd: number,
+  telNo:  string | null,
+  roadAddr: string,
+  roadPostNo: number,
+  x: number,
+  y: number,
+  discountAmt: number | null,
+  refNo: string,
+  appOrderYn: string | null,
+  kioskYn: string | null,
+  useYn: string | null,
+  franchise: string | null,
+  menuList: any
+}
+
+export const Menu: React.FC = (props: any) => {
 
 
   const [modalState, setModalState] = useState(1);
@@ -42,7 +64,7 @@ export const Menu: React.FC = (props : any) => {
   const [mobileModalState, setMobileModalState] = useState(1);
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
   const [logoCafes, setLogoCafes] = useState<logoCafes[]>([]);
-
+  const [cafeData, setCafeData] = useState<cafe[]>([]);
 
   const showLeftModal = () => {
     if (modalState === 0) {
@@ -68,38 +90,47 @@ export const Menu: React.FC = (props : any) => {
 
   useEffect(() => {
     _getFranchises();
-  },[])
+    _getCafesList();
+  }, [])
 
-  const _getFranchises = async() => {
+  const _getFranchises = async () => {
     const response = await getFranchises();
-    if(response.data.length > 0 ){
+    if (response.data.length > 0) {
       const cafesMap = new Map([
-        [ 6, starbucksSvg], // title: "starbucks",
-        [ 7, paulbassettSvg],
-        [ 1, angelinusSvg ],
-        [ 2, hollysSvg ],
-        [ 3, passcucciSvg ],
-        [ 4, ediyaSvg ],
-        [ 5, coffeebeanSvg ],
-        [ 8, twosomeSvg ]
+        [6, starbucksSvg], // title: "starbucks",
+        [7, paulbassettSvg],
+        [1, angelinusSvg],
+        [2, hollysSvg],
+        [3, passcucciSvg],
+        [4, ediyaSvg],
+        [5, coffeebeanSvg],
+        [8, twosomeSvg]
       ])
-      response.data.forEach((item : logoCafes) => {
+      response.data.forEach((item: logoCafes) => {
         item.src = cafesMap.get(item.franchiseId) || ''
       })
       setLogoCafes(response.data)
-    }else{
+    } else {
       setLogoCafes([])
     }
   }
 
-
+  const _getCafesList = async () => {
+    const response = await getCafesList(); // type 변경 필요 
+    if (response.data.length > 0) {
+      setCafeData(response.data)
+      console.log(response.data)
+    } else {
+      setCafeData([])
+    }
+  }
 
   return (
     <>
       <MobileView>
         <div className="mb-container">
           <div className="mb-search">
-            <div className="mg16 mb-hambergerSvg" onClick={props.mobileShowLogin}/>
+            <div className="mg16 mb-hambergerSvg" onClick={props.mobileShowLogin} />
             <input className="fs16 fw700 lh24 mgr50" type="text"
               onFocus={() => setMobileModalState(2)}
               value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색하세요." onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
@@ -108,11 +139,12 @@ export const Menu: React.FC = (props : any) => {
           {mobileModalState !== 1 ?
             <ModalWrap
               setMobileModalState={setMobileModalState}
-              mobileModalState={mobileModalState} 
-              logoCafes = {logoCafes}
-              />
+              mobileModalState={mobileModalState}
+              logoCafes={logoCafes}
+              cafeData = {cafeData}
+            />
             : null}
-          <NavContainer  logoCafes = {logoCafes}/>
+          <NavContainer logoCafes={logoCafes} />
         </div>
         <MixedBoundary>
           <Maps />
@@ -122,16 +154,17 @@ export const Menu: React.FC = (props : any) => {
         <div className="container">
           {modalState === 2 ? null :
             <div className={modalState === 1 ? 'navOpen' : ''}>
-              <NavContainer  logoCafes = {logoCafes}/>
+              <NavContainer logoCafes={logoCafes} />
             </div>
           }
           <div className="left-modal" ref={leftModalComponent}>
             <div className="left-container ">{modalState !== 0 ?
               <ModalWrap
                 setModalState={setModalState}
-                modalState={modalState} 
-                logoCafes = {logoCafes}
-                />
+                modalState={modalState}
+                logoCafes={logoCafes}
+                cafeData = {cafeData}
+              />
               : null}
             </div>
             <div className={`openButton ${setButtonState()}`} onClick={showLeftModal}>

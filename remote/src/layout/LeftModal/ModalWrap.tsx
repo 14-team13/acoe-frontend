@@ -9,51 +9,35 @@ import NaverFinderComponent from 'components/NaverFinderComponent';
 import AppOrderDiscountComponent from 'components/AppOrderDiscountComponent';
 import KioskOrderDiscountComponent from 'components/KioskOrderDiscountComponent';
 import { isMobile } from 'react-device-detect';
+import { getCafeInfo } from 'api/main';
 
 interface menu {
   menu: string;
   price: number;
   discount: number
 }
-interface infoCafes {
-  number: number;
-  title: string;
-  telephone: string;
-  address: string;
-  x: number;
-  y: number;
-  type: string;
-  discountprice: number;
-  kiosk: string;
-  app: string;
-  menu1: string;
-  menu1_price: number;
-  menu2: string;
-  menu2_price: number;
-  menu3: string;
-  menu3_price: number;
-}
 
 const ModalWrap = (props: any) => {
 
-  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes } = props;
+  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes, cafeData } = props;
 
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
   const [cafeID, setCafeID] = useState<number>()
-  const [selectedCafe, setSelectedCafe] = useState<infoCafes>();
-  const [cafeData, setCafeData] = useState<infoCafes[]>([]);
+  const [selectedCafe, setSelectedCafe] = useState<any>(); // type 체크 필요 
   const [selectedMenu, setSelectedMenu] = useState<menu[]>([]);
 
+  const _getCafeInfo = async (cafeID: number) => {
+    const response = await getCafeInfo(cafeID); // type 변경 필요 
+    if (response.data) {
+      setSelectedCafe(response.data)
+    } else {
+      setSelectedCafe([])
+    }
+  }
+
   useEffect(() => {
-    if (cafeID && cafeData.length > 0) {
-      const cafe = cafeData.filter((item) => item.number === cafeID)
-      setSelectedCafe(cafe[0])
-      const menus = [
-        { menu: cafe[0].menu1, price: cafe[0].menu1_price, discount: cafe[0].discountprice },
-        { menu: cafe[0].menu2, price: cafe[0].menu2_price, discount: cafe[0].discountprice },
-        { menu: cafe[0].menu3, price: cafe[0].menu3_price, discount: cafe[0].discountprice }
-      ]
-      setSelectedMenu(menus)
+    if (cafeID) {
+      _getCafeInfo(cafeID);
     }
   }, [cafeID])
 
@@ -78,18 +62,18 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="summary fw700 fs14 lh21 fc-gray">{cafeData.length > 0 ? `${cafeData.length}개의 카페` : null}</div>
           <div className="cafe-list">
-            {cafeData.map((cafe, i) => (
+            {cafeData.map((cafe: any, i: number) => ( // any type 체크 필요 
               <CafeCard
                 key={i}
-                cafeTitle={cafe.title}
-                cafeAddress={cafe.address}
+                cafeTitle={cafe.cafeNm}
+                cafeAddress={cafe.roadAddr}
                 naverRoadFinder={true}
-                appOrderPossible={true}
-                kioskDiscountPossible={true}
+                appOrderYn={cafe.appOrderYn}
+                kioskYn={cafe.kioskYn}
                 menu1={cafe.menu1}
-                menu1_price={cafe.menu1_price}
+                menu1_price={cafe.discountAmt}
                 discountprice={cafe.discountprice}
-                cafeId={cafe.number}
+                cafeId={cafe.cafeId}
                 setCafeID={setCafeID}
                 setModalState={setModalState}
                 setMobileModalState={setMobileModalState}
@@ -153,27 +137,28 @@ const ModalWrap = (props: any) => {
             {searchCafeTxt !== '' ? <img className="mgl15 img12" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
           </div>
           <div className="cafes">
-            {logoCafes.map((logoCafe: any, i: any) => (
+            {logoCafes.map((logoCafe: any, i: number) => (
               <img key={i} src={logoCafe.src} // onClick = {logoCafe.onClick}
               />
             ))}
           </div>
           <div className="summary fw700 fs14 lh21 fc-gray">{cafeData.length > 0 ? `${cafeData.length}개의 카페` : null}</div>
           <div className="cafe-list">
-            {cafeData.map((cafe, i) => (
+            {cafeData.map((cafe: any, i: number) => (
               <CafeCard
                 key={i}
-                cafeTitle={cafe.title}
-                cafeAddress={cafe.address}
+                cafeTitle={cafe.cafeNm}
+                cafeAddress={cafe.roadAddr}
                 naverRoadFinder={true}
-                appOrderPossible={true}
-                kioskDiscountPossible={true}
+                appOrderYn={cafe.appOrderYn}
+                kioskYn={cafe.kioskYn}
                 menu1={cafe.menu1}
-                menu1_price={cafe.menu1_price}
-                discountprice={cafe.discountprice}
-                cafeId={cafe.number}
+                menu1_price={cafe.discountAmt}
+                discountprice={cafe.discountAmt}
+                cafeId={cafe.cafeId}
                 setCafeID={setCafeID}
                 setModalState={setModalState}
+                setMobileModalState={setMobileModalState}
               />
             ))}
           </div>
@@ -187,16 +172,16 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="cafe-detail">
             <div className="cafe-typical">
-              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountprice}원 할인</div>
-              <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.title}</div>
-              <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.address}</div>
+              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt}원 할인</div>
+              <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.cafeNm}</div>
+              <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.roadAddr}</div>
               <div className="mgb25"> <NaverFinderComponent /></div>
               <div className="flex-row-center mgb30">
                 <div>
-                  <AppOrderDiscountComponent />
+                  {selectedCafe && selectedCafe.appOrderYn ? <AppOrderDiscountComponent /> : null}
                 </div>
                 <div className="mgl25">
-                  <KioskOrderDiscountComponent />
+                  {selectedCafe && selectedCafe.kioskYn ? <KioskOrderDiscountComponent /> : null}
                 </div>
               </div>
             </div>
