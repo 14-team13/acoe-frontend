@@ -48,7 +48,7 @@ const NavContainer = (props: any) => {
     setIsShowDiscount(false)
   }
 
-
+  //logoCafes = {logoCafes}
   return (
     <>
       <MobileView>
@@ -73,7 +73,7 @@ const NavContainer = (props: any) => {
                   <span>1,000원 이상~</span>
                 </div>
               </div>
-              {isShowDiscount ? <DiscountWrap /> : null}
+              {isShowDiscount ? <DiscountWrap  logoCafes = {props.logoCafes}/> : null}
             </div>
           </div>
         </div>
@@ -100,7 +100,7 @@ const NavContainer = (props: any) => {
                   <span>1,000원 이상~</span>
                 </div>
               </div>
-              {isShowDiscount ? <DiscountWrap /> : null}
+              {isShowDiscount ? <DiscountWrap logoCafes = {props.logoCafes}/> : null}
             </div>
           </div>
         </div>

@@ -2,28 +2,13 @@ import React, { useEffect, useState } from 'react';
 import searchSvg from 'images/search.svg';
 import xSvg from 'images/x.svg';
 import CafeCard from 'components/CafeCard';
-import starbucksSvg from 'images/starbucks.svg';
-import paulbassettSvg from 'images/paul.svg';
-import angelinusSvg from 'images/angelinus.svg';
-import hollysSvg from 'images/hollys.svg';
-import passcucciSvg from 'images/passcucci.svg';
-import ediyaSvg from 'images/ediya.svg';
-import coffeebeanSvg from 'images/coffeebean.svg';
-import twosomeSvg from 'images/twosome.svg';
 import leftModalSvg from 'images/leftModal.svg';
 import MenusComponent from 'components/MenusComponent';
 import BlogReviewComponent from 'components/BlogReviewComponent';
 import NaverFinderComponent from 'components/NaverFinderComponent';
 import AppOrderDiscountComponent from 'components/AppOrderDiscountComponent';
 import KioskOrderDiscountComponent from 'components/KioskOrderDiscountComponent';
-import { getData } from 'store/cafeData';
-import { BrowserView, MobileView } from 'react-device-detect';
 import { isMobile } from 'react-device-detect';
-
-interface logoCafes {
-  title: string;
-  src: string;
-}
 
 interface menu {
   menu: string;
@@ -51,9 +36,8 @@ interface infoCafes {
 
 const ModalWrap = (props: any) => {
 
-  const { setModalState, modalState, setMobileModalState, mobileModalState } = props;
+  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes } = props;
 
-  const [logoCafes, setLogoCafes] = useState<logoCafes[]>([]);
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
   const [cafeID, setCafeID] = useState<number>()
   const [selectedCafe, setSelectedCafe] = useState<infoCafes>();
@@ -61,25 +45,7 @@ const ModalWrap = (props: any) => {
   const [selectedMenu, setSelectedMenu] = useState<menu[]>([]);
 
   useEffect(() => {
-    const cafes = [
-      { title: "starbucks", src: starbucksSvg },
-      { title: "paulbassett", src: paulbassettSvg },
-      { title: "angelinus", src: angelinusSvg },
-      { title: "hollys", src: hollysSvg },
-      { title: "passcucci", src: passcucciSvg },
-      { title: "ediya", src: ediyaSvg },
-      { title: "coffeebean", src: coffeebeanSvg },
-      { title: "twosome", src: twosomeSvg },
-    ]
-    setLogoCafes(cafes)
-
-    //데이터 초기화
-    setCafeData(getData)
-  }, [])
-
-  useEffect(() => {
     if (cafeID && cafeData.length > 0) {
-      // setModalState(2);
       const cafe = cafeData.filter((item) => item.number === cafeID)
       setSelectedCafe(cafe[0])
       const menus = [
@@ -92,7 +58,7 @@ const ModalWrap = (props: any) => {
   }, [cafeID])
 
   const search = () => {
-    setCafeData(getData)
+    // setCafeData(getData)
   }
 
   return (
@@ -105,7 +71,7 @@ const ModalWrap = (props: any) => {
             {searchCafeTxt !== '' ? <img className="mgl20 close-image" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
           </div>
           <div className="cafes">
-            {logoCafes.map((logoCafe, i) => (
+            {logoCafes.map((logoCafe: any, i: any) => ( //type 수정 필요 
               <img key={i} src={logoCafe.src} // onClick = {logoCafe.onClick}
               />
             ))}
@@ -187,7 +153,7 @@ const ModalWrap = (props: any) => {
             {searchCafeTxt !== '' ? <img className="mgl15 img12" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
           </div>
           <div className="cafes">
-            {logoCafes.map((logoCafe, i) => (
+            {logoCafes.map((logoCafe: any, i: any) => (
               <img key={i} src={logoCafe.src} // onClick = {logoCafe.onClick}
               />
             ))}

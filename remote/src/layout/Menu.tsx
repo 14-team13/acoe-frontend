@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Maps } from 'components/Maps';
 import { MixedBoundary } from 'components/Common';
 import { NavContainer } from 'layout/Nav';
@@ -6,13 +6,42 @@ import ModalWrap from './LeftModal/ModalWrap'
 import ShortCutAppOrder from 'components/ShortCutAppOrder';
 import ShortCutKioskOrder from 'components/ShortCutKioskOrder';
 import { BrowserView, MobileView } from 'react-device-detect';
+import starbucksSvg from 'images/starbucks.svg';
+import paulbassettSvg from 'images/paul.svg';
+import angelinusSvg from 'images/angelinus.svg';
+import hollysSvg from 'images/hollys.svg';
+import passcucciSvg from 'images/passcucci.svg';
+import ediyaSvg from 'images/ediya.svg';
+import coffeebeanSvg from 'images/coffeebean.svg';
+import twosomeSvg from 'images/twosome.svg';
+import { getFranchises } from 'api/main';
+
+
+interface logoCafes {
+  // title: string;
+  // src: string;
+  rmk: null;
+  regrId: number;
+  regDttm: Date;
+  modrId: number;
+  modDttm: Date;
+  franchiseId: number;
+  franchiseNm: string;
+  discountAmt: number;
+  logoImg: null;
+  useYn: boolean;
+  menuList: any; // 수정필요
+  src: string;
+}
 
 export const Menu: React.FC = (props : any) => {
+
 
   const [modalState, setModalState] = useState(1);
   const leftModalComponent = useRef<HTMLDivElement>(null);
   const [mobileModalState, setMobileModalState] = useState(1);
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
+  const [logoCafes, setLogoCafes] = useState<logoCafes[]>([]);
 
 
   const showLeftModal = () => {
@@ -37,6 +66,33 @@ export const Menu: React.FC = (props : any) => {
     console.log("search")
   }
 
+  useEffect(() => {
+    _getFranchises();
+  },[])
+
+  const _getFranchises = async() => {
+    const response = await getFranchises();
+    if(response.data.length > 0 ){
+      const cafesMap = new Map([
+        [ 6, starbucksSvg], // title: "starbucks",
+        [ 7, paulbassettSvg],
+        [ 1, angelinusSvg ],
+        [ 2, hollysSvg ],
+        [ 3, passcucciSvg ],
+        [ 4, ediyaSvg ],
+        [ 5, coffeebeanSvg ],
+        [ 8, twosomeSvg ]
+      ])
+      response.data.forEach((item : logoCafes) => {
+        item.src = cafesMap.get(item.franchiseId) || ''
+      })
+      setLogoCafes(response.data)
+    }else{
+      setLogoCafes([])
+    }
+  }
+
+
 
   return (
     <>
@@ -52,9 +108,11 @@ export const Menu: React.FC = (props : any) => {
           {mobileModalState !== 1 ?
             <ModalWrap
               setMobileModalState={setMobileModalState}
-              mobileModalState={mobileModalState} />
+              mobileModalState={mobileModalState} 
+              logoCafes = {logoCafes}
+              />
             : null}
-          <NavContainer />
+          <NavContainer  logoCafes = {logoCafes}/>
         </div>
         <MixedBoundary>
           <Maps />
@@ -64,14 +122,16 @@ export const Menu: React.FC = (props : any) => {
         <div className="container">
           {modalState === 2 ? null :
             <div className={modalState === 1 ? 'navOpen' : ''}>
-              <NavContainer />
+              <NavContainer  logoCafes = {logoCafes}/>
             </div>
           }
           <div className="left-modal" ref={leftModalComponent}>
             <div className="left-container ">{modalState !== 0 ?
               <ModalWrap
                 setModalState={setModalState}
-                modalState={modalState} />
+                modalState={modalState} 
+                logoCafes = {logoCafes}
+                />
               : null}
             </div>
             <div className={`openButton ${setButtonState()}`} onClick={showLeftModal}>
