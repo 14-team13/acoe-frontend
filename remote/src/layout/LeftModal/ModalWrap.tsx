@@ -19,7 +19,7 @@ interface menu {
 
 const ModalWrap = (props: any) => {
 
-  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes, cafeData } = props;
+  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes, cafeData, getCafeKeyword } = props;
 
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
   const [cafeID, setCafeID] = useState<number>()
@@ -42,7 +42,7 @@ const ModalWrap = (props: any) => {
   }, [cafeID])
 
   const search = () => {
-    // setCafeData(getData)
+    getCafeKeyword(searchCafeTxt)
   }
 
   return (

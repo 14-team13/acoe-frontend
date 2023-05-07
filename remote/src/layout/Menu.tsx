@@ -15,6 +15,7 @@ import ediyaSvg from 'images/ediya.svg';
 import coffeebeanSvg from 'images/coffeebean.svg';
 import twosomeSvg from 'images/twosome.svg';
 import { getFranchises, getCafesList } from 'api/main';
+import { getCafeKeyword } from 'api/main';
 
 interface logoCafes {
   rmk: null;
@@ -42,7 +43,7 @@ interface cafe {
   areaCd: number,
   trdStateCd: number,
   dtlStateCd: number,
-  telNo:  string | null,
+  telNo: string | null,
   roadAddr: string,
   roadPostNo: number,
   x: number,
@@ -86,6 +87,7 @@ export const Menu: React.FC = (props: any) => {
 
   const search = () => {
     console.log("search")
+    _getCafeKeyword(searchCafeTxt)
   }
 
   useEffect(() => {
@@ -109,6 +111,7 @@ export const Menu: React.FC = (props: any) => {
       response.data.forEach((item: logoCafes) => {
         item.src = cafesMap.get(item.franchiseId) || ''
       })
+      console.log(response.data)
       setLogoCafes(response.data)
     } else {
       setLogoCafes([])
@@ -124,6 +127,17 @@ export const Menu: React.FC = (props: any) => {
       setCafeData([])
     }
   }
+
+  const _getCafeKeyword = async (cafeTitle: string) => {
+    const response = await getCafeKeyword(cafeTitle); // type 변경 필요 
+    if (response.data.length > 0) {
+      setCafeData(response.data)
+      console.log(response.data)
+    } else {
+      setCafeData([])
+    }
+  }
+
 
   return (
     <>
@@ -141,7 +155,7 @@ export const Menu: React.FC = (props: any) => {
               setMobileModalState={setMobileModalState}
               mobileModalState={mobileModalState}
               logoCafes={logoCafes}
-              cafeData = {cafeData}
+              cafeData={cafeData}
             />
             : null}
           <NavContainer logoCafes={logoCafes} />
@@ -163,7 +177,8 @@ export const Menu: React.FC = (props: any) => {
                 setModalState={setModalState}
                 modalState={modalState}
                 logoCafes={logoCafes}
-                cafeData = {cafeData}
+                cafeData={cafeData}
+                getCafeKeyword={_getCafeKeyword}
               />
               : null}
             </div>

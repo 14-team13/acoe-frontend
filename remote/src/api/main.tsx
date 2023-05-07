@@ -52,3 +52,13 @@ export const getCafeInfo = (cafeId: number) => {
     // }
   });
 }
+
+export const getCafeKeyword = (cafeTitle: string) => {
+  return request({
+    method: 'GET',
+    url: '/main/cafe/cafe-keyword/' + cafeTitle, // 수정필요
+    // data: {
+    //   cafeId: cafeId,
+    // }
+  });
+}
