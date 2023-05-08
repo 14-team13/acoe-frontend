@@ -28,3 +28,25 @@ export const logout = () => {
   });
 }
 
+
+export const getAdminFranchisesList = () => {
+  return request({
+    method: 'GET',
+    url: 'admin/franchise/franchises' // 수정필요
+    // data: {
+    //   cafeId: cafeId,
+    // }
+  });
+}
+
+
+export const getAdminFranchiseInfo = (cafeId: number) => {
+  return request({
+    method: 'GET',
+    url: 'admin/franchise/' + cafeId, // 수정필요
+    // data: {
+    //   cafeId: cafeId,
+    // }
+  });
+}
+
