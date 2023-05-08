@@ -10,7 +10,8 @@ import { API_HOST } from 'constant';
 import requestRefreshToken from './requestRefreshToken';
 
 const request = axios.create({
-  baseURL: 'http://localhost:8123',
+  // baseURL: 'http://localhost:8123', // 확인필요!!! 
+  baseURL: '',
 });
 
 //요청 타임아웃 설정
