@@ -1,7 +1,7 @@
 import { Tabs, Tab } from 'react-bootstrap'
 import MembersManagement from '@pages/components/MembersManagement'
 import FranchiseManagement from '@pages/components/FranchiseManagement'
-import MemberManagement from '@pages/components/MemberManagement'
+import CafesManagement from '@pages/components/CafesManagement'
 
 
 const AcoeAdmin = () => {
@@ -18,7 +18,7 @@ const AcoeAdmin = () => {
         <FranchiseManagement />
       </Tab>
       <Tab eventKey="cafe" title="카페 관리">
-        <MemberManagement />
+        <CafesManagement />
       </Tab>
     </Tabs>
   );
