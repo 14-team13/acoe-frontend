@@ -50,3 +50,21 @@ export const getAdminFranchiseInfo = (cafeId: number) => {
   });
 }
 
+export const postAdminFranchise = (_data : any) => {
+  return request({
+    method: 'POST',
+    url: '/admin/franchise', // 수정필요
+    data: _data
+  });
+}
+
+export const putAdminFranchise = (_data : any, cafeId: number) => {
+  return request({
+    method: 'PUT',
+    url: '/admin/cafe/' + cafeId, // 수정필요
+    data: _data
+  });
+}
+
+
+
