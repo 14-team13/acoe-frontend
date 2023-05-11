@@ -1,5 +1,4 @@
 import { Container, Row, Col, Card, Button, InputGroup, Form } from 'react-bootstrap';
-import { getAdminFranchisesList, getAdminFranchiseInfo } from 'api/main';
 import { getAdminFranchisesList, getAdminFranchiseInfo, postAdminFranchise, putAdminFranchise} from 'api/main';
 import { useState, useRef, useEffect } from 'react';
 import * as formik from 'formik';
@@ -21,21 +20,15 @@ const FranchiseManagement = () => {
     useYn: boolean;
     menuList?: any; // 수정필요
     src: string;
-    menuNm0: string;
-    price0: number;
-    menuNm1: string;
-    price1: number;
-    menuNm2: string;
-    price2: number;
   }
 
   interface menu {
-    rmk?: string;
-    regrId: number;
-    menuId: number;
     menuNm: string;
     price: number;
   }
+
+  type menuType = {};
+  type menuList = [];
 
   const [franchiseData, setFranchisesData] = useState<cafe[]>([]);
   const [franchiseAdminMain, setFranchiseAdminMain] = useState(true);
@@ -43,6 +36,7 @@ const FranchiseManagement = () => {
   const [franchiseInfo, setFranchiseInfo] = useState<cafe[]>([]);
   const [formData, setFormData] = useState<any>({}); // 수정필요
   const [fileData, setFileData] = useState<string | null>(null);
+
 
   const _getAdminFranchisesList = async () => {
     const response = await getAdminFranchisesList(); // type 변경 필요 
@@ -56,21 +50,26 @@ const FranchiseManagement = () => {
 
   const _getAdminFranchiseInfo = async (cafeId: number) => {
     const response = await getAdminFranchiseInfo(cafeId); // type 변경 필요 
-    if (response.data) {
-      if (response.data.menuList) {
-        const _menuList = {}
-        response.data.menuList.forEach((item: menu, index: number) => {
-          _menuList['menuNm' + index] = item.menuNm;
-          _menuList['price' + index] = item.price;
-        })
-        setFormData({ ...response.data, ..._menuList })
-      } else {
 
+    if (response.data) {
+      console.log(response.data)
+      for (let i = 0; i < 3; i++) {
+        if (response.data.menuList[i] && response.data.menuList[i].menuNm) {
+          let item = response.data.menuList[i];
+          response.data.menuList[i]({ 'menuId': item.menuId, 'menuNm': item.menuNm, 'price': item.price })
+        } else {
+          response.data.menuList.push({ 'menuId': i, 'menuNm': '', 'price': '' })
+        }
       }
+      setFormData(response.data)
     } else {
-      setFormData({});
+      setFormData({})
     }
   }
+
+  useEffect(() => {
+    console.log(formData)
+  }, [formData])
 
   useEffect(() => {
     if (franchiseAdminMain) {
@@ -102,15 +101,13 @@ const FranchiseManagement = () => {
     useYn: yup.bool().required().oneOf([true], 'terms must be accepted'),
   });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData); // log the form data to the console
-    // submit the form data to a backend API
+    await putAdminFranchise(JSON.stringify(formData), formData.franchiseId); 
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    console.log("aa")
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
@@ -165,7 +162,12 @@ const FranchiseManagement = () => {
                     type="text"
                     name="franchiseNm"
                     value={formData.franchiseNm || ''}
-                    onChange={handleChange}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        [event.target.name]: event.target.value,
+                      }));
+                    }}
                     isValid={touched.franchiseNm && !errors.franchiseNm}
                   />
                   <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
@@ -181,54 +183,81 @@ const FranchiseManagement = () => {
                     type="number"
                     name="discountAmt"
                     value={formData.discountAmt || 0}
-                    // onChange={handleChange}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                      if (!isNaN(parseInt(event.target.value))) {
-                        setFormData((prevFormData) => ({
-                          ...prevFormData,
-                          [event.target.name]: parseInt(event.target.value),
-                        }));
-                      }
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        [event.target.name]: parseInt(event.target.value),
+                      }));
                     }}
                     isValid={touched[0]?.discountAmt && !errors[0]?.discountAmt}
                   />
                   <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
                 </Form.Group>
               </Row>
-              {/* <Row className="mb-6">
-                <Form.Group
-                  as={Col}
-                  md="4"
-                  controlId="validationFormik103"
-                  className="position-relative"
-                >
-                  <Form.Label>메뉴1</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="franchiseName"
-                    value={values.franchiseNm}
-                    onChange={handleChange}
-                    isValid={touched.franchiseNm && !errors.franchiseNm}
-                  />
-                  <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group
-                  as={Col}
-                  md="4"
-                  controlId="validationFormik104"
-                  className="position-relative"
-                >
-                  <Form.Label>금액1</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="discountPrice"
-                    value={values.discountAmt}
-                    onChange={handleChange}
-                    isValid={touched.discountAmt && !errors.discountAmt}
-                  />
-                  <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-              </Row> */}
+              {formData && formData.menuList && formData.menuList.map((item, i) => (
+                <Row className="mb-6" key={i}>
+                  <Form.Group
+                    as={Col}
+                    md="4"
+                    controlId= {i + "formikVal_menu"} 
+                    className="position-relative"
+                  >
+                    <Form.Label>메뉴{i + 1}</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="menuNm"
+                      value={formData.menuList[i].menuNm || ''}
+                      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        setFormData((prevFormData) => ({
+                          ...prevFormData,
+                          ['menuList']:
+                            prevFormData.menuList.map((item, listIndex) => {
+                              if (i === listIndex) {
+                                return {
+                                  ...item,
+                                  [event.target.name]: event.target.value
+                                };
+                              } else {
+                                return item;
+                              }
+                            })
+                        }));
+                      }}
+                    />
+                    <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group
+                    as={Col}
+                    md="4"
+                    controlId={i + "formikVal_price"} 
+                    className="position-relative"
+                  >
+                    <Form.Label>금액 {i + 1}</Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="price"
+                      value={formData.menuList[i].price || 0}
+                      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        setFormData((prevFormData) => ({
+                          ...prevFormData,
+                          ['menuList']:
+                            prevFormData.menuList.map((item, listIndex) => {
+                              if (i === listIndex) {
+                                return {
+                                  ...item,
+                                  [event.target.name]: parseInt(event.target.value),
+                                };
+                              } else {
+                                return item;
+                              }
+                            })
+                        }));
+                      }}
+                    />
+                    <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                  </Form.Group>
+                </Row>
+              ))}
               <Row>
                 <Form.Group className="position-relative mb-3">
                   <Form.Label>로고</Form.Label>
@@ -261,42 +290,29 @@ const FranchiseManagement = () => {
                     //   // };
                     // }
                     //}}
-
                     isInvalid={!!errors.logoImg}
                   />
                   <Form.Control.Feedback type="invalid" tooltip>
                     {errors.logoImg}
                   </Form.Control.Feedback>
-                  {fileData && <div>{fileData}</div>}
                 </Form.Group>
               </Row>
               <Form.Group className="position-relative mb-3">
-                <Form.Label>사용여부</Form.Label>
                 <Form.Check
                   required
-                  type="radio"
                   name="useYn"
-                  label="Y"
-                  value={formData.useYn || false}
-                  onChange={handleChange}
+                  label="사용여부"
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setFormData((prevFormData) => ({
+                      ...prevFormData,
+                      [event.target.name]: event.target.checked,
+                    }));
+                  }}
+                  value={formData.useYn}
                   isInvalid={!!errors.useYn}
                   feedback={errors.useYn}
                   feedbackType="invalid"
-                  id="default-radio"
-                  feedbackTooltip
-                />
-                <Form.Check
-                  required
-                  type="radio"
-                  name="useYn"
-                  label="N"
-                  onChange={handleChange}
-                  // value={formData.useYn}
-                  isInvalid={!!errors.useYn}
-                  feedback={errors.useYn}
-                  feedbackType="invalid"
-                  id="disabled-default-radio"
-                  feedbackTooltip
+                  id="validationFormik0"
                 />
               </Form.Group>
               <Button type="submit">Submit form</Button>
