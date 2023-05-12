@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
-function AcoeFooter() {
+const  AcoeFooter = () =>  {
   return (
     <footer className = "pd10">
       <Row>
