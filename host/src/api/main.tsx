@@ -29,42 +29,100 @@ export const logout = () => {
 }
 
 
+
+export const getAdminUser = (_params : any) => {
+  return request({
+    method: 'GET',
+    url: 'admin/user/users',
+    params: _params // get
+  });
+}
+
+export const putAdminUser = (_params : any, _userId: number) => {
+  return request({
+    method: 'PUT',
+    url: 'admin/user/' + _userId,
+    data: _params
+  });
+}
+
+
+export const deleteAdminUser = (_params : any, _userId: number) => {
+  return request({
+    method: 'DELETE',
+    url: 'admin/user/' + _userId,
+    data: _params
+  });
+}
+
+
+
 export const getAdminFranchisesList = () => {
   return request({
     method: 'GET',
-    url: 'admin/franchise/franchises' // 수정필요
+    url: 'admin/franchise/franchises' 
     // data: {
-    //   cafeId: cafeId,
+    //   cafeId: _cafeId,
     // }
   });
 }
 
 
-export const getAdminFranchiseInfo = (cafeId: number) => {
+
+export const getAdminFranchiseInfo = (_cafeId: number) => {
   return request({
     method: 'GET',
-    url: 'admin/franchise/' + cafeId, // 수정필요
+    url: 'admin/franchise/' + _cafeId, 
     // data: {
-    //   cafeId: cafeId,
+    //   _cafeId: _cafeId,
     // }
   });
 }
 
-export const postAdminFranchise = (_data : any) => {
+export const postAdminFranchise = (_params : any) => {
   return request({
     method: 'POST',
-    url: '/admin/franchise', // 수정필요
-    data: _data
+    url: '/admin/franchise', 
+    data: _params
   });
 }
 
-export const putAdminFranchise = (_data : any, cafeId: number) => {
+export const putAdminFranchise = (_params : any, _cafeId: number) => {
   return request({
     method: 'PUT',
-    url: '/admin/cafe/' + cafeId, // 수정필요
-    data: _data
+    url: '/admin/cafe/' + _cafeId, 
+    data: _params
   });
 }
 
+export const getAdminCafeList = (_params : any) => {
+  return request({
+    method: 'GET',
+    url: '/admin/cafe/cafes',
+    params: _params // get
+  });
+}
 
+export const getAdminCafeInfo = (_cafeId: number) => {
+  return request({
+    method: 'GET',
+    url: '/admin/cafe/' + _cafeId, 
+  });
+}
+
+export const postAdminCafeInfo = (_params : any) => {
+  return request({
+    method: 'POST',
+    url: '/admin/cafe/',
+    data: _params //post
+  });
+}
+
+export const putAdminCafeInfo = (_params : any, _cafeId: number) => {
+  return request({
+    method: 'PUT',
+    url: '/admin/cafe/' + _cafeId,
+    data: _params
+  });
+}
 
