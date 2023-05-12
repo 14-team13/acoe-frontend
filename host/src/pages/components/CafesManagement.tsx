@@ -20,12 +20,6 @@ const CafesManagement = (props: any) => {
     menuYn?: boolean | null;
   }
 
-  interface MyPaginationProps {
-    totalPages: number;
-    currentPage: number;
-    onPageChange: (pageNumber: number) => void;
-  }
-
   const options: Option[] = [
     // { value: '', label: '전체' },
     { value: 'cafeNm', label: '카페명' },
@@ -37,6 +31,7 @@ const CafesManagement = (props: any) => {
     const response = await getAdminCafeList(_searchOption); // type 변경 필요 
     if (response.data) {
       setCafeList(response.data.content)
+      totalPages.current = response.data
     } else {
       setCafeList([])
     }
@@ -91,7 +86,8 @@ const CafesManagement = (props: any) => {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [cafeMngAdminMain, setCafeMngAdminMain] = useState(true);
   const [formData, setFormData] = useState<any>(null)
-  const [currentPage, setCurrentPage] = useState(1);
+  const [activePage, setActivePage] = useState(1);
+  const totalPages = useRef<number>(0);
 
   useEffect(() => {
     if (cafeMngAdminMain) {
@@ -138,11 +134,23 @@ const CafesManagement = (props: any) => {
   }
 
   const search = () => {
-    console.log(selectedOption)
-    // setSearchOption({ ..., "page" : 0 })
+
+    let _selectedOption = { "page": 0, "sizePerPage": 10}
+    if(selectedOption && selectedOption.value === 'cafeNm'){
+      _selectedOption["cafeNm"] =  inputValue;
+    }else if(selectedOption && selectedOption.value === 'roadAddr'){
+      _selectedOption["roadAddr"] =  inputValue;
+    }else if(selectedOption && selectedOption.value === 'discountAmt'){
+      _selectedOption["discountAmt"] =  inputValue;
+    }else{
+
+    }
+    setActivePage(1)
+    setSearchOption(_selectedOption)
+    _getAdminCafeList(_selectedOption)
   }
 
-  const [activePage, setActivePage] = useState(currentPage);
+
 
   const schema = yup.object().shape({
     cafeNm: yup.string().required(),
@@ -152,7 +160,15 @@ const CafesManagement = (props: any) => {
 
   const renderPageItems = () => {
     const pageItems: any = [];
-    for (let pageNumber = 1; pageNumber <= 11; pageNumber++) {
+    pageItems.push(<Pagination.First onClick={() => handlePageChange(1)} />)
+    pageItems.push(<Pagination.Prev onClick={() => handlePageChange(activePage - 1)} />)
+    let _pageNumber = 1;
+    if(activePage > totalPages.current - 10){
+      _pageNumber = activePage-10;;
+    }else if (activePage > 5) {
+      _pageNumber = activePage-5;;
+    } 
+    for (let pageNumber = _pageNumber; pageNumber <= _pageNumber + 9; pageNumber++) {
       pageItems.push(
         <Pagination.Item
           key={pageNumber}
@@ -163,22 +179,29 @@ const CafesManagement = (props: any) => {
         </Pagination.Item>
       );
     }
+
+    pageItems.push( <Pagination.Next onClick={() => handlePageChange(activePage + 1)} />)
+    pageItems.push( <Pagination.Last  onClick={() => handlePageChange(totalPages.current)}/>)
     return pageItems;
   };
 
   const handlePageChange = (pageNumber: number) => {
-    setActivePage(pageNumber);
-    onPageChange(pageNumber);
-    const _selectedOption = {
-      "page": pageNumber - 1,
-      "sizePerPage": 10
+    if (pageNumber > 0 || pageNumber < totalPages.current) {
+      setActivePage(pageNumber);
+      onPageChange(pageNumber);
+      const _selectedOption = {
+        "page": pageNumber - 1,
+        "sizePerPage": 10
+      }
+      _getAdminCafeList(_selectedOption)
     }
-    _getAdminCafeList(_selectedOption)
   }
 
   const onPageChange = (pageNumber: number) => {
 
   }
+
+
 
   return (
     <Container style={{ overflowY: "auto" }}>
@@ -207,6 +230,9 @@ const CafesManagement = (props: any) => {
               </Form>
             </div>
           </div>
+          <Pagination>
+            {renderPageItems()}
+          </Pagination>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -239,11 +265,6 @@ const CafesManagement = (props: any) => {
               )) : null}
             </tbody>
           </Table>
-          <Pagination>
-            <Pagination.Prev onClick={() => handlePageChange(activePage - 1)} />
-            {renderPageItems()}
-            <Pagination.Next onClick={() => handlePageChange(activePage + 1)} />
-          </Pagination>
         </div> :
         <div>
           <Formik
