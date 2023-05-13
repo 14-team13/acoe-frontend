@@ -10,8 +10,7 @@ import { API_HOST } from 'constant';
 import requestRefreshToken from './requestRefreshToken';
 
 const request = axios.create({
-  // baseURL: 'http://localhost:8123', // 확인필요!!! 
-  baseURL: '',
+  baseURL: 'http://acoe.co.kr:9090/',
   headers: {
     'Content-Type': 'application/json'
   }

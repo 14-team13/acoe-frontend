@@ -7,7 +7,7 @@ import axios, {
 
 
 const request = axios.create({
-  baseURL: '',
+  baseURL: 'http://acoe.co.kr:9090/',
 });
 
 //요청 타임아웃 설정
