@@ -10,7 +10,7 @@ module.exports = function (config, env) {
       (module.exports = {
         name: "host",
         remotes: {
-          remote:'remote@http://localhost:3001/remoteEntry.js'
+          remote:'remote@http://acoe.co.kr:3001/remoteEntry.js'
         },
         exposes: {
           "./atoms": "./src/store/atoms",
