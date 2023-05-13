@@ -45,11 +45,12 @@ const CafesManagement = (props: any) => {
         for (let i = 0; i < 5; i++) {
           if (response.data.menuList[i] && response.data.menuList[i].menuNm) {
             let item = response.data.menuList[i];
-            response.data.menuList[i]({ 'menuId': item.menuId, 'menuNm': item.menuNm, 'price': item.price })
+            response.data.menuList[i] = { 'menuId': item.menuId, 'menuNm': item.menuNm, 'price': item.price }
           } else {
-            response.data.menuList.push({ 'menuId': i, 'menuNm': '', 'price': '' })
+            response.data.menuList[i] = { 'menuId': i, 'menuNm': '', 'price': '' }
           }
         }
+        console.log(response.data.menuList)
         setFormData({ ...response.data, type: 'UPD' })
       }
     } else {
