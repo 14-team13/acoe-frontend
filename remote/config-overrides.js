@@ -15,7 +15,7 @@ module.exports = function (config, env) {
           host: 
           isDevelopment?  
           'host@http://localhost:3000/remoteEntry.js' :
-          `host@https://acoe.vercel.app/remoteEntry.js` 
+          `host@https://acoe.co.kr/remoteEntry.js` 
         },
         exposes: {
           "./Menu": "./src/layout/Menu"
