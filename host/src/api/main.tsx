@@ -29,7 +29,7 @@ export const logout = () => {
 }
 
 
-
+//user 
 export const getAdminUser = (_params : any) => {
   return request({
     method: 'GET',
@@ -57,6 +57,7 @@ export const deleteAdminUser = (_params : any, _userId: number) => {
 
 
 
+//franchise
 export const getAdminFranchisesList = () => {
   return request({
     method: 'GET',
@@ -90,11 +91,12 @@ export const postAdminFranchise = (_params : any) => {
 export const putAdminFranchise = (_params : any, _cafeId: number) => {
   return request({
     method: 'PUT',
-    url: '/admin/cafe/' + _cafeId, 
+    url: '/admin/franchise/' + _cafeId, 
     data: _params
   });
 }
 
+//cafelist
 export const getAdminCafeList = (_params : any) => {
   return request({
     method: 'GET',
