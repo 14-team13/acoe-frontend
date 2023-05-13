@@ -50,10 +50,10 @@ const Main = () => {
   //   if (data.status === 200) {
   //     window.open('/login', '_self');
   //   }
-  // };
+  // };https://acoe.co.kr/
 
-  const KAKAO_AUTH_URL = 'http://118.67.131.181:9090/oauth2/authorization/kakao?redirect_uri=https://acoe.vercel.app/oauth/redirect'
-  const GOOGLE_AUTH_URL = 'http://118.67.131.181:9090/oauth2/authorization/google?redirect_uri=https://acoe.vercel.app/oauth/redirect'
+  const KAKAO_AUTH_URL = 'http://acoe.co.kr:9090/oauth2/authorization/kakao?redirect_uri=https://acoe.co.kr/oauth/redirect'
+  const GOOGLE_AUTH_URL = 'http://acoe.co.kr:9090/oauth2/authorization/google?redirect_uri=https://acoe.co.kr/oauth/redirect'
 
   const startAcoe = () => {
     setShowLogin(true);
