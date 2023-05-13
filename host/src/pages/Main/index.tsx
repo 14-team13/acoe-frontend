@@ -52,8 +52,8 @@ const Main = () => {
   //   }
   // };https://acoe.co.kr/
 
-  const KAKAO_AUTH_URL = 'http://acoe.co.kr:9090/oauth2/authorization/kakao?redirect_uri=https://acoe.co.kr/oauth/redirect'
-  const GOOGLE_AUTH_URL = 'http://acoe.co.kr:9090/oauth2/authorization/google?redirect_uri=https://acoe.co.kr/oauth/redirect'
+  const KAKAO_AUTH_URL = 'http://acoe.co.kr:9090/oauth2/authorization/kakao?redirect_uri=http://acoe.co.kr/oauth/redirect'
+  const GOOGLE_AUTH_URL = 'http://acoe.co.kr:9090/oauth2/authorization/google?redirect_uri=http://acoe.co.kr/oauth/redirect'
 
   const startAcoe = () => {
     setShowLogin(true);
