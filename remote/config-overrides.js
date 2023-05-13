@@ -12,10 +12,7 @@ module.exports = function (config, env) {
       (module.exports = {
         name: "remote",
         remotes: {
-          host: 
-          isDevelopment?  
-          'host@http://localhost:3000/remoteEntry.js' :
-          `host@https://acoe.co.kr/remoteEntry.js` 
+          host: `host@http://localhost:3000/remoteEntry.js`
         },
         exposes: {
           "./Menu": "./src/layout/Menu"
