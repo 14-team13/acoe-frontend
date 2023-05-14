@@ -2,7 +2,7 @@
   "name": "remote",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:9090",
+  "proxy": "http://acoe.co.kr:9090",
   "dependencies": {
     "@types/node": "^16.18.11",
     "@types/react": "^18.0.26",
