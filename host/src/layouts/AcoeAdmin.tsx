@@ -1,5 +1,5 @@
 import { Tabs, Tab } from 'react-bootstrap'
-import { useState} from 'react';
+import { useState } from 'react';
 import MembersManagement from '@pages/components/MembersManagement'
 import FranchiseManagement from '@pages/components/FranchiseManagement'
 import CafesManagement from '@pages/components/CafesManagement'
@@ -7,7 +7,7 @@ import CafesManagement from '@pages/components/CafesManagement'
 
 const AcoeAdmin = () => {
 
-  const [key, setKey] = useState('')
+  const [key, setKey] = useState('member')
 
   const handleSelect = (key) => {
     setKey(key)
@@ -21,13 +21,13 @@ const AcoeAdmin = () => {
       className="mb-3 mgt10 mg20"
     >
       <Tab eventKey="member" title="회원관리">
-        <MembersManagement key = {key}/>
+        {key === 'member' ? <MembersManagement key={key} /> : null}
       </Tab>
       <Tab eventKey="franchise" title="프렌차이즈 관리">
-        <FranchiseManagement key = {key}/>
+        {key === 'franchise' ? <FranchiseManagement key={key} /> : null}
       </Tab>
       <Tab eventKey="cafe" title="카페 관리">
-        <CafesManagement key = {key}/>
+        {key === 'cafe' ? <CafesManagement key={key} /> : null}
       </Tab>
     </Tabs>
   );
