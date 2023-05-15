@@ -1,13 +1,27 @@
-
-import acoeTumblerSvg from 'images/acoe-tumbler.svg';
-
+import React, { useState, useEffect } from 'react';
 
 const MenusComponent = (props) => {
+
+  const [image, setImage] = useState(null);
+
+  function rand(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  useEffect(() => {
+    const loadImage = async () => {
+      const { default: myImage } = await import(`images/C_tumbler${rand(1, 5)}.svg`);
+      setImage(myImage);
+    };
+    loadImage();
+  }, []);
+
 
   return (
     <div className="cafe-menu">
       <div className="flex-row mg8">
-        <img src={acoeTumblerSvg} />
+        {/* <img src={`images/C_tumbler${rand(1, 5)}.svg`} /> */}
+        <img src={image} />
         <div className="flex-column mgl16">
           <div className="fw400 fs14 lh21">	{props.menuNm} </div>
           <div className="flex-row mgt3">
