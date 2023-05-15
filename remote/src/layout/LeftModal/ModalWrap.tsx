@@ -50,14 +50,13 @@ const ModalWrap = (props: any) => {
       {isMobile && mobileModalState === 2 ?
         <div className="mb-cafe-modal">
           <div className="search">
-            <img className="" src={leftModalSvg} onClick={() => setMobileModalState(1)} />
+            <img className="" src={leftModalSvg}  onClick={() => setMobileModalState(1)} />
             <input className="mgl50" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
             {searchCafeTxt !== '' ? <img className="mgl20 close-image" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
           </div>
           <div className="cafes">
             {logoCafes.map((logoCafe: any, i: any) => ( //type 수정 필요 
-              <img key={i} src={logoCafe.src} // onClick = {logoCafe.onClick}
-              />
+              <img key={i} src={`data:image/jpg;base64,${logoCafe.logoImg}`} alt="base64-encoded image"/>
             ))}
           </div>
           <div className="summary fw700 fs14 lh21 fc-gray">{cafeData.length > 0 ? `${cafeData.length}개의 카페` : null}</div>
@@ -138,8 +137,7 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="cafes">
             {logoCafes.map((logoCafe: any, i: number) => (
-              <img key={i} src={logoCafe.src} // onClick = {logoCafe.onClick}
-              />
+              <img key={i} src={`data:image/jpg;base64,${logoCafe.logoImg}`} />
             ))}
           </div>
           <div className="summary fw700 fs14 lh21 fc-gray">{cafeData.length > 0 ? `${cafeData.length}개의 카페` : null}</div>

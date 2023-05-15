@@ -8,7 +8,9 @@ const FranchiseCard = (props) => {
       <MobileView>
         <div className="mb-franchise-card">
           <div className="mb-franchise-img">
-            <img src={props.src} />
+            <img 
+              src={`data:image/jpg;base64,${props.logoImg}`} 
+            />
           </div>
           <div className="pd10">
             <div className="fw400 fs12 lh18 fc-gray">{props.name}</div>
@@ -19,7 +21,7 @@ const FranchiseCard = (props) => {
       <BrowserView>
         <div className="franchise-card">
           <div className="franchise-img">
-            <img src={props.src} />
+            <img src={`data:image/jpg;base64,${props.logoImg}`} />
           </div>
           <div className="pd10">
             <div className="fw400 fs12 lh18 fc-gray">{props.name}</div>

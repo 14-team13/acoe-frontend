@@ -16,7 +16,7 @@ const DiscountWrap = (props: any) => {
           {props.logoCafes.map((logoCafe: any, i: number) => ( //type 수정 필요 
             <FranchiseCard
               key={i}
-              src={logoCafe.src}
+              logoImg={logoCafe.logoImg}
               name={logoCafe.franchiseNm}
               discountInfo={logoCafe.discountAmt}
             />
@@ -28,7 +28,7 @@ const DiscountWrap = (props: any) => {
           {props.logoCafes.map((logoCafe: any, i: number) => ( //type 수정 필요 
             <FranchiseCard
               key={i}
-              src={logoCafe.src}
+              logoImg={logoCafe.logoImg}
               name={logoCafe.franchiseNm}
               discountInfo={logoCafe.discountAmt}
             />
