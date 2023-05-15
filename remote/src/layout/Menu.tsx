@@ -98,20 +98,6 @@ export const Menu: React.FC = (props: any) => {
   const _getFranchises = async () => {
     const response = await getFranchises();
     if (response.data.length > 0) {
-      const cafesMap = new Map([
-        [6, starbucksSvg], // title: "starbucks",
-        [7, paulbassettSvg],
-        [1, angelinusSvg],
-        [2, hollysSvg],
-        [3, passcucciSvg],
-        [4, ediyaSvg],
-        [5, coffeebeanSvg],
-        [8, twosomeSvg]
-      ])
-      response.data.forEach((item: logoCafes) => {
-        item.src = cafesMap.get(item.franchiseId) || ''
-      })
-      console.log(response.data)
       setLogoCafes(response.data)
     } else {
       setLogoCafes([])

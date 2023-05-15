@@ -12,9 +12,9 @@ import { isMobile } from 'react-device-detect';
 import { getCafeInfo } from 'api/main';
 
 interface menu {
-  menu: string;
+  menuNm: string;
   price: number;
-  discount: number
+  discountAmt: number
 }
 
 const ModalWrap = (props: any) => {
@@ -30,8 +30,12 @@ const ModalWrap = (props: any) => {
     const response = await getCafeInfo(cafeID); // type 변경 필요 
     if (response.data) {
       setSelectedCafe(response.data)
+      if(response.data.menuList && response.data.menuList.length > 0){
+        setSelectedMenu(response.data.menuList)
+      }
     } else {
       setSelectedCafe([])
+      setSelectedMenu([])
     }
   }
 
@@ -69,9 +73,9 @@ const ModalWrap = (props: any) => {
                 naverRoadFinder={true}
                 appOrderYn={cafe.appOrderYn}
                 kioskYn={cafe.kioskYn}
-                menu1={cafe.menu1}
-                menu1_price={cafe.discountAmt}
-                discountprice={cafe.discountprice}
+                menuNm={cafe.menuList && cafe.menuList[0]? cafe.menuList[0].menuNm : ''}
+                price={cafe.menuList && cafe.menuList[0]? cafe.menuList[0].price : 0}
+                discountAmt={cafe.discountAmt}
                 cafeId={cafe.cafeId}
                 setCafeID={setCafeID}
                 setModalState={setModalState}
@@ -88,7 +92,7 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="cafe-detail">
             <div className="cafe-typical">
-              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountprice}원 할인</div>
+              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt}원 할인</div>
               <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.title}</div>
               <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.address}</div>
               <NaverFinderComponent />
@@ -106,9 +110,9 @@ const ModalWrap = (props: any) => {
               {selectedMenu.map((item, i) => (
                 <MenusComponent
                   key={i}
-                  menu={item.menu}
+                  menuNm={item.menuNm}
                   price={item.price}
-                  discountprice={item.discount}
+                  discountAmt={selectedCafe?.discountAmt}
                   naverRoadFinder={true}
                 />
               ))}
@@ -150,9 +154,9 @@ const ModalWrap = (props: any) => {
                 naverRoadFinder={true}
                 appOrderYn={cafe.appOrderYn}
                 kioskYn={cafe.kioskYn}
-                menu1={cafe.menu1}
-                menu1_price={cafe.discountAmt}
-                discountprice={cafe.discountAmt}
+                menuNm={cafe.menuList && cafe.menuList[0]? cafe.menuList[0].menuNm : ''}
+                price={cafe.menuList && cafe.menuList[0]? cafe.menuList[0].price : 0}
+                discountAmt={cafe.discountAmt}
                 cafeId={cafe.cafeId}
                 setCafeID={setCafeID}
                 setModalState={setModalState}
@@ -175,10 +179,11 @@ const ModalWrap = (props: any) => {
               <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.roadAddr}</div>
               <div className="mgb25"> <NaverFinderComponent /></div>
               <div className="flex-row-center mgb30">
+              {selectedCafe && selectedCafe.appOrderYn ?
+                <div className="mgr25">
+                   <AppOrderDiscountComponent /> 
+                </div>: null}
                 <div>
-                  {selectedCafe && selectedCafe.appOrderYn ? <AppOrderDiscountComponent /> : null}
-                </div>
-                <div className="mgl25">
                   {selectedCafe && selectedCafe.kioskYn ? <KioskOrderDiscountComponent /> : null}
                 </div>
               </div>
@@ -188,9 +193,9 @@ const ModalWrap = (props: any) => {
               {selectedMenu.map((item, i) => (
                 <MenusComponent
                   key={i}
-                  menu={item.menu}
+                  menuNm={item.menuNm}
                   price={item.price}
-                  discountprice={item.discount}
+                  discountAmt={selectedCafe?.discountAmt}
                   naverRoadFinder={true}
                 />
               ))}
