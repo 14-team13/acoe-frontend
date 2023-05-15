@@ -9,10 +9,6 @@ const FranchiseManagement = (props) => {
 
   interface cafe {
     rmk?: string;
-    // regrId: number;
-    // regDttm: string;
-    // modrId: number;
-    // modDttm: string;
     franchiseId: number;
     franchiseNm: string;
     discountAmt: number;
@@ -27,16 +23,17 @@ const FranchiseManagement = (props) => {
     price: number;
   }
 
-  type menuType = {};
-  type menuList = [];
+  interface file {
+    myFile: string | null;
+  }
+
 
   const [franchiseData, setFranchisesData] = useState<cafe[]>([]);
   const [franchiseAdminMain, setFranchiseAdminMain] = useState(true);
   const [currentData, setCurrentData] = useState<cafe | null>(null);
   const [franchiseInfo, setFranchiseInfo] = useState<cafe[]>([]);
   const [formData, setFormData] = useState<any>({}); // 수정필요
-  const [fileData, setFileData] = useState<string | null>(null);
-
+  const [postImage, setPostImage] = useState<file | object>({ myFile: "" });
 
   const _getAdminFranchisesList = async () => {
     const response = await getAdminFranchisesList(); // type 변경 필요 
@@ -54,12 +51,11 @@ const FranchiseManagement = (props) => {
       for (let i = 0; i < 3; i++) {
         if (response.data.menuList[i] && response.data.menuList[i].menuNm) {
           let item = response.data.menuList[i];
-          response.data.menuList[i] = { 'menuId': item.menuId, 'menuNm': item.menuNm, 'price': item.price }
+          response.data.menuList[i] = { '_id': i, 'menuId': item.menuId, 'menuNm': item.menuNm, 'price': item.price }
         } else {
-          response.data.menuList[i] = { 'menuId': i, 'menuNm': '', 'price': '' }
+          response.data.menuList[i] = { '_id': i, 'menuNm': '', 'price': '' }
         }
       }
-      console.log(response.data.menuList)
       setFormData(response.data)
     } else {
       setFormData({})
@@ -76,20 +72,9 @@ const FranchiseManagement = (props) => {
 
   useEffect(() => {
     if (props.key === 'franchise') {
-      setFranchiseAdminMain(true)
+      setFranchiseAdminMain(true);
     }
   }, [props.key])
-
-  useEffect(() => {
-    if (fileData) {
-      console.log(Base64.encode(fileData))
-      setFormData((formData) => ({
-        ...formData,
-        ['logoImg']: Base64.encode(fileData)
-      }));
-    }
-
-  }, [fileData])
 
   const { Formik } = formik;
 
@@ -109,16 +94,30 @@ const FranchiseManagement = (props) => {
     }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
 
-    if (event.target.files && event.target.files.length > 0) {
-      const reader = new FileReader();
-
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const base64 = await convertToBase64(file);
+      if (base64) {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ['logoImg']: base64.toString().split(',')[1],
+        }));
+        setPostImage({ ...postImage, myFile: base64 });
+      }
     }
   };
 
@@ -129,8 +128,8 @@ const FranchiseManagement = (props) => {
         <Row>
           {franchiseData.map((data) => (
             <Col md={4} key={data.franchiseId}>
-              <Card style={{ width: '15rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+              <Card style={{ width: '14rem' }}>
+                <Card.Img variant="top" src={`data:image/jpg;base64,${data.logoImg}`} alt="base64-encoded image"  />
                 <Card.Body onClick={() => setCurrentData(data)}>
                   <Card.Title>{data.franchiseNm}</Card.Title>
                   <Card.Text>할인금액 : {data.discountAmt}</Card.Text>
@@ -261,33 +260,9 @@ const FranchiseManagement = (props) => {
                     <Form.Control
                       type="file"
                       required
+                      accept=".jpg"
                       name="logoImg"
-                      value={formData.logoImg || ''}
                       onChange={handleChange}
-                      //onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                      // console.log(event.target)
-                      // if (event.target.files && event.target.files[0]) {
-                      //   const reader = new FileReader();
-                      //   reader.readAsDataURL(event.target.files[0]);
-                      //   reader.onloadend = (e) => {
-                      //     if (e.target && typeof e.target.result === 'string') {
-                      //       setFileData(e.target.result);
-                      //     }
-                      //   };
-
-                      //   // reader.onloadend = (e : any) => {
-                      //   //   if (e.target && e.target.result) {
-                      //   //     console.log(e.target.result)
-                      //   //     setFormData((prevFormData) => ({
-                      //   //       ...prevFormData,
-                      //   //       //[event.target.name]: Base64.encode(e.target.result),
-                      //   //       [event.target.name]: '멜롱'
-                      //   //     }));
-                      //   //   }
-                      //   // };
-                      // }
-                      //}}
-                      isInvalid={formData.logoImg !== ''}
                     />
                   </Form.Group>
                 </Row>

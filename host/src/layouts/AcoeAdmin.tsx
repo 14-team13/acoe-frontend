@@ -1,4 +1,4 @@
-import { Tabs, Tab } from 'react-bootstrap'
+import { Tabs, Tab, Pagination } from 'react-bootstrap'
 import { useState } from 'react';
 import MembersManagement from '@pages/components/MembersManagement'
 import FranchiseManagement from '@pages/components/FranchiseManagement'

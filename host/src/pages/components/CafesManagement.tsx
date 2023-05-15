@@ -45,9 +45,9 @@ const CafesManagement = (props: any) => {
         for (let i = 0; i < 5; i++) {
           if (response.data.menuList[i] && response.data.menuList[i].menuNm) {
             let item = response.data.menuList[i];
-            response.data.menuList[i] = { 'menuId': item.menuId, 'menuNm': item.menuNm, 'price': item.price }
+            response.data.menuList[i] = { '_id': i, 'menuNm': item.menuNm, 'price': item.price }
           } else {
-            response.data.menuList[i] = { 'menuId': i, 'menuNm': '', 'price': '' }
+            response.data.menuList[i] = { '_id': i, 'menuNm': '', 'price': '' }
           }
         }
         console.log(response.data.menuList)
@@ -59,11 +59,11 @@ const CafesManagement = (props: any) => {
         roadAddr: '',
         discountAmt: 0,
         menuList: [
-          { 'menuId': 0, 'menuNm': '', 'price': 0 },
-          { 'menuId': 1, 'menuNm': '', 'price': 0 },
-          { 'menuId': 2, 'menuNm': '', 'price': 0 },
-          { 'menuId': 3, 'menuNm': '', 'price': 0 },
-          { 'menuId': 4, 'menuNm': '', 'price': 0 }
+          { '_id': 0, 'menuNm': '', 'price': 0 },
+          { '_id': 1, 'menuNm': '', 'price': 0 },
+          { '_id': 2, 'menuNm': '', 'price': 0 },
+          { '_id': 3, 'menuNm': '', 'price': 0 },
+          { '_id': 4, 'menuNm': '', 'price': 0 }
         ],
         appOrderYn: false,
         kioskYn: false,
