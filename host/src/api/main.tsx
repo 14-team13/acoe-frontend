@@ -47,11 +47,10 @@ export const putAdminUser = (_params : any, _userId: number) => {
 }
 
 
-export const deleteAdminUser = (_params : any, _userId: number) => {
+export const deleteAdminUser = (_userId: string) => {
   return request({
     method: 'DELETE',
     url: 'admin/user/' + _userId,
-    data: _params
   });
 }
 

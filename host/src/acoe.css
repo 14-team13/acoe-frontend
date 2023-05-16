@@ -294,6 +294,11 @@
   margin-right: 15px
 }
 
+
+.mgr25 {
+  margin-right: 25px
+}
+
 .mgr40 {
   margin-right: 40px
 }
@@ -1292,4 +1297,15 @@
   height: 2px;
   background: #F0F1F5;
   margin: 16px 0px;
+}
+
+.cafe-menu img{
+  width : 44px;
+  height : 44px
+}
+
+.marker-icon{
+  width : 20px;
+  height : 20px;
+  fill: red;
 }
