@@ -1,13 +1,7 @@
-import { useEffect} from 'react';
 import FranchiseCard from 'components/FranchiseCard'
 import { BrowserView, MobileView } from 'react-device-detect';
 
 const DiscountWrap = (props: any) => {
-
-  useEffect(() => {
-    console.log(props.logoCafes)
-  }, [props.logoCafes])
-
 
   return (
     <>

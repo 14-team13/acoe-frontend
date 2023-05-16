@@ -19,7 +19,7 @@ interface menu {
 
 const ModalWrap = (props: any) => {
 
-  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes, cafeData, getCafeKeyword } = props;
+  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes, cafeData, getCafeKeyword, getCafesList} = props;
 
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
   const [cafeID, setCafeID] = useState<number>()
@@ -46,7 +46,11 @@ const ModalWrap = (props: any) => {
   }, [cafeID])
 
   const search = () => {
-    getCafeKeyword(searchCafeTxt)
+    if(searchCafeTxt){
+      getCafeKeyword(searchCafeTxt)
+    }else{
+      getCafesList()
+    }
   }
 
   return (
@@ -92,7 +96,7 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="cafe-detail">
             <div className="cafe-typical">
-              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt}원 할인</div>
+              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt|| 0}원 할인</div>
               <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.title}</div>
               <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.address}</div>
               <NaverFinderComponent />
@@ -174,7 +178,7 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="cafe-detail">
             <div className="cafe-typical">
-              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt}원 할인</div>
+              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt|| 0}원 할인</div>
               <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.cafeNm}</div>
               <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.roadAddr}</div>
               <div className="mgb25"> <NaverFinderComponent /></div>

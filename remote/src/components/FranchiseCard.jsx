@@ -14,7 +14,7 @@ const FranchiseCard = (props) => {
           </div>
           <div className="pd10">
             <div className="fw400 fs12 lh18 fc-gray">{props.name}</div>
-            <div className="fw700 fs14 lh24">{props.discountInfo}원 할인</div>
+            <div className="fw700 fs14 lh24">{props.discountInfo || 0}원 할인</div>
           </div>
         </div>
       </MobileView>
@@ -25,7 +25,7 @@ const FranchiseCard = (props) => {
           </div>
           <div className="pd10">
             <div className="fw400 fs12 lh18 fc-gray">{props.name}</div>
-            <div className="fw700 fs14 lh24">{props.discountInfo}원 할인</div>
+            <div className="fw700 fs14 lh24">{props.discountInfo|| 0}원 할인</div>
           </div>
         </div>
       </BrowserView>
