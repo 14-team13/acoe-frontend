@@ -86,7 +86,6 @@ export const Menu: React.FC = (props: any) => {
   }
 
   const search = () => {
-    console.log("search")
     _getCafeKeyword(searchCafeTxt)
   }
 
@@ -107,8 +106,12 @@ export const Menu: React.FC = (props: any) => {
   const _getCafesList = async () => {
     const response = await getCafesList(); // type 변경 필요 
     if (response.data.length > 0) {
-      setCafeData(response.data)
-      console.log(response.data)
+      // const _data = []; 
+      // for(let i = 0 ; i < 10; i++){
+      //   _data.push(response.data[i])
+      // }
+      const _data = response.data.filter((item : any) => item.useYn)
+      setCafeData(_data)
     } else {
       setCafeData([])
     }
@@ -168,13 +171,15 @@ export const Menu: React.FC = (props: any) => {
               />
               : null}
             </div>
-            <div className={`openButton ${setButtonState()}`} onClick={showLeftModal}>
+            <div className={`ope  nButton ${setButtonState()}`} onClick={showLeftModal}>
               <div className={`left ${modalState !== 0 ? 'move' : ''}`}></div>
             </div>
           </div>
           <div className="maps">
             <MixedBoundary>
-              <Maps />
+              <Maps 
+              newMarkers={cafeData}
+              />
             </MixedBoundary>
           </div>
           <div className="short-cut">
