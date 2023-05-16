@@ -60,6 +60,7 @@ export const Menu: React.FC = (props: any) => {
   const [cafeData, setCafeData] = useState<cafe[]>([]);
   const [cafeBasicData, setCafeBasicData] = useState<cafe[]>([])
   const [markerSetting, setMarkerSetting] = useState<string | null>(null)
+  const [clickedCafe, setClickedCafe] = useState<cafe | null>(null)
 
   const showLeftModal = () => {
     if (modalState === 0) {
@@ -81,11 +82,11 @@ export const Menu: React.FC = (props: any) => {
 
   const search = () => {
     console.log(searchCafeTxt)
-    if(searchCafeTxt){
+    if (searchCafeTxt) {
       _getCafeKeyword(searchCafeTxt)
-    }else{
+    } else {
       _getCafesList();
-    }    
+    }
   }
 
   useEffect(() => {
@@ -94,19 +95,19 @@ export const Menu: React.FC = (props: any) => {
   }, [])
 
   useEffect(() => {
-    if(markerSetting !== null && Number(markerSetting) >= 0){
-      const _cafeData = cafeBasicData.filter((item : cafe) => item.discountAmt !== null && item.discountAmt >= Number(markerSetting))
+    if (markerSetting !== null && Number(markerSetting) >= 0) {
+      const _cafeData = cafeBasicData.filter((item: cafe) => item.discountAmt !== null && item.discountAmt >= Number(markerSetting))
       setCafeData([..._cafeData])
-    }else if(markerSetting === 'app'){
-      const _cafeData = cafeBasicData.filter((item : cafe) => item.appOrderYn)
+    } else if (markerSetting === 'app') {
+      const _cafeData = cafeBasicData.filter((item: cafe) => item.appOrderYn)
       setCafeData([..._cafeData])
-    }else if(markerSetting === 'kiosk'){
-      const _cafeData = cafeBasicData.filter((item : cafe) => item.kioskYn)
+    } else if (markerSetting === 'kiosk') {
+      const _cafeData = cafeBasicData.filter((item: cafe) => item.kioskYn)
       setCafeData([..._cafeData])
-    }else{
+    } else {
       setCafeData([...cafeBasicData])
     }
-  },[markerSetting])
+  }, [markerSetting])
 
   const _getFranchises = async () => {
     const response = await getFranchises();
@@ -120,8 +121,8 @@ export const Menu: React.FC = (props: any) => {
   const _getCafesList = async () => {
     const response = await getCafesList(); // type 변경 필요 
     if (response.data.length > 0) {
-      const _data = response.data.filter((item : any) => item.useYn)
-      setCafeBasicData( JSON.parse(JSON.stringify(_data)))
+      const _data = response.data.filter((item: any) => item.useYn)
+      setCafeBasicData(JSON.parse(JSON.stringify(_data)))
       setCafeData(_data)
     } else {
       setCafeBasicData([])
@@ -132,8 +133,8 @@ export const Menu: React.FC = (props: any) => {
   const _getCafeKeyword = async (cafeTitle: string) => {
     const response = await getCafeKeyword(cafeTitle); // type 변경 필요 
     if (response.data.length > 0) {
-      const _data = response.data.filter((item : any) => item.useYn)
-      setCafeBasicData( JSON.parse(JSON.stringify(_data)))
+      const _data = response.data.filter((item: any) => item.useYn)
+      setCafeBasicData(JSON.parse(JSON.stringify(_data)))
       setCafeData(_data)
     } else {
       setCafeData([])
@@ -158,20 +159,23 @@ export const Menu: React.FC = (props: any) => {
               mobileModalState={mobileModalState}
               logoCafes={logoCafes}
               cafeData={cafeData}
-              
+
             />
             : null}
-          <NavContainer logoCafes={logoCafes} setMarkerSetting = {setMarkerSetting}/>
+          <NavContainer logoCafes={logoCafes} setMarkerSetting={setMarkerSetting} />
         </div>
         <MixedBoundary>
-          <Maps />
+          <Maps
+            setClickedCafe={setClickedCafe}
+            newMarkers={cafeData}
+          />
         </MixedBoundary>
       </MobileView>
       <BrowserView>
         <div className="container">
           {modalState === 2 ? null :
             <div className={modalState === 1 ? 'navOpen' : ''}>
-              <NavContainer logoCafes={logoCafes} setMarkerSetting = {setMarkerSetting}/>
+              <NavContainer logoCafes={logoCafes} setMarkerSetting={setMarkerSetting} />
             </div>
           }
           <div className="left-modal" ref={leftModalComponent}>
@@ -182,7 +186,8 @@ export const Menu: React.FC = (props: any) => {
                 logoCafes={logoCafes}
                 cafeData={cafeData}
                 getCafeKeyword={_getCafeKeyword}
-                getCafesList = {_getCafesList}
+                getCafesList={_getCafesList}
+                clickedCafe = {clickedCafe}
               />
               : null}
             </div>
@@ -192,14 +197,15 @@ export const Menu: React.FC = (props: any) => {
           </div>
           <div className="maps">
             <MixedBoundary>
-              <Maps 
-              newMarkers={cafeData}
+              <Maps
+                setClickedCafe={setClickedCafe}
+                newMarkers={cafeData}
               />
             </MixedBoundary>
           </div>
           <div className="short-cut">
-            <ShortCutAppOrder setMarkerSetting = {setMarkerSetting}/>
-            <ShortCutKioskOrder setMarkerSetting = {setMarkerSetting}/>
+            <ShortCutAppOrder setMarkerSetting={setMarkerSetting} />
+            <ShortCutKioskOrder setMarkerSetting={setMarkerSetting} />
           </div>
         </div>
       </BrowserView>
