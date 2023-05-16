@@ -10,7 +10,7 @@ import { API_HOST } from 'constant';
 import requestRefreshToken from './requestRefreshToken';
 
 const request = axios.create({
-  baseURL: 'http://acoe.co.kr:9090/',
+  baseURL: '',
   headers: {
     'Content-Type': 'application/json'
   }

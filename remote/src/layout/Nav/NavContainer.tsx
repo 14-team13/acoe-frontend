@@ -21,6 +21,11 @@ const NavContainer = (props: any) => {
   }
 
   const showMore300Discount = () => {
+    if(!isShowMore300){
+      props.setMarkerSetting('300')
+    }else{
+      props.setMarkerSetting(null)
+    }
     setIsShowMore300(!isShowMore300)
     setIsShowDiscount(false)
     setIsShowMore500(false)
@@ -28,6 +33,11 @@ const NavContainer = (props: any) => {
   }
 
   const showMore500Discount = () => {
+    if(!isShowMore500){
+      props.setMarkerSetting('500')
+    }else{
+      props.setMarkerSetting(null)
+    }
     setIsShowMore500(!isShowMore500)
     setIsShowDiscount(false)
     setIsShowMore300(false)
@@ -35,6 +45,11 @@ const NavContainer = (props: any) => {
   }
 
   const showMore1000Discount = () => {
+    if(!isShowMore1000){
+      props.setMarkerSetting('1000')
+    }else{
+      props.setMarkerSetting(null)
+    }
     setIsShowMore1000(!isShowMore1000)
     setIsShowDiscount(false)
     setIsShowMore300(false)

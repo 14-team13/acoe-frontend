@@ -2,7 +2,7 @@
   "name": "host",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:9090",
+  "proxy": "http://acoe.co.kr:9090",
   "dependencies": {
     "@emotion/babel-plugin": "^11.1.2",
     "@emotion/react": "^11.0.0",

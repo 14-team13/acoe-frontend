@@ -1,13 +1,7 @@
-import { useEffect} from 'react';
 import FranchiseCard from 'components/FranchiseCard'
 import { BrowserView, MobileView } from 'react-device-detect';
 
 const DiscountWrap = (props: any) => {
-
-  useEffect(() => {
-    console.log(props.logoCafes)
-  }, [props.logoCafes])
-
 
   return (
     <>
@@ -16,7 +10,7 @@ const DiscountWrap = (props: any) => {
           {props.logoCafes.map((logoCafe: any, i: number) => ( //type 수정 필요 
             <FranchiseCard
               key={i}
-              src={logoCafe.src}
+              logoImg={logoCafe.logoImg}
               name={logoCafe.franchiseNm}
               discountInfo={logoCafe.discountAmt}
             />
@@ -28,7 +22,7 @@ const DiscountWrap = (props: any) => {
           {props.logoCafes.map((logoCafe: any, i: number) => ( //type 수정 필요 
             <FranchiseCard
               key={i}
-              src={logoCafe.src}
+              logoImg={logoCafe.logoImg}
               name={logoCafe.franchiseNm}
               discountInfo={logoCafe.discountAmt}
             />

@@ -12,14 +12,14 @@ import { isMobile } from 'react-device-detect';
 import { getCafeInfo } from 'api/main';
 
 interface menu {
-  menu: string;
+  menuNm: string;
   price: number;
-  discount: number
+  discountAmt: number
 }
 
 const ModalWrap = (props: any) => {
 
-  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes, cafeData, getCafeKeyword } = props;
+  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes, cafeData, getCafeKeyword, getCafesList} = props;
 
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
   const [cafeID, setCafeID] = useState<number>()
@@ -30,8 +30,12 @@ const ModalWrap = (props: any) => {
     const response = await getCafeInfo(cafeID); // type 변경 필요 
     if (response.data) {
       setSelectedCafe(response.data)
+      if(response.data.menuList && response.data.menuList.length > 0){
+        setSelectedMenu(response.data.menuList)
+      }
     } else {
       setSelectedCafe([])
+      setSelectedMenu([])
     }
   }
 
@@ -42,7 +46,11 @@ const ModalWrap = (props: any) => {
   }, [cafeID])
 
   const search = () => {
-    getCafeKeyword(searchCafeTxt)
+    if(searchCafeTxt){
+      getCafeKeyword(searchCafeTxt)
+    }else{
+      getCafesList()
+    }
   }
 
   return (
@@ -50,14 +58,13 @@ const ModalWrap = (props: any) => {
       {isMobile && mobileModalState === 2 ?
         <div className="mb-cafe-modal">
           <div className="search">
-            <img className="" src={leftModalSvg} onClick={() => setMobileModalState(1)} />
+            <img className="" src={leftModalSvg}  onClick={() => setMobileModalState(1)} />
             <input className="mgl50" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
             {searchCafeTxt !== '' ? <img className="mgl20 close-image" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
           </div>
           <div className="cafes">
             {logoCafes.map((logoCafe: any, i: any) => ( //type 수정 필요 
-              <img key={i} src={logoCafe.src} // onClick = {logoCafe.onClick}
-              />
+              <img key={i} src={`data:image/jpg;base64,${logoCafe.logoImg}`} alt="base64-encoded image"/>
             ))}
           </div>
           <div className="summary fw700 fs14 lh21 fc-gray">{cafeData.length > 0 ? `${cafeData.length}개의 카페` : null}</div>
@@ -70,9 +77,9 @@ const ModalWrap = (props: any) => {
                 naverRoadFinder={true}
                 appOrderYn={cafe.appOrderYn}
                 kioskYn={cafe.kioskYn}
-                menu1={cafe.menu1}
-                menu1_price={cafe.discountAmt}
-                discountprice={cafe.discountprice}
+                menuNm={cafe.menuList && cafe.menuList[0]? cafe.menuList[0].menuNm : ''}
+                price={cafe.menuList && cafe.menuList[0]? cafe.menuList[0].price : 0}
+                discountAmt={cafe.discountAmt}
                 cafeId={cafe.cafeId}
                 setCafeID={setCafeID}
                 setModalState={setModalState}
@@ -89,7 +96,7 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="cafe-detail">
             <div className="cafe-typical">
-              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountprice}원 할인</div>
+              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt|| 0}원 할인</div>
               <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.title}</div>
               <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.address}</div>
               <NaverFinderComponent />
@@ -107,9 +114,9 @@ const ModalWrap = (props: any) => {
               {selectedMenu.map((item, i) => (
                 <MenusComponent
                   key={i}
-                  menu={item.menu}
+                  menuNm={item.menuNm}
                   price={item.price}
-                  discountprice={item.discount}
+                  discountAmt={selectedCafe?.discountAmt}
                   naverRoadFinder={true}
                 />
               ))}
@@ -138,8 +145,7 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="cafes">
             {logoCafes.map((logoCafe: any, i: number) => (
-              <img key={i} src={logoCafe.src} // onClick = {logoCafe.onClick}
-              />
+              <img key={i} src={`data:image/jpg;base64,${logoCafe.logoImg}`} />
             ))}
           </div>
           <div className="summary fw700 fs14 lh21 fc-gray">{cafeData.length > 0 ? `${cafeData.length}개의 카페` : null}</div>
@@ -152,9 +158,9 @@ const ModalWrap = (props: any) => {
                 naverRoadFinder={true}
                 appOrderYn={cafe.appOrderYn}
                 kioskYn={cafe.kioskYn}
-                menu1={cafe.menu1}
-                menu1_price={cafe.discountAmt}
-                discountprice={cafe.discountAmt}
+                menuNm={cafe.menuList && cafe.menuList[0]? cafe.menuList[0].menuNm : ''}
+                price={cafe.menuList && cafe.menuList[0]? cafe.menuList[0].price : 0}
+                discountAmt={cafe.discountAmt}
                 cafeId={cafe.cafeId}
                 setCafeID={setCafeID}
                 setModalState={setModalState}
@@ -172,15 +178,16 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="cafe-detail">
             <div className="cafe-typical">
-              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt}원 할인</div>
+              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt|| 0}원 할인</div>
               <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.cafeNm}</div>
               <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.roadAddr}</div>
               <div className="mgb25"> <NaverFinderComponent /></div>
               <div className="flex-row-center mgb30">
+              {selectedCafe && selectedCafe.appOrderYn ?
+                <div className="mgr25">
+                   <AppOrderDiscountComponent /> 
+                </div>: null}
                 <div>
-                  {selectedCafe && selectedCafe.appOrderYn ? <AppOrderDiscountComponent /> : null}
-                </div>
-                <div className="mgl25">
                   {selectedCafe && selectedCafe.kioskYn ? <KioskOrderDiscountComponent /> : null}
                 </div>
               </div>
@@ -190,9 +197,9 @@ const ModalWrap = (props: any) => {
               {selectedMenu.map((item, i) => (
                 <MenusComponent
                   key={i}
-                  menu={item.menu}
+                  menuNm={item.menuNm}
                   price={item.price}
-                  discountprice={item.discount}
+                  discountAmt={selectedCafe?.discountAmt}
                   naverRoadFinder={true}
                 />
               ))}

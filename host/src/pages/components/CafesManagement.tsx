@@ -31,7 +31,7 @@ const CafesManagement = (props: any) => {
     const response = await getAdminCafeList(_searchOption); // type 변경 필요 
     if (response.data) {
       setCafeList(response.data.content)
-      totalPages.current = response.data
+      totalPages.current = response.data.totalPages
     } else {
       setCafeList([])
     }
@@ -45,9 +45,9 @@ const CafesManagement = (props: any) => {
         for (let i = 0; i < 5; i++) {
           if (response.data.menuList[i] && response.data.menuList[i].menuNm) {
             let item = response.data.menuList[i];
-            response.data.menuList[i] = { 'menuId': item.menuId, 'menuNm': item.menuNm, 'price': item.price }
+            response.data.menuList[i] = { '_id': i, 'menuId': item.menuId, 'menuNm': item.menuNm, 'price': item.price }
           } else {
-            response.data.menuList[i] = { 'menuId': i, 'menuNm': '', 'price': '' }
+            response.data.menuList[i] = { '_id': i, 'menuNm': '', 'price': '' }
           }
         }
         console.log(response.data.menuList)
@@ -59,11 +59,11 @@ const CafesManagement = (props: any) => {
         roadAddr: '',
         discountAmt: 0,
         menuList: [
-          { 'menuId': 0, 'menuNm': '', 'price': 0 },
-          { 'menuId': 1, 'menuNm': '', 'price': 0 },
-          { 'menuId': 2, 'menuNm': '', 'price': 0 },
-          { 'menuId': 3, 'menuNm': '', 'price': 0 },
-          { 'menuId': 4, 'menuNm': '', 'price': 0 }
+          { '_id': 0, 'menuNm': '', 'price': 0 },
+          { '_id': 1, 'menuNm': '', 'price': 0 },
+          { '_id': 2, 'menuNm': '', 'price': 0 },
+          { '_id': 3, 'menuNm': '', 'price': 0 },
+          { '_id': 4, 'menuNm': '', 'price': 0 }
         ],
         appOrderYn: false,
         kioskYn: false,
@@ -136,14 +136,14 @@ const CafesManagement = (props: any) => {
 
   const search = () => {
 
-    let _selectedOption = { "page": 0, "sizePerPage": 10}
-    if(selectedOption && selectedOption.value === 'cafeNm'){
-      _selectedOption["cafeNm"] =  inputValue;
-    }else if(selectedOption && selectedOption.value === 'roadAddr'){
-      _selectedOption["roadAddr"] =  inputValue;
-    }else if(selectedOption && selectedOption.value === 'discountAmt'){
-      _selectedOption["discountAmt"] =  inputValue;
-    }else{
+    let _selectedOption = { "page": 0, "sizePerPage": 10 }
+    if (selectedOption && selectedOption.value === 'cafeNm') {
+      _selectedOption["cafeNm"] = inputValue;
+    } else if (selectedOption && selectedOption.value === 'roadAddr') {
+      _selectedOption["roadAddr"] = inputValue;
+    } else if (selectedOption && selectedOption.value === 'discountAmt') {
+      _selectedOption["discountAmt"] = inputValue;
+    } else {
 
     }
     setActivePage(1)
@@ -164,42 +164,53 @@ const CafesManagement = (props: any) => {
     pageItems.push(<Pagination.First onClick={() => handlePageChange(1)} />)
     pageItems.push(<Pagination.Prev onClick={() => handlePageChange(activePage - 1)} />)
     let _pageNumber = 1;
-    if(activePage > totalPages.current - 10){
-      _pageNumber = activePage-10;;
-    }else if (activePage > 5) {
-      _pageNumber = activePage-5;;
-    } 
-    for (let pageNumber = _pageNumber; pageNumber <= _pageNumber + 9; pageNumber++) {
-      pageItems.push(
-        <Pagination.Item
-          key={pageNumber}
-          active={pageNumber === activePage}
-          onClick={() => handlePageChange(pageNumber)}
-        >
-          {pageNumber}
-        </Pagination.Item>
-      );
-    }
+    if (activePage > totalPages.current - 5) {
+      let startPage = totalPages.current - 10 < 1 ? 1 : totalPages.current - 10
+      for (let pageNumber = startPage; pageNumber <= totalPages.current; pageNumber++) {
+        pageItems.push(
+          <Pagination.Item
+            key={pageNumber}
+            active={pageNumber === activePage}
+            onClick={() => handlePageChange(pageNumber)}
+          >
+            {pageNumber}
+          </Pagination.Item>
+        );
+      }
 
-    pageItems.push( <Pagination.Next onClick={() => handlePageChange(activePage + 1)} />)
-    pageItems.push( <Pagination.Last  onClick={() => handlePageChange(totalPages.current)}/>)
+    } else {
+      if (activePage > 5) {
+        _pageNumber = activePage - 5;
+      } else {
+        _pageNumber = 1;
+      }
+
+      for (let pageNumber = _pageNumber; pageNumber <= _pageNumber + 9; pageNumber++) {
+        pageItems.push(
+          <Pagination.Item
+            key={pageNumber}
+            active={pageNumber === activePage}
+            onClick={() => handlePageChange(pageNumber)}
+          >
+            {pageNumber}
+          </Pagination.Item>
+        );
+      }
+    }
+    pageItems.push(<Pagination.Next onClick={() => handlePageChange(activePage + 1)} />)
+    pageItems.push(<Pagination.Last onClick={() => handlePageChange(totalPages.current)} />)
     return pageItems;
   };
 
   const handlePageChange = (pageNumber: number) => {
-    if (pageNumber > 0 || pageNumber < totalPages.current) {
+    if (pageNumber > 0 && pageNumber < totalPages.current + 1) {
       setActivePage(pageNumber);
-      onPageChange(pageNumber);
       const _selectedOption = {
         "page": pageNumber - 1,
         "sizePerPage": 10
       }
       _getAdminCafeList(_selectedOption)
     }
-  }
-
-  const onPageChange = (pageNumber: number) => {
-
   }
 
 
@@ -223,7 +234,7 @@ const CafesManagement = (props: any) => {
                   </Form.Control>
                 </Form.Group>
                 <Form.Group controlId="formBasicInput">
-                  <Form.Control type="text" placeholder="Enter text" value={inputValue} onChange={handleInputChange} />
+                  <Form.Control type="text" placeholder="Enter text" value={inputValue || ''} onChange={handleInputChange} />
                 </Form.Group>
                 <Form.Group>
                   <Form.Control type="submit" value="Search" onClick={search} />
@@ -258,7 +269,7 @@ const CafesManagement = (props: any) => {
                   <td>{item.kioskYn ? 'Y' : 'N'}</td>
                   <td>{item.useYn ? 'Y' : 'N'}</td>
                   <td>
-                    <Button variant="danger" onClick={() => handleInsUpd(item, 'UDP')}>
+                    <Button variant="warning" onClick={() => handleInsUpd(item, 'UDP')}>
                       수정
                     </Button>
                   </td>

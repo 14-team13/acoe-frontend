@@ -6,14 +6,6 @@ import ModalWrap from './LeftModal/ModalWrap'
 import ShortCutAppOrder from 'components/ShortCutAppOrder';
 import ShortCutKioskOrder from 'components/ShortCutKioskOrder';
 import { BrowserView, MobileView } from 'react-device-detect';
-import starbucksSvg from 'images/starbucks.svg';
-import paulbassettSvg from 'images/paul.svg';
-import angelinusSvg from 'images/angelinus.svg';
-import hollysSvg from 'images/hollys.svg';
-import passcucciSvg from 'images/passcucci.svg';
-import ediyaSvg from 'images/ediya.svg';
-import coffeebeanSvg from 'images/coffeebean.svg';
-import twosomeSvg from 'images/twosome.svg';
 import { getFranchises, getCafesList } from 'api/main';
 import { getCafeKeyword } from 'api/main';
 
@@ -66,6 +58,8 @@ export const Menu: React.FC = (props: any) => {
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
   const [logoCafes, setLogoCafes] = useState<logoCafes[]>([]);
   const [cafeData, setCafeData] = useState<cafe[]>([]);
+  const [cafeBasicData, setCafeBasicData] = useState<cafe[]>([])
+  const [markerSetting, setMarkerSetting] = useState<string | null>(null)
 
   const showLeftModal = () => {
     if (modalState === 0) {
@@ -86,8 +80,12 @@ export const Menu: React.FC = (props: any) => {
   }
 
   const search = () => {
-    console.log("search")
-    _getCafeKeyword(searchCafeTxt)
+    console.log(searchCafeTxt)
+    if(searchCafeTxt){
+      _getCafeKeyword(searchCafeTxt)
+    }else{
+      _getCafesList();
+    }    
   }
 
   useEffect(() => {
@@ -95,23 +93,24 @@ export const Menu: React.FC = (props: any) => {
     _getCafesList();
   }, [])
 
+  useEffect(() => {
+    if(markerSetting !== null && Number(markerSetting) >= 0){
+      const _cafeData = cafeBasicData.filter((item : cafe) => item.discountAmt !== null && item.discountAmt >= Number(markerSetting))
+      setCafeData([..._cafeData])
+    }else if(markerSetting === 'app'){
+      const _cafeData = cafeBasicData.filter((item : cafe) => item.appOrderYn)
+      setCafeData([..._cafeData])
+    }else if(markerSetting === 'kiosk'){
+      const _cafeData = cafeBasicData.filter((item : cafe) => item.kioskYn)
+      setCafeData([..._cafeData])
+    }else{
+      setCafeData([...cafeBasicData])
+    }
+  },[markerSetting])
+
   const _getFranchises = async () => {
     const response = await getFranchises();
     if (response.data.length > 0) {
-      const cafesMap = new Map([
-        [6, starbucksSvg], // title: "starbucks",
-        [7, paulbassettSvg],
-        [1, angelinusSvg],
-        [2, hollysSvg],
-        [3, passcucciSvg],
-        [4, ediyaSvg],
-        [5, coffeebeanSvg],
-        [8, twosomeSvg]
-      ])
-      response.data.forEach((item: logoCafes) => {
-        item.src = cafesMap.get(item.franchiseId) || ''
-      })
-      console.log(response.data)
       setLogoCafes(response.data)
     } else {
       setLogoCafes([])
@@ -121,9 +120,11 @@ export const Menu: React.FC = (props: any) => {
   const _getCafesList = async () => {
     const response = await getCafesList(); // type 변경 필요 
     if (response.data.length > 0) {
-      setCafeData(response.data)
-      console.log(response.data)
+      const _data = response.data.filter((item : any) => item.useYn)
+      setCafeBasicData( JSON.parse(JSON.stringify(_data)))
+      setCafeData(_data)
     } else {
+      setCafeBasicData([])
       setCafeData([])
     }
   }
@@ -131,8 +132,9 @@ export const Menu: React.FC = (props: any) => {
   const _getCafeKeyword = async (cafeTitle: string) => {
     const response = await getCafeKeyword(cafeTitle); // type 변경 필요 
     if (response.data.length > 0) {
-      setCafeData(response.data)
-      console.log(response.data)
+      const _data = response.data.filter((item : any) => item.useYn)
+      setCafeBasicData( JSON.parse(JSON.stringify(_data)))
+      setCafeData(_data)
     } else {
       setCafeData([])
     }
@@ -156,9 +158,10 @@ export const Menu: React.FC = (props: any) => {
               mobileModalState={mobileModalState}
               logoCafes={logoCafes}
               cafeData={cafeData}
+              
             />
             : null}
-          <NavContainer logoCafes={logoCafes} />
+          <NavContainer logoCafes={logoCafes} setMarkerSetting = {setMarkerSetting}/>
         </div>
         <MixedBoundary>
           <Maps />
@@ -168,7 +171,7 @@ export const Menu: React.FC = (props: any) => {
         <div className="container">
           {modalState === 2 ? null :
             <div className={modalState === 1 ? 'navOpen' : ''}>
-              <NavContainer logoCafes={logoCafes} />
+              <NavContainer logoCafes={logoCafes} setMarkerSetting = {setMarkerSetting}/>
             </div>
           }
           <div className="left-modal" ref={leftModalComponent}>
@@ -179,21 +182,24 @@ export const Menu: React.FC = (props: any) => {
                 logoCafes={logoCafes}
                 cafeData={cafeData}
                 getCafeKeyword={_getCafeKeyword}
+                getCafesList = {_getCafesList}
               />
               : null}
             </div>
-            <div className={`openButton ${setButtonState()}`} onClick={showLeftModal}>
+            <div className={`ope  nButton ${setButtonState()}`} onClick={showLeftModal}>
               <div className={`left ${modalState !== 0 ? 'move' : ''}`}></div>
             </div>
           </div>
           <div className="maps">
             <MixedBoundary>
-              <Maps />
+              <Maps 
+              newMarkers={cafeData}
+              />
             </MixedBoundary>
           </div>
           <div className="short-cut">
-            <ShortCutAppOrder />
-            <ShortCutKioskOrder />
+            <ShortCutAppOrder setMarkerSetting = {setMarkerSetting}/>
+            <ShortCutKioskOrder setMarkerSetting = {setMarkerSetting}/>
           </div>
         </div>
       </BrowserView>
