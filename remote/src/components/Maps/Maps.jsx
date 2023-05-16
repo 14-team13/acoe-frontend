@@ -61,7 +61,7 @@ const Maps = (props) => {
       );
 
       if (feature) {
-        alert(feature.get("name"));
+        props.setClickedCafe(feature.get('item'))
       }
     });
 
@@ -69,7 +69,7 @@ const Maps = (props) => {
       const point = new Point(fromLonLat([marker.x, marker.y]));
       const feature = new Feature({
         geometry: point,
-        name: marker.cafeNm,
+        item  : marker
       });
       feature.setStyle(markerStyle);
       return feature;
