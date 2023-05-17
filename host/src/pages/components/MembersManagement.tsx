@@ -78,11 +78,9 @@ const MembersManagement = () => {
 
   const _getAdminUser = async (_searchOption: Search) => {
     const response = await getAdminUser(_searchOption); // type 변경 필요 
-    console.log(response.data)
     if (response.data && response.data.body.user) {
       setMemberList(response.data.body.user.content)
       totalPages.current = response.data.body.user.totalPages
-
     } else {
       setMemberList([])
     }
@@ -90,8 +88,8 @@ const MembersManagement = () => {
 
   const renderPageItems = () => {
     const pageItems: any = [];
-    pageItems.push(<Pagination.First onClick={() => handlePageChange(1)} />)
-    pageItems.push(<Pagination.Prev onClick={() => handlePageChange(activePage - 1)} />)
+    pageItems.push(<Pagination.First key = {-2}onClick={() => handlePageChange(1)} />)
+    pageItems.push(<Pagination.Prev key = {-1} onClick={() => handlePageChange(activePage - 1)} />)
     let _pageNumber = 1;
     if (activePage > totalPages.current - 5) {
       let startPage = totalPages.current - 10 < 1 ? 1 : totalPages.current - 10
@@ -126,8 +124,8 @@ const MembersManagement = () => {
         );
       }
     }
-    pageItems.push(<Pagination.Next onClick={() => handlePageChange(activePage + 1)} />)
-    pageItems.push(<Pagination.Last onClick={() => handlePageChange(totalPages.current)} />)
+    pageItems.push(<Pagination.Next key = {10000} onClick={() => handlePageChange(activePage + 1)} />)
+    pageItems.push(<Pagination.Last key = {10001} onClick={() => handlePageChange(totalPages.current)} />)
     return pageItems;
   };
 
@@ -168,7 +166,7 @@ const MembersManagement = () => {
     <Container>
       <div className="flex-row-space mgb10">
         <div></div>
-        <Form onSubmit={handleSubmit} className="flex-row">
+        <Form className="flex-row">
           <Form.Group controlId="formBasicSelect">
             <Form.Control as="select" value={selectedOption?.value || ''} onChange={handleSelectedOptionChange}>
               <option value="">Select an option...</option>
@@ -183,7 +181,7 @@ const MembersManagement = () => {
             <Form.Control type="text" placeholder="Enter text" value={inputValue || ''} onChange={handleInputChange} />
           </Form.Group>
           <Form.Group>
-            <Form.Control type="submit" value="Search" onClick={search} />
+            <Form.Control  value="Search" onClick={search} />
           </Form.Group>
         </Form>
       </div>
