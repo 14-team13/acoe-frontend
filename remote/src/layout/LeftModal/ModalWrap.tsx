@@ -19,7 +19,7 @@ interface menu {
 
 const ModalWrap = (props: any) => {
 
-  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes, cafeData, getCafeKeyword, getCafesList, clickedCafe} = props;
+  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes, cafeData, getCafeKeyword, getCafesList, clickedCafe, setClickFranchise} = props;
 
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
   const [cafeID, setCafeID] = useState<number>()
@@ -71,7 +71,7 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="cafes">
             {logoCafes.map((logoCafe: any, i: any) => ( //type 수정 필요 
-              <img key={i} src={`data:image/jpg;base64,${logoCafe.logoImg}`} alt="base64-encoded image"/>
+              <img key={i} src={`data:image/jpg;base64,${logoCafe.logoImg}`} alt="base64-encoded image" onClick = {() => setClickFranchise(logoCafe)}/>
             ))}
           </div>
           <div className="summary fw700 fs14 lh21 fc-gray">{cafeData.length > 0 ? `${cafeData.length}개의 카페` : null}</div>
@@ -152,7 +152,7 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="cafes">
             {logoCafes.map((logoCafe: any, i: number) => (
-              <img key={i} src={`data:image/jpg;base64,${logoCafe.logoImg}`} />
+              <img key={i} src={`data:image/jpg;base64,${logoCafe.logoImg}`} onClick = {() => setClickFranchise(logoCafe)}/>
             ))}
           </div>
           <div className="summary fw700 fs14 lh21 fc-gray">{cafeData.length > 0 ? `${cafeData.length}개의 카페` : null}</div>

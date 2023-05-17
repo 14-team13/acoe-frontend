@@ -31,7 +31,7 @@ const CafesManagement = (props: any) => {
   }
 
   const options: Option[] = [
-    // { value: '', label: '전체' },
+    { value: '', label: '전체' },
     { value: 'cafeNm', label: '카페명' },
     { value: 'roadAddr', label: '주소' },
     { value: 'discountAmt', label: '텀블러할인 금액' },
@@ -76,16 +76,17 @@ const CafesManagement = (props: any) => {
       }
     } else {
       setShowFranchise(false);
+      setFranchiseValue("해당없음")
       setFormData({
         cafeNm: '',
         roadAddr: '',
         discountAmt: 0,
         menuList: [
-          { '_id': 0, 'menuNm': '', 'price': 0 },
-          { '_id': 1, 'menuNm': '', 'price': 0 },
-          { '_id': 2, 'menuNm': '', 'price': 0 },
-          { '_id': 3, 'menuNm': '', 'price': 0 },
-          { '_id': 4, 'menuNm': '', 'price': 0 }
+          { 'menuNm': '', 'price': 0 },
+          { 'menuNm': '', 'price': 0 },
+          { 'menuNm': '', 'price': 0 },
+          { 'menuNm': '', 'price': 0 },
+          { 'menuNm': '', 'price': 0 }
         ],
         appOrderYn: false,
         kioskYn: false,
@@ -129,6 +130,7 @@ const CafesManagement = (props: any) => {
   useEffect(() => {
     if (cafeMngAdminMain) {
       _getAdminCafeList(searchOption)
+      setSelectedOption({ value: '', label: '전체' })
     }
   }, [cafeMngAdminMain])
 
@@ -145,8 +147,8 @@ const CafesManagement = (props: any) => {
     setInputValue(event.target.value);
   };
 
-  const handleSelectedOptionChange = (event: any) => {
-    const option = options.find((o) => o.value === event.target.value) || null;
+  const handleSelectedOptionChange = (value) => {
+    const option = options.find((o) => o.value === value) || null;
     setSelectedOption(option);
   };
 
@@ -157,7 +159,6 @@ const CafesManagement = (props: any) => {
     }else{
       delete formData.franchise;
     }
-    console.log(formData)
     if (formData.type === 'INS') {
       let response = await postAdminCafeInfo(JSON.parse(JSON.stringify(formData)));
       if (response.status === 200) {
@@ -179,19 +180,23 @@ const CafesManagement = (props: any) => {
 
 
   const search = () => {
-    let _selectedOption = { "page": 0, "sizePerPage": 10 }
-    if (selectedOption && selectedOption.value === 'cafeNm') {
-      _selectedOption["cafeNm"] = inputValue;
-    } else if (selectedOption && selectedOption.value === 'roadAddr') {
-      _selectedOption["roadAddr"] = inputValue;
-    } else if (selectedOption && selectedOption.value === 'discountAmt') {
-      _selectedOption["discountAmt"] = inputValue;
-    } else {
-
-    }
+    let _selectedOption = { "page": 0, "sizePerPage": 10,} ; 
+    let _add; 
+    if(selectedOption && selectedOption.value === 'cafeNm'){
+      _add = {
+        "cafeNm": inputValue,
+      }
+    }else if(selectedOption && selectedOption.value === 'roadAddr'){
+      _add = {
+        "roadAddr": inputValue
+      }
+    }else if(selectedOption && selectedOption.value === 'discountAmt'){
+      _add = {
+        "discountAmt": inputValue,
+      }
+    }    
     setActivePage(1)
-    setSearchOption(_selectedOption)
-    _getAdminCafeList(_selectedOption)
+    _getAdminCafeList({..._selectedOption, ..._add})
   }
 
 
@@ -266,7 +271,10 @@ const CafesManagement = (props: any) => {
     }));
   };
 
-  
+  const buttonStyle = {
+    width : "100px"
+  };
+
 
   return (
     <Container style={{ overflowY: "auto" }}>
@@ -275,22 +283,20 @@ const CafesManagement = (props: any) => {
           <div className="flex-row-space mgb10">
             <Button variant="secondary" onClick={() => handleInsUpd({}, 'INS')}>등록</Button>
             <div className="flex-row">
-              <Form onClick={search} className="flex-row">
-                <Form.Group controlId="formBasicSelect">
-                  <Form.Control as="select" value={selectedOption?.value} onChange={handleSelectedOptionChange}>
-                    <option value="">Select an option...</option>
-                    {options.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group controlId="formBasicInput">
-                  <Form.Control type="text" placeholder="Enter text" value={inputValue || ''} onChange={handleInputChange} />
-                </Form.Group>
-                <Button onClick={search} >검색</Button>
-              </Form>
+              <Dropdown onSelect={handleSelectedOptionChange}>
+              <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                {selectedOption?.label || null}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {options.length > 0? options.map((option, index) => (
+                  <Dropdown.Item key={index} eventKey={option.value}>
+                    {option.label}
+                  </Dropdown.Item>
+                )) : null}
+              </Dropdown.Menu>
+          </Dropdown>
+          <Form.Control type="text" placeholder="Enter text" value={inputValue || ''} onChange={handleInputChange} onKeyDown={(e) => { if (e.key === 'Enter') { search() }}}/>
+          <Button variant="danger"  style={buttonStyle} onClick={() => search()}>검색</Button>
             </div>
           </div>
           <Pagination>
@@ -328,7 +334,8 @@ const CafesManagement = (props: any) => {
               )) : null}
             </tbody>
           </Table>
-        </div> :
+        </div> : null }
+        {!cafeMngAdminMain ? 
         <div>
           <Formik
             initialValues={formData}
@@ -568,14 +575,12 @@ const CafesManagement = (props: any) => {
                 </Form.Group>
                 <Button id = "submit2" type="submit">저장하기</Button>
                 <Button variant="danger" onClick={() => 
-                  // console.log(formData)
                   setCafeMngAdminMain(true)
                   }>카페 리스트보기</Button>
               </Form>
             )}
           </Formik>
-        </div>
-      }
+        </div>:  null}
     </Container>
   );
 };
