@@ -1,4 +1,4 @@
-import { Container, Pagination, Modal, Table, Button, Form } from 'react-bootstrap';
+import { Container, Pagination, Modal, Table, Button, Dropdown, Form } from 'react-bootstrap';
 import { getAdminUser, putAdminUser, deleteAdminUser } from 'api/main';
 import { useState, useRef, useEffect } from 'react';
 
@@ -25,7 +25,7 @@ const MembersManagement = () => {
   }
 
   const options: Option[] = [
-    // { value: '', label: '전체' },
+    { value: '', label: '전체' },
     { value: 'email', label: '아이디' },
     { value: 'username', label: '이름' },
   ];
@@ -73,16 +73,16 @@ const MembersManagement = () => {
 
   useEffect(() => {
     _getAdminUser(searchOption)
+    setSelectedOption({ value: '', label: '전체' })
   }, [])
 
 
   const _getAdminUser = async (_searchOption: Search) => {
     const response = await getAdminUser(_searchOption); // type 변경 필요 
-    console.log(response.data)
     if (response.data && response.data.body.user) {
       setMemberList(response.data.body.user.content)
+      // console.log(response.data.body.user.content)
       totalPages.current = response.data.body.user.totalPages
-
     } else {
       setMemberList([])
     }
@@ -90,8 +90,8 @@ const MembersManagement = () => {
 
   const renderPageItems = () => {
     const pageItems: any = [];
-    pageItems.push(<Pagination.First onClick={() => handlePageChange(1)} />)
-    pageItems.push(<Pagination.Prev onClick={() => handlePageChange(activePage - 1)} />)
+    pageItems.push(<Pagination.First key = {-2}onClick={() => handlePageChange(1)} />)
+    pageItems.push(<Pagination.Prev key = {-1} onClick={() => handlePageChange(activePage - 1)} />)
     let _pageNumber = 1;
     if (activePage > totalPages.current - 5) {
       let startPage = totalPages.current - 10 < 1 ? 1 : totalPages.current - 10
@@ -126,8 +126,8 @@ const MembersManagement = () => {
         );
       }
     }
-    pageItems.push(<Pagination.Next onClick={() => handlePageChange(activePage + 1)} />)
-    pageItems.push(<Pagination.Last onClick={() => handlePageChange(totalPages.current)} />)
+    pageItems.push(<Pagination.Next key = {10000} onClick={() => handlePageChange(activePage + 1)} />)
+    pageItems.push(<Pagination.Last key = {10001} onClick={() => handlePageChange(totalPages.current)} />)
     return pageItems;
   };
 
@@ -137,7 +137,6 @@ const MembersManagement = () => {
       const _selectedOption = {
         "page": pageNumber - 1,
         "sizePerPage": 10,
-        "userId": "",
         "username": "",
         "email": ""
       }
@@ -150,43 +149,59 @@ const MembersManagement = () => {
   };
 
 
-  const handleSubmit = () => {
-
-  }
 
   const search = () => {
-
+    let _selectedOption = { "page": activePage - 1, "sizePerPage": 10,} ; 
+    let _add; 
+    if(selectedOption && selectedOption.value === ''){
+      _add = {
+        "username": inputValue,
+        "email": inputValue
+      }
+    }else if(selectedOption && selectedOption.value === 'email'){
+      _add = {
+        "email": inputValue
+      }
+    }else if(selectedOption && selectedOption.value === 'username'){
+      _add = {
+        "username": inputValue,
+      }
+    }    
+    setActivePage(1)
+    _getAdminUser({..._selectedOption, ..._add})
   }
 
-  const handleSelectedOptionChange = (event: any) => {
-    const option = options.find((o) => o.value === event.target.value) || null;
+  const handleSelectedOptionChange = (value) => {
+    const option = options.find((o) => o.value === value) || null;
     setSelectedOption(option);
   };
 
+
+  const buttonStyle = {
+    width : "100px"
+  };
 
   return (
     <Container>
       <div className="flex-row-space mgb10">
         <div></div>
-        <Form onSubmit={handleSubmit} className="flex-row">
-          <Form.Group controlId="formBasicSelect">
-            <Form.Control as="select" value={selectedOption?.value || ''} onChange={handleSelectedOptionChange}>
-              <option value="">Select an option...</option>
-              {options.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-          <Form.Group controlId="formBasicInput">
-            <Form.Control type="text" placeholder="Enter text" value={inputValue || ''} onChange={handleInputChange} />
-          </Form.Group>
-          <Form.Group>
-            <Form.Control type="submit" value="Search" onClick={search} />
-          </Form.Group>
-        </Form>
-      </div>
+        <div className = "flex-row">
+          <Dropdown onSelect={handleSelectedOptionChange}>
+              <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                {selectedOption?.label || null}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {options.length > 0? options.map((option, index) => (
+                  <Dropdown.Item key={index} eventKey={option.value}>
+                    {option.label}
+                  </Dropdown.Item>
+                )) : null}
+              </Dropdown.Menu>
+          </Dropdown>
+          <Form.Control type="text" style = {{height : "minContent"}}placeholder="Enter text" value={inputValue || ''} onChange={handleInputChange} onKeyDown={(e) => { if (e.key === 'Enter') { search() }}}/>
+          <Button variant="danger" style={buttonStyle}  onClick={() => search()}>검색</Button>
+        </div>
+      </div> 
       <Pagination>
         {renderPageItems()}
       </Pagination>

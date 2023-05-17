@@ -7,7 +7,7 @@ import { Base64 } from 'js-base64';
 
 const FranchiseManagement = (props) => {
 
-  interface cafe {
+  interface franchise {
     rmk?: string;
     franchiseId: number;
     franchiseNm: string;
@@ -28,10 +28,10 @@ const FranchiseManagement = (props) => {
   }
 
 
-  const [franchiseData, setFranchisesData] = useState<cafe[]>([]);
+  const [franchiseData, setFranchisesData] = useState<franchise[]>([]);
   const [franchiseAdminMain, setFranchiseAdminMain] = useState(true);
-  const [currentData, setCurrentData] = useState<cafe | null>(null);
-  const [franchiseInfo, setFranchiseInfo] = useState<cafe[]>([]);
+  const [currentData, setCurrentData] = useState<franchise | null>(null);
+  const [franchiseInfo, setFranchiseInfo] = useState<franchise[]>([]);
   const [formData, setFormData] = useState<any>({}); // 수정필요
   const [postImage, setPostImage] = useState<file | object>({ myFile: "" });
 
@@ -46,7 +46,6 @@ const FranchiseManagement = (props) => {
 
   const _getAdminFranchiseInfo = async (cafeId: number) => {
     const response = await getAdminFranchiseInfo(cafeId); // type 변경 필요 
-
     if (response.data) {
       for (let i = 0; i < 3; i++) {
         if (response.data.menuList[i] && response.data.menuList[i].menuNm) {
@@ -126,9 +125,9 @@ const FranchiseManagement = (props) => {
     <Container>
       {franchiseAdminMain ?
         <Row>
-          {franchiseData.map((data) => (
-            <Col md={4} key={data.franchiseId}>
-              <Card style={{ width: '14rem' }}>
+          {franchiseData.map((data, i) => (
+            <Col md={4} >
+              <Card style={{ width: '14rem' }} key={i} >
                 <Card.Img variant="top" src={`data:image/jpg;base64,${data.logoImg}`} alt="base64-encoded image"  />
                 <Card.Body onClick={() => setCurrentData(data)}>
                   <Card.Title>{data.franchiseNm}</Card.Title>
@@ -139,7 +138,8 @@ const FranchiseManagement = (props) => {
               </Card>
             </Col>
           ))}
-        </Row> :
+        </Row> 
+        :
         <div>
           <Formik
             initialValues={formData}
@@ -191,7 +191,7 @@ const FranchiseManagement = (props) => {
                   </Form.Group>
                 </Row>
                 {formData && formData.menuList && formData.menuList.map((item, i) => (
-                  <Row className="mb-6" key={i}>
+                  <Row className="mb-6" key={i} >
                     <Form.Group
                       as={Col}
                       md="4"
@@ -220,7 +220,6 @@ const FranchiseManagement = (props) => {
                           }));
                         }}
                       />
-
                     </Form.Group>
                     <Form.Group
                       as={Col}
@@ -250,7 +249,6 @@ const FranchiseManagement = (props) => {
                           }));
                         }}
                       />
-
                     </Form.Group>
                   </Row>
                 ))}

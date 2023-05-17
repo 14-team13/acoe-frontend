@@ -2,7 +2,6 @@
   "name": "host",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://acoe.co.kr:9090",
   "dependencies": {
     "@emotion/babel-plugin": "^11.1.2",
     "@emotion/react": "^11.0.0",
@@ -24,6 +23,7 @@
     "bootstrap": "^5.2.3",
     "fontfaceobserver": "^2.3.0",
     "formik": "^2.2.9",
+    "http-proxy-middleware": "^2.0.6",
     "js-base64": "^3.7.5",
     "jwt-decode": "^3.1.2",
     "pm2": "^5.3.0",

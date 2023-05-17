@@ -58,9 +58,10 @@ export const Menu: React.FC = (props: any) => {
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
   const [logoCafes, setLogoCafes] = useState<logoCafes[]>([]);
   const [cafeData, setCafeData] = useState<cafe[]>([]);
-  const [cafeBasicData, setCafeBasicData] = useState<cafe[]>([])
+  const cafeBasicDataRef = useRef<cafe[]>([])
   const [markerSetting, setMarkerSetting] = useState<string | null>(null)
   const [clickedCafe, setClickedCafe] = useState<cafe | null>(null)
+  const [clickFranchise, setClickFranchise]= useState<logoCafes | null>(null);
 
   const showLeftModal = () => {
     if (modalState === 0) {
@@ -95,17 +96,26 @@ export const Menu: React.FC = (props: any) => {
   }, [])
 
   useEffect(() => {
+    if(clickFranchise){
+      // 검색한 데이터에서 프랜차이즈 찾기, 전체에서 찾기?  
+      const _cafeData = cafeBasicDataRef.current.filter((item: any) => item.franchise && item.franchise.franchiseId === clickFranchise.franchiseId)
+      setCafeData([..._cafeData])
+    }
+  },[clickFranchise])
+
+
+  useEffect(() => {
     if (markerSetting !== null && Number(markerSetting) >= 0) {
-      const _cafeData = cafeBasicData.filter((item: cafe) => item.discountAmt !== null && item.discountAmt >= Number(markerSetting))
+      const _cafeData = cafeBasicDataRef.current.filter((item: cafe) => item.discountAmt !== null && item.discountAmt >= Number(markerSetting))
       setCafeData([..._cafeData])
     } else if (markerSetting === 'app') {
-      const _cafeData = cafeBasicData.filter((item: cafe) => item.appOrderYn)
+      const _cafeData = cafeBasicDataRef.current.filter((item: cafe) => item.appOrderYn)
       setCafeData([..._cafeData])
     } else if (markerSetting === 'kiosk') {
-      const _cafeData = cafeBasicData.filter((item: cafe) => item.kioskYn)
+      const _cafeData = cafeBasicDataRef.current.filter((item: cafe) => item.kioskYn)
       setCafeData([..._cafeData])
     } else {
-      setCafeData([...cafeBasicData])
+      setCafeData([...cafeBasicDataRef.current])
     }
   }, [markerSetting])
 
@@ -119,24 +129,27 @@ export const Menu: React.FC = (props: any) => {
   }
 
   const _getCafesList = async () => {
-    const response = await getCafesList(); // type 변경 필요 
+    const response = await getCafesList(); 
     if (response.data.length > 0) {
       const _data = response.data.filter((item: any) => item.useYn)
-      setCafeBasicData(JSON.parse(JSON.stringify(_data)))
+      // setCafeBasicData(JSON.parse(JSON.stringify(_data))) // 카페 전체 데이터 
+      cafeBasicDataRef.current = JSON.parse(JSON.stringify(_data))
       setCafeData(_data)
+      console.log(_data)
     } else {
-      setCafeBasicData([])
+      cafeBasicDataRef.current = []; 
       setCafeData([])
     }
   }
 
   const _getCafeKeyword = async (cafeTitle: string) => {
-    const response = await getCafeKeyword(cafeTitle); // type 변경 필요 
+    const response = await getCafeKeyword(cafeTitle); 
     if (response.data.length > 0) {
       const _data = response.data.filter((item: any) => item.useYn)
-      setCafeBasicData(JSON.parse(JSON.stringify(_data)))
+      cafeBasicDataRef.current = JSON.parse(JSON.stringify(_data))
       setCafeData(_data)
     } else {
+      cafeBasicDataRef.current = []; 
       setCafeData([])
     }
   }
@@ -159,7 +172,10 @@ export const Menu: React.FC = (props: any) => {
               mobileModalState={mobileModalState}
               logoCafes={logoCafes}
               cafeData={cafeData}
-
+              getCafeKeyword={_getCafeKeyword}
+              getCafesList={_getCafesList}
+              clickedCafe = {clickedCafe}
+              setClickFranchise={setClickFranchise}
             />
             : null}
           <NavContainer logoCafes={logoCafes} setMarkerSetting={setMarkerSetting} />
@@ -188,6 +204,7 @@ export const Menu: React.FC = (props: any) => {
                 getCafeKeyword={_getCafeKeyword}
                 getCafesList={_getCafesList}
                 clickedCafe = {clickedCafe}
+                setClickFranchise={setClickFranchise}
               />
               : null}
             </div>
