@@ -1,6 +1,6 @@
-import { Container, Pagination, Row, Col, Table, Button, Form } from 'react-bootstrap';
+import { Container, Pagination, Row, Col, Table, Button, FormControl, Form , Dropdown,  } from 'react-bootstrap';
 import { useState, useRef, useEffect } from 'react';
-import { getAdminCafeList, getAdminCafeInfo, postAdminCafeInfo, putAdminCafeInfo } from 'api/main';
+import { getAdminFranchisesList, getAdminCafeList, getAdminCafeInfo, postAdminCafeInfo, putAdminCafeInfo } from 'api/main';
 import * as formik from 'formik';
 import * as yup from 'yup';
 
@@ -11,6 +11,16 @@ const CafesManagement = (props: any) => {
     label: string;
   }
 
+  interface franchise {
+    rmk?: string;
+    franchiseId: number;
+    franchiseNm: string;
+    discountAmt: number;
+    logoImg?: string;
+    useYn: boolean;
+    menuList?: any; // 수정필요
+    src: string;
+  }
   interface Search {
     page: number | null;
     sizePerPage: number | null;
@@ -42,18 +52,30 @@ const CafesManagement = (props: any) => {
     if (type === 'UDP') {
       const response = await getAdminCafeInfo(cafeId); // type 변경 필요 
       if (response.data && type === 'UDP') {
-        for (let i = 0; i < 5; i++) {
-          if (response.data.menuList[i] && response.data.menuList[i].menuNm) {
-            let item = response.data.menuList[i];
-            response.data.menuList[i] = { '_id': i, 'menuId': item.menuId, 'menuNm': item.menuNm, 'price': item.price }
-          } else {
-            response.data.menuList[i] = { '_id': i, 'menuNm': '', 'price': '' }
-          }
+        if(response.data.franchise){ // 프랜차이즈면 
+          setShowFranchise(true);
+          setFranchiseValue(response.data.franchise.franchiseNm)
+        }else{ // 프랜차이즈가 아니면
+          setShowFranchise(false); 
+          setFranchiseValue("해당없음")
+          for (let i = 0; i < 5; i++) {
+            if (response.data.menuList[i] && response.data.menuList[i].menuNm) {
+              let item = response.data.menuList[i];
+              response.data.menuList[i] = { 'menuNm': item.menuNm, 'price': item.price }
+            } else {
+              response.data.menuList[i] = { 'menuNm': '', 'price': '' }
+            }
+          }        
         }
-        console.log(response.data.menuList)
+        response.data.menuList.forEach((item) => {
+          if(item.appOrderYn === null) item.appOrderYn = false;
+          if(item.kioskYn === null) item.kioskYn = false;
+          if(item.useYn === null) item.appOrderYn = false;
+        })
         setFormData({ ...response.data, type: 'UPD' })
       }
     } else {
+      setShowFranchise(false);
       setFormData({
         cafeNm: '',
         roadAddr: '',
@@ -73,8 +95,19 @@ const CafesManagement = (props: any) => {
         type: 'INS'
       })
     }
-
   }
+
+  const _getAdminFranchisesList = async () => {
+    const response = await getAdminFranchisesList(); // type 변경 필요 
+    if (response.data.length > 0) {
+      const newObj = {'franchiseId' : null, 'franchiseNm' : '해당없음'}
+      response.data.unshift(newObj);
+      setFranchisesData(response.data)
+    } else {
+      setFranchisesData([])
+    }
+  }
+   
   const { Formik } = formik;
 
   const [inputValue, setInputValue] = useState('');
@@ -83,12 +116,15 @@ const CafesManagement = (props: any) => {
     "page": 0,
     "sizePerPage": 10
   });
-
+  const [franchiseData, setFranchisesData] = useState<franchise[]>([]);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [cafeMngAdminMain, setCafeMngAdminMain] = useState(true);
   const [formData, setFormData] = useState<any>(null)
   const [activePage, setActivePage] = useState(1);
   const totalPages = useRef<number>(0);
+  const [franchiseValue, setFranchiseValue] = useState('');
+  const [showFranchise, setShowFranchise] = useState(false);
+
 
   useEffect(() => {
     if (cafeMngAdminMain) {
@@ -116,6 +152,12 @@ const CafesManagement = (props: any) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if(showFranchise){
+      delete formData.menuList;
+    }else{
+      delete formData.franchise;
+    }
+    console.log(formData)
     if (formData.type === 'INS') {
       let response = await postAdminCafeInfo(JSON.parse(JSON.stringify(formData)));
       if (response.status === 200) {
@@ -132,10 +174,11 @@ const CafesManagement = (props: any) => {
   const handleInsUpd = (item: any, type: string) => {
     setCafeMngAdminMain(false);
     _getAdminCafeInfo(type, item.cafeId)
+    _getAdminFranchisesList();
   }
 
-  const search = () => {
 
+  const search = () => {
     let _selectedOption = { "page": 0, "sizePerPage": 10 }
     if (selectedOption && selectedOption.value === 'cafeNm') {
       _selectedOption["cafeNm"] = inputValue;
@@ -161,8 +204,8 @@ const CafesManagement = (props: any) => {
 
   const renderPageItems = () => {
     const pageItems: any = [];
-    pageItems.push(<Pagination.First onClick={() => handlePageChange(1)} />)
-    pageItems.push(<Pagination.Prev onClick={() => handlePageChange(activePage - 1)} />)
+    pageItems.push(<Pagination.First key = {-2} onClick={() => handlePageChange(1)} />)
+    pageItems.push(<Pagination.Prev key = {-1} onClick={() => handlePageChange(activePage - 1)} />)
     let _pageNumber = 1;
     if (activePage > totalPages.current - 5) {
       let startPage = totalPages.current - 10 < 1 ? 1 : totalPages.current - 10
@@ -197,8 +240,8 @@ const CafesManagement = (props: any) => {
         );
       }
     }
-    pageItems.push(<Pagination.Next onClick={() => handlePageChange(activePage + 1)} />)
-    pageItems.push(<Pagination.Last onClick={() => handlePageChange(totalPages.current)} />)
+    pageItems.push(<Pagination.Next key = {10000} onClick={() => handlePageChange(activePage + 1)} />)
+    pageItems.push(<Pagination.Last key = {10001} onClick={() => handlePageChange(totalPages.current)} />)
     return pageItems;
   };
 
@@ -213,7 +256,17 @@ const CafesManagement = (props: any) => {
     }
   }
 
+  const handleDropdownChange = (value) => {
+    value !== "해당없음"? setShowFranchise(true) : setShowFranchise(false)
+    setFranchiseValue(value);
+    const selectedOption = franchiseData.find((option) => option.franchiseNm === value )
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      ['franchiseId']: selectedOption?.franchiseId
+    }));
+  };
 
+  
 
   return (
     <Container style={{ overflowY: "auto" }}>
@@ -222,7 +275,7 @@ const CafesManagement = (props: any) => {
           <div className="flex-row-space mgb10">
             <Button variant="secondary" onClick={() => handleInsUpd({}, 'INS')}>등록</Button>
             <div className="flex-row">
-              <Form onSubmit={handleSubmit} className="flex-row">
+              <Form onClick={search} className="flex-row">
                 <Form.Group controlId="formBasicSelect">
                   <Form.Control as="select" value={selectedOption?.value} onChange={handleSelectedOptionChange}>
                     <option value="">Select an option...</option>
@@ -236,9 +289,7 @@ const CafesManagement = (props: any) => {
                 <Form.Group controlId="formBasicInput">
                   <Form.Control type="text" placeholder="Enter text" value={inputValue || ''} onChange={handleInputChange} />
                 </Form.Group>
-                <Form.Group>
-                  <Form.Control type="submit" value="Search" onClick={search} />
-                </Form.Group>
+                <Button onClick={search} >검색</Button>
               </Form>
             </div>
           </div>
@@ -306,7 +357,6 @@ const CafesManagement = (props: any) => {
                       }}
                       isValid={formData && formData.cafeNm !== ''}
                     />
-
                   </Form.Group>
                   <Form.Group
                     as={Col}
@@ -327,7 +377,6 @@ const CafesManagement = (props: any) => {
                       }}
                       isValid={formData && formData.roadAddr !== ''}
                     />
-
                   </Form.Group>
                   <Form.Group
                     as={Col}
@@ -347,10 +396,9 @@ const CafesManagement = (props: any) => {
                         }));
                       }}
                     />
-
                   </Form.Group>
                 </Row>
-                {formData && formData.menuList && formData.menuList.map((item, i) => (
+                {!showFranchise && formData && formData.menuList && formData.menuList.map((item, i) => (
                   <Row className="mb-6" key={i}>
                     <Form.Group
                       as={Col}
@@ -380,7 +428,6 @@ const CafesManagement = (props: any) => {
                           }));
                         }}
                       />
-
                     </Form.Group>
                     <Form.Group
                       as={Col}
@@ -410,7 +457,6 @@ const CafesManagement = (props: any) => {
                           }));
                         }}
                       />
-
                     </Form.Group>
                   </Row>
                 ))}
@@ -455,8 +501,26 @@ const CafesManagement = (props: any) => {
                       isValid={formData && formData.y !== 0}
                     />
                   </Form.Group>
+                </Row> 
+                <Row className="flex-row ">
+                  <Form.Group>
+                    <Form.Label>프랜차이즈 선택</Form.Label>
+                  </Form.Group>
+                  <Form.Group>
+                  <Dropdown onSelect={handleDropdownChange}>
+                      <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                        {franchiseValue || '해당없음'}
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        {franchiseData.length > 0? franchiseData.map((option, index) => (
+                          <Dropdown.Item key={index} eventKey={option.franchiseNm}>
+                            {option.franchiseNm}
+                          </Dropdown.Item>
+                        )) : null}
+                      </Dropdown.Menu>
+                    </Dropdown>
+                    </Form.Group>
                 </Row>
-                <Row></Row>
                 <Form.Group className="position-relative mb-3">
                   <Form.Check
                     required
@@ -502,8 +566,11 @@ const CafesManagement = (props: any) => {
                     id="validationFormik8"
                   />
                 </Form.Group>
-                <Button type="submit">저장하기</Button>
-                <Button variant="danger" onClick={() => setCafeMngAdminMain(true)}>카페 리스트보기</Button>
+                <Button id = "submit2" type="submit">저장하기</Button>
+                <Button variant="danger" onClick={() => 
+                  // console.log(formData)
+                  setCafeMngAdminMain(true)
+                  }>카페 리스트보기</Button>
               </Form>
             )}
           </Formik>
