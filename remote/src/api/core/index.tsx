@@ -7,7 +7,7 @@ import axios, {
 
 
 const request = axios.create({
-  baseURL: process.env.REACT_APP_API_HOST + ":8080", // Replace with your API base URL
+  baseURL: process.env.REACT_APP_API_HOST + ":9090", // Replace with your API base URL
   headers: {
     'Content-Type': 'application/json'
   }
