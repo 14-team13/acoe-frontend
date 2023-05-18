@@ -10,7 +10,7 @@ import { API_HOST } from 'constant';
 import requestRefreshToken from './requestRefreshToken';
 
 const request = axios.create({
-  baseURL: '',
+  baseURL: process.env.REACT_APP_API_HOST, // Replace with your API base URL
   headers: {
     'Content-Type': 'application/json'
   }

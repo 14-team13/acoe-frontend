@@ -8,7 +8,7 @@ import { isMobile } from 'react-device-detect';
 const CafeCard = (props) => {
 
   const findCafe = (item) => {
-    props.setCafeID((props) => item.cafeId)
+    props.setCafeID((props) => item)
     if (isMobile) {
       props.setMobileModalState(3);
     } else {

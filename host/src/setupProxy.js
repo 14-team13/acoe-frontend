@@ -3,7 +3,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 module.exports = (app) => {
   app.use(
     createProxyMiddleware('/main', {
-      target: 'http://acoe.co.kr:9090/',
+      target: 'http://acoe.co.kr:9090',
       changeOrigin: true,
     }),
   ),
@@ -18,6 +18,7 @@ module.exports = (app) => {
       target: 'http://acoe.co.kr:9090/',
       changeOrigin: true,
     }),
+<<<<<<< Updated upstream
   );
 };
 app.use(
@@ -38,3 +39,7 @@ app.use(
     changeOrigin: true,
   }),
 );
+=======
+  )
+};
+>>>>>>> Stashed changes
