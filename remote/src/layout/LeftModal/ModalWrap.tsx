@@ -10,6 +10,7 @@ import AppOrderDiscountComponent from 'components/AppOrderDiscountComponent';
 import KioskOrderDiscountComponent from 'components/KioskOrderDiscountComponent';
 import { isMobile } from 'react-device-detect';
 import { getCafeInfo } from 'api/main';
+import axios from 'axios';
 
 interface menu {
   menuNm: string;
@@ -19,18 +20,19 @@ interface menu {
 
 const ModalWrap = (props: any) => {
 
-  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes, cafeData, getCafeKeyword, getCafesList, clickedCafe, setClickFranchise} = props;
+  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes, cafeData, getCafeKeyword, getCafesList, clickedCafe, setClickFranchise } = props;
 
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
-  const [cafeID, setCafeID] = useState<number>()
+  const [cafeID, setCafeID] = useState<any>()
   const [selectedCafe, setSelectedCafe] = useState<any>(); // type 체크 필요 
   const [selectedMenu, setSelectedMenu] = useState<menu[]>([]);
+  const [cafeBlogData, setCafeBlogData] = useState<any[]>([])
 
   const _getCafeInfo = async (cafeID: number) => {
     const response = await getCafeInfo(cafeID); // type 변경 필요 
     if (response.data) {
       setSelectedCafe(response.data)
-      if(response.data.menuList && response.data.menuList.length > 0){
+      if (response.data.menuList && response.data.menuList.length > 0) {
         setSelectedMenu(response.data.menuList)
       }
     } else {
@@ -39,23 +41,28 @@ const ModalWrap = (props: any) => {
     }
   }
 
+  const _getCafeBlog = async (cafeNm: string) => {
+
+  }
+
   useEffect(() => {
     if (cafeID) {
-      _getCafeInfo(cafeID);
+      _getCafeInfo(cafeID.cafeId);
+      _getCafeBlog(cafeID.cafeTitle)
     }
   }, [cafeID])
 
   useEffect(() => {
     if (clickedCafe !== null && clickedCafe.cafeId) {
-      _getCafeInfo(clickedCafe.cafeId);      
-      isMobile? setMobileModalState(3) : setModalState(2)
+      _getCafeInfo(clickedCafe.cafeId);
+      isMobile ? setMobileModalState(3) : setModalState(2)
     }
   }, [clickedCafe])
 
   const search = () => {
-    if(searchCafeTxt){
+    if (searchCafeTxt) {
       getCafeKeyword(searchCafeTxt)
-    }else{
+    } else {
       getCafesList()
     }
   }
@@ -65,13 +72,13 @@ const ModalWrap = (props: any) => {
       {isMobile && mobileModalState === 2 ?
         <div className="mb-cafe-modal">
           <div className="search">
-            <img className="" src={leftModalSvg}  onClick={() => setMobileModalState(1)} />
+            <img className="" src={leftModalSvg} onClick={() => setMobileModalState(1)} />
             <input className="mgl50" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
             {searchCafeTxt !== '' ? <img className="mgl20 close-image" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
           </div>
           <div className="cafes">
             {logoCafes.map((logoCafe: any, i: any) => ( //type 수정 필요 
-              <img key={i} src={`data:image/jpg;base64,${logoCafe.logoImg}`} alt="base64-encoded image" onClick = {() => setClickFranchise(logoCafe)}/>
+              <img key={i} src={`data:image/jpg;base64,${logoCafe.logoImg}`} alt="base64-encoded image" onClick={() => setClickFranchise(logoCafe)} />
             ))}
           </div>
           <div className="summary fw700 fs14 lh21 fc-gray">{cafeData.length > 0 ? `${cafeData.length}개의 카페` : null}</div>
@@ -84,8 +91,8 @@ const ModalWrap = (props: any) => {
                 naverRoadFinder={true}
                 appOrderYn={cafe.appOrderYn}
                 kioskYn={cafe.kioskYn}
-                menuNm={cafe.menuList && cafe.menuList[0]? cafe.menuList[0].menuNm : ''}
-                price={cafe.menuList && cafe.menuList[0]? cafe.menuList[0].price : 0}
+                menuNm={cafe.menuList && cafe.menuList[0] ? cafe.menuList[0].menuNm : ''}
+                price={cafe.menuList && cafe.menuList[0] ? cafe.menuList[0].price : 0}
                 discountAmt={cafe.discountAmt}
                 cafeId={cafe.cafeId}
                 setCafeID={setCafeID}
@@ -103,7 +110,7 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="cafe-detail">
             <div className="cafe-typical">
-              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt|| 0}원 할인</div>
+              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt || 0}원 할인</div>
               <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.title}</div>
               <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.address}</div>
               <NaverFinderComponent />
@@ -134,11 +141,16 @@ const ModalWrap = (props: any) => {
             </div>
             <div className="cafe-detail-component">
               <div className="fw700 fs14 lh24">블로그 리뷰</div>
-              <BlogReviewComponent />
-              <BlogReviewComponent />
-              <BlogReviewComponent />
-              <BlogReviewComponent />
-              <BlogReviewComponent />
+              {cafeBlogData.map((item: any, i: number) => (
+                <BlogReviewComponent
+                  key={i}
+                  bloggername={item.bloggername}
+                  title={item.title}
+                  description={item.description}
+                  postdate={item.postdate}
+                  link={item.link}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -152,7 +164,7 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="cafes">
             {logoCafes.map((logoCafe: any, i: number) => (
-              <img key={i} src={`data:image/jpg;base64,${logoCafe.logoImg}`} onClick = {() => setClickFranchise(logoCafe)}/>
+              <img key={i} src={`data:image/jpg;base64,${logoCafe.logoImg}`} onClick={() => setClickFranchise(logoCafe)} />
             ))}
           </div>
           <div className="summary fw700 fs14 lh21 fc-gray">{cafeData.length > 0 ? `${cafeData.length}개의 카페` : null}</div>
@@ -165,8 +177,8 @@ const ModalWrap = (props: any) => {
                 naverRoadFinder={true}
                 appOrderYn={cafe.appOrderYn}
                 kioskYn={cafe.kioskYn}
-                menuNm={cafe.menuList && cafe.menuList[0]? cafe.menuList[0].menuNm : ''}
-                price={cafe.menuList && cafe.menuList[0]? cafe.menuList[0].price : 0}
+                menuNm={cafe.menuList && cafe.menuList[0] ? cafe.menuList[0].menuNm : ''}
+                price={cafe.menuList && cafe.menuList[0] ? cafe.menuList[0].price : 0}
                 discountAmt={cafe.discountAmt}
                 cafeId={cafe.cafeId}
                 setCafeID={setCafeID}
@@ -185,15 +197,15 @@ const ModalWrap = (props: any) => {
           </div>
           <div className="cafe-detail">
             <div className="cafe-typical">
-              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt|| 0}원 할인</div>
+              <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt || 0}원 할인</div>
               <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.cafeNm}</div>
               <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.roadAddr}</div>
               <div className="mgb25"> <NaverFinderComponent /></div>
               <div className="flex-row-center mgb30">
-              {selectedCafe && selectedCafe.appOrderYn ?
-                <div className="mgr25">
-                   <AppOrderDiscountComponent /> 
-                </div>: null}
+                {selectedCafe && selectedCafe.appOrderYn ?
+                  <div className="mgr25">
+                    <AppOrderDiscountComponent />
+                  </div> : null}
                 <div>
                   {selectedCafe && selectedCafe.kioskYn ? <KioskOrderDiscountComponent /> : null}
                 </div>
@@ -217,11 +229,16 @@ const ModalWrap = (props: any) => {
             </div>
             <div className="cafe-detail-component">
               <div className="fw700 fs14 lh24">블로그 리뷰</div>
-              <BlogReviewComponent />
-              <BlogReviewComponent />
-              <BlogReviewComponent />
-              <BlogReviewComponent />
-              <BlogReviewComponent />
+              {cafeBlogData.map((item: any, i: number) => (
+                <BlogReviewComponent
+                  key={i}
+                  bloggername={item.bloggername}
+                  title={item.title}
+                  description={item.description}
+                  postdate={item.postdate}
+                  link={item.link}
+                />
+              ))}
             </div>
           </div>
         </div>
