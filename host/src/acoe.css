@@ -1059,7 +1059,7 @@
   z-index: 3;
 }
 
-.short-cut .short-cut-component {
+.short-cut-component {
   background: #FFFFFF;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
@@ -1073,6 +1073,30 @@
   cursor: pointer;
   width: 30px;
   /*height: 94px; */
+}
+
+.mb-short-cut{
+  
+  z-index: 3;
+  position: fixed;
+  top: 7rem;
+  right: 1.2rem;
+  height: 1.5rem!important;
+}
+
+.mb-short-cut-component {
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 2px;
+  text-align: center;
+  cursor: pointer;
+  width: 0.8rem !important;
 }
 
 .app-svg {
@@ -1358,12 +1382,15 @@
   fill: red;
 }
 
+.not-found{
+  height: 100vh;
+}
+
 .not-found .not-found-box{
   background: #FAFAFC;
   border-radius: 8px;
   padding: 20px;
   margin : 0 15px;
-  height: 100vh;
 }
 
 .mb-scroll{
