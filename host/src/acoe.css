@@ -283,6 +283,10 @@
   margin-top: 24px
 }
 
+.mgt70 {
+  margin-top: 70px
+}
+
 .mgr4 {
   margin-right: 4px
 }
@@ -944,7 +948,7 @@
 }
 
 .cafe-card .bottom-wrap {
-  width: inherit;
+  width: auto;
   height: 56px;
   display: flex;
   justify-content: space-between;
@@ -1190,6 +1194,26 @@
   outline: none;
 }
 
+.mb-card{
+  display: flex;
+  /* flex-direction: row; */
+  /* justify-content: space-between; */
+  align-items: center;
+  position: relative;
+  width: 80vw;
+  /* height: 54px; */
+  left: 5vw;
+  /* background: #FFFFFF; */
+  /* box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); */
+  border-radius: 12px;
+  /* padding: 0 50px; */
+  /* width: 70vw; */
+  /* height: inherit; */
+  position: fixed;
+  bottom: 0.3rem;
+  /* right: 1.2rem;*/
+}
+
 .mb-container {
   display: flex;
   flex-direction: column;
@@ -1302,7 +1326,7 @@
 .mb-cafe-modal {
   box-sizing: border-box;
   width: 100vw;
-  /* height: 100vh; */
+  height: 100vh;
   background-color: white;
   border-left: 1px solid rgb(240, 241, 245);
   overflow-y: hidden;
@@ -1332,4 +1356,22 @@
   width : 20px;
   height : 20px;
   fill: red;
+}
+
+.not-found .not-found-box{
+  background: #FAFAFC;
+  border-radius: 8px;
+  padding: 20px;
+  margin : 0 15px;
+  height: 100vh;
+}
+
+.mb-scroll{
+  overflow: auto;
+  height: 100%;
+}
+
+.scroll{
+  overflow: auto;
+  height: 88%;
 }

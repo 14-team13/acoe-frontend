@@ -5,7 +5,7 @@ import { NavContainer } from 'layout/Nav';
 import ModalWrap from './LeftModal/ModalWrap'
 import ShortCutAppOrder from 'components/ShortCutAppOrder';
 import ShortCutKioskOrder from 'components/ShortCutKioskOrder';
-import { BrowserView, MobileView } from 'react-device-detect';
+import CafeCard from 'components/CafeCard';
 import { getFranchises, getCafesList } from 'api/main';
 import { getCafeKeyword } from 'api/main';
 import { isMobile } from 'react-device-detect';
@@ -50,6 +50,11 @@ interface cafe {
   menuList: any
 }
 
+
+// 모바일 0 - 기본화면
+// 웹 
+
+
 export const Menu: React.FC = (props: any) => {
 
 
@@ -64,7 +69,7 @@ export const Menu: React.FC = (props: any) => {
   const [clickedCafe, setClickedCafe] = useState<cafe | null>(null)
   const [clickFranchise, setClickFranchise] = useState<logoCafes | null>(null);
   const [focusText, setFocusText] = useState(false);
-
+  const [cafeInfo, setCafeInfo] = useState<cafe | null>(null);
 
   const showLeftModal = () => {
     if (modalState === 0) {
@@ -86,7 +91,7 @@ export const Menu: React.FC = (props: any) => {
 
 
   const search = () => {
-    console.log(searchCafeTxt)
+    setMobileModalState(0)
     if (searchCafeTxt) {
       _getCafeKeyword(searchCafeTxt)
     } else {
@@ -100,7 +105,16 @@ export const Menu: React.FC = (props: any) => {
   }, [])
 
   useEffect(() => {
+    if(clickedCafe){
+      if(isMobile) setMobileModalState(4)
+      setCafeInfo(clickedCafe)
+    }
+  },[clickedCafe])
+
+
+  useEffect(() => {
     if (clickFranchise) {
+      setMobileModalState(0)
       // 전체에서 찾기 cafeBasicDataRef.current  
       const _cafeData = cafeBasicDataRef.current.filter((item: any) => item.franchise && item.franchise.franchiseId === clickFranchise.franchiseId)
       setCafeData([..._cafeData])
@@ -109,6 +123,7 @@ export const Menu: React.FC = (props: any) => {
 
 
   useEffect(() => {
+    setMobileModalState(0)
     if (markerSetting !== null && Number(markerSetting) >= 0) {
       const _cafeData = cafeBasicDataRef.current.filter((item: cafe) => item.discountAmt !== null && item.discountAmt >= Number(markerSetting))
       setCafeData([..._cafeData])
@@ -180,12 +195,26 @@ export const Menu: React.FC = (props: any) => {
                 cafeData={cafeData}
                 getCafeKeyword={_getCafeKeyword}
                 getCafesList={_getCafesList}
-                clickedCafe={clickedCafe}
+                cafeInfo={cafeInfo}
                 setClickFranchise={setClickFranchise}
                 focusText={focusText}
               />
               : null}
             <NavContainer logoCafes={logoCafes} setMarkerSetting={setMarkerSetting} />
+            {mobileModalState === 4 ?  // 하단 카페 정보
+              <div className = "mb-card">
+                <CafeCard
+                  cafeTitle={clickedCafe?.cafeNm}
+                  cafeAddress={clickedCafe?.roadAddr}
+                  naverRoadFinder={true}
+                  appOrderYn={clickedCafe?.appOrderYn}
+                  kioskYn={clickedCafe?.kioskYn}
+                  menuNm={clickedCafe?.menuList && clickedCafe.menuList[0] ? clickedCafe.menuList[0].menuNm : ''}
+                  price={clickedCafe?.menuList && clickedCafe.menuList[0] ? clickedCafe.menuList[0].price : 0}
+                  discountAmt={clickedCafe?.discountAmt}
+                  cafeId={clickedCafe?.cafeId}/>
+              </div>          
+           : null}
           </div>
           <MixedBoundary>
             <Maps
@@ -211,7 +240,7 @@ export const Menu: React.FC = (props: any) => {
                 cafeData={cafeData}
                 getCafeKeyword={_getCafeKeyword}
                 getCafesList={_getCafesList}
-                clickedCafe={clickedCafe}
+                cafeInfo={cafeInfo}
                 setClickFranchise={setClickFranchise}
               />
               : null}
