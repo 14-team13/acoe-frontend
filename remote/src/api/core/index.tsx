@@ -12,6 +12,7 @@ const request = axios.create({
     'Content-Type': 'application/json',
     "Access-Control-Allow-Origin": `http://acoe.co.kr`,
     'Access-Control-Allow-Credentials':"true",
+    'x-cors-api-key': process.env.REACT_APP_CORS
   }
 });
 
