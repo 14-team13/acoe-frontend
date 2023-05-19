@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, InputHTMLAttributes } from 'react';
 import searchSvg from 'images/search.svg';
 import acoe_white from 'images/acoe_white.svg';
 import xSvg from 'images/x.svg';
@@ -21,13 +21,14 @@ interface menu {
 
 const ModalWrap = (props: any) => {
 
-  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes, cafeData, getCafeKeyword, getCafesList, clickedCafe, setClickFranchise } = props;
+  const { setModalState, modalState, setMobileModalState, mobileModalState, logoCafes, cafeData, getCafeKeyword, getCafesList, clickedCafe, setClickFranchise, focusText} = props;
 
   const [searchCafeTxt, setSearchCafeTxt] = useState('')
   const [cafeID, setCafeID] = useState<any>()
   const [selectedCafe, setSelectedCafe] = useState<any>(); // type 체크 필요 
   const [selectedMenu, setSelectedMenu] = useState<menu[]>([]);
   const [cafeBlogData, setCafeBlogData] = useState<any[]>([])
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const _getCafeInfo = async (cafeID: number) => {
     const response = await getCafeInfo(cafeID); // type 변경 필요 
@@ -54,11 +55,15 @@ const ModalWrap = (props: any) => {
   }, [cafeID])
 
   useEffect(() => {
+    console.log(clickedCafe)
+    console.log("aa")
     if (clickedCafe !== null && clickedCafe.cafeId) {
+  
       _getCafeInfo(clickedCafe.cafeId);
       isMobile ? setMobileModalState(3) : setModalState(2)
     }
   }, [clickedCafe])
+
 
   const search = () => {
     if (searchCafeTxt) {
@@ -68,13 +73,19 @@ const ModalWrap = (props: any) => {
     }
   }
 
+  useEffect(() => {
+    if(focusText && inputRef.current){
+      inputRef.current.focus();
+    }
+  },[focusText])
+
   return (
     <>
       {isMobile && mobileModalState === 2 ?
         <div className="mb-cafe-modal">
           <div className="search">
             <img className="" src={leftModalSvg} onClick={() => setMobileModalState(1)} />
-            <input className="mgl50" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름을 검색하세요." onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
+            <input className="mgl50" type="text" value={searchCafeTxt} ref = {inputRef} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름을 검색하세요." onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
             {searchCafeTxt !== '' ? <img className="mgl20 close-image" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
           </div>
           <div className="cafes">
@@ -107,20 +118,21 @@ const ModalWrap = (props: any) => {
         <div className="mb-cafe-modal">
           <div className="search">
             <img className="" src={leftModalSvg} onClick={() => setMobileModalState(2)} />
-            <div className="fw700 fs20 lh36 mgl25 mgr40 txt-overflow">{selectedCafe ? selectedCafe.title : ''}</div>
+            <div className="fw700 fs20 lh36 mgl25 mgr40 txt-overflow"></div>
           </div>
           <div className="cafe-detail">
             <div className="cafe-typical">
               <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt || 0}원 할인</div>
-              <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.title}</div>
-              <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.address}</div>
-              <NaverFinderComponent />
+              <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.cafeNm}</div>
+              <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.roadAddr}</div>
+              {/* <NaverFinderComponent /> */}
               <div className="flex-row-center mgt15">
-                <div>
-                  <AppOrderDiscountComponent />
-                </div>
-                <div className="mgl25">
-                  <KioskOrderDiscountComponent />
+              {selectedCafe && selectedCafe.appOrderYn ?
+                  <div className="mgr25">
+                    <AppOrderDiscountComponent />
+                  </div> : null}
+                  <div>
+                  {selectedCafe && selectedCafe.kioskYn ? <KioskOrderDiscountComponent /> : null}
                 </div>
               </div>
             </div>
@@ -197,7 +209,7 @@ const ModalWrap = (props: any) => {
       }
       {!isMobile && modalState === 2 &&
         <div className="cafe-modal">
-          <div className="search">
+          <div className="search" style = {{justifyContent : 'space-between'}}>
             <img className="" src={leftModalSvg} onClick={(modalState) => setModalState(1)} />
             <div className="fw700 fs20 lh36 mgl25 mgr40 txt-overflow"></div>
           </div>
@@ -206,7 +218,7 @@ const ModalWrap = (props: any) => {
               <div className="fw700 fs12 lh18 mgt17 discount-badge">{selectedCafe?.discountAmt || 0}원 할인</div>
               <div className="fw700 fs20 lh36 mgt12">{selectedCafe?.cafeNm}</div>
               <div className="fw400 fs12 lh18 mgt8">{selectedCafe?.roadAddr}</div>
-              <div className="mgb25"> <NaverFinderComponent /></div>
+              {/* <div className="mgb25"> <NaverFinderComponent /></div> */}
               <div className="flex-row-center mgb30">
                 {selectedCafe && selectedCafe.appOrderYn ?
                   <div className="mgr25">

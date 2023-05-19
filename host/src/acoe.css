@@ -409,7 +409,7 @@
 }
 
 .search {
-  width: 390px;
+  width: 100%;
   margin-right: 24px;
   display: flex;
   flex-direction: row;
@@ -479,7 +479,7 @@
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px;
   border-radius: 24px;
   margin-top: 8px;
-  padding: 16px 16px 8px 16px;
+  padding: 16px 16px 8px 0;
   display: flex;
   flex-wrap: wrap;
   align-content: space-between;
@@ -494,12 +494,8 @@
   border-radius: 12px;
   display: flex;
   margin-bottom: 8px;
+  margin-left : 17px;
 }
-
-.franchise-card:nth-child(even) {
-  margin-left: 20px;
-}
-
 
 .franchise-card .franchise-img {
   position: inherit;
@@ -1127,6 +1123,7 @@
   color: black !important;
   z-index: 3 !important;
   font-size: inherit !important;
+  border-color: white !important;
 }
 
 .ol-zoom-in:hover {
@@ -1154,6 +1151,8 @@
   color: black !important;
   z-index: 3 !important;
   font-size: inherit !important;
+  border-color: white !important;
+  outline: none !important;
 }
 
 .ol-zoom-out:focus {
@@ -1179,7 +1178,7 @@
 }
 
 .mb-search input {
-  margin-right: 24px;
+  /* margin-right: 24px; */
   border: none;
 }
 

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Maps } from 'components/Maps';
 import { MixedBoundary } from 'components/Common';
 import { NavContainer } from 'layout/Nav';
@@ -8,6 +8,7 @@ import ShortCutKioskOrder from 'components/ShortCutKioskOrder';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { getFranchises, getCafesList } from 'api/main';
 import { getCafeKeyword } from 'api/main';
+import { isMobile } from 'react-device-detect';
 
 interface logoCafes {
   rmk: null;
@@ -61,7 +62,9 @@ export const Menu: React.FC = (props: any) => {
   const cafeBasicDataRef = useRef<cafe[]>([])
   const [markerSetting, setMarkerSetting] = useState<string | null>(null)
   const [clickedCafe, setClickedCafe] = useState<cafe | null>(null)
-  const [clickFranchise, setClickFranchise]= useState<logoCafes | null>(null);
+  const [clickFranchise, setClickFranchise] = useState<logoCafes | null>(null);
+  const [focusText, setFocusText] = useState(false);
+
 
   const showLeftModal = () => {
     if (modalState === 0) {
@@ -81,6 +84,7 @@ export const Menu: React.FC = (props: any) => {
     return state
   }
 
+
   const search = () => {
     console.log(searchCafeTxt)
     if (searchCafeTxt) {
@@ -96,12 +100,12 @@ export const Menu: React.FC = (props: any) => {
   }, [])
 
   useEffect(() => {
-    if(clickFranchise){
+    if (clickFranchise) {
       // 전체에서 찾기 cafeBasicDataRef.current  
       const _cafeData = cafeBasicDataRef.current.filter((item: any) => item.franchise && item.franchise.franchiseId === clickFranchise.franchiseId)
       setCafeData([..._cafeData])
     }
-  },[clickFranchise])
+  }, [clickFranchise])
 
 
   useEffect(() => {
@@ -129,23 +133,24 @@ export const Menu: React.FC = (props: any) => {
   }
 
   const _getCafesList = async () => {
-    const response = await getCafesList(); 
+    const response = await getCafesList();
     if (response.data.length > 0) {
-      const _data = response.data.filter((item: any) => item.useYn)
-      // setCafeBasicData(JSON.parse(JSON.stringify(_data))) // 카페 전체 데이터 
+      // const _data = response.data.filter((item: any) => item.useYn)
+      const _data = response.data
       cafeBasicDataRef.current = JSON.parse(JSON.stringify(_data))
       setCafeData(_data)
       console.log(_data)
     } else {
-      cafeBasicDataRef.current = []; 
+      cafeBasicDataRef.current = [];
       setCafeData([])
     }
   }
 
   const _getCafeKeyword = async (cafeTitle: string) => {
-    const response = await getCafeKeyword(cafeTitle); 
+    const response = await getCafeKeyword(cafeTitle);
     if (response.data.length > 0) {
-      const _data = response.data.filter((item: any) => item.useYn)
+      //const _data = response.data.filter((item: any) => item.useYn)
+      const _data = response.data
       setCafeData(_data)
     } else {
       setCafeData([])
@@ -155,37 +160,42 @@ export const Menu: React.FC = (props: any) => {
 
   return (
     <>
-      <MobileView>
-        <div className="mb-container">
-          <div className="mb-search">
-            <div className="mg16 mb-hambergerSvg" onClick={props.mobileShowLogin} />
-            <input className="fs16 fw700 lh24 mgr50" type="text"
-              onFocus={() => setMobileModalState(2)}
-              value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름을 검색하세요." onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
-            <div className="mgr10 mb-searchSvg" />
+      {isMobile &&
+        <React.Fragment>
+          <div className="mb-container">
+            <div className="mb-search">
+              <div className="mg16 mb-hambergerSvg" onClick={props.mobileShowLogin} />
+              <input className="fs16 fw700 lh24 mgr50"
+                type="text"
+                onClick={() => setFocusText(true)}
+                onFocus={() => setMobileModalState(2)}
+                value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름을 검색하세요.모바일" onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
+              <div className="mgr10 mb-searchSvg" />
+            </div>
+            {mobileModalState !== 1 ?
+              <ModalWrap
+                setMobileModalState={setMobileModalState}
+                mobileModalState={mobileModalState}
+                logoCafes={logoCafes}
+                cafeData={cafeData}
+                getCafeKeyword={_getCafeKeyword}
+                getCafesList={_getCafesList}
+                clickedCafe={clickedCafe}
+                setClickFranchise={setClickFranchise}
+                focusText={focusText}
+              />
+              : null}
+            <NavContainer logoCafes={logoCafes} setMarkerSetting={setMarkerSetting} />
           </div>
-          {mobileModalState !== 1 ?
-            <ModalWrap
-              setMobileModalState={setMobileModalState}
-              mobileModalState={mobileModalState}
-              logoCafes={logoCafes}
-              cafeData={cafeData}
-              getCafeKeyword={_getCafeKeyword}
-              getCafesList={_getCafesList}
-              clickedCafe = {clickedCafe}
-              setClickFranchise={setClickFranchise}
+          <MixedBoundary>
+            <Maps
+              setClickedCafe={setClickedCafe}
+              newMarkers={cafeData}
             />
-            : null}
-          <NavContainer logoCafes={logoCafes} setMarkerSetting={setMarkerSetting} />
-        </div>
-        <MixedBoundary>
-          <Maps
-            setClickedCafe={setClickedCafe}
-            newMarkers={cafeData}
-          />
-        </MixedBoundary>
-      </MobileView>
-      <BrowserView>
+          </MixedBoundary>
+        </React.Fragment>
+      }
+      {!isMobile &&
         <div className="container">
           {modalState === 2 ? null :
             <div className={modalState === 1 ? 'navOpen' : ''}>
@@ -201,12 +211,12 @@ export const Menu: React.FC = (props: any) => {
                 cafeData={cafeData}
                 getCafeKeyword={_getCafeKeyword}
                 getCafesList={_getCafesList}
-                clickedCafe = {clickedCafe}
+                clickedCafe={clickedCafe}
                 setClickFranchise={setClickFranchise}
               />
               : null}
             </div>
-            <div className={`ope  nButton ${setButtonState()}`} onClick={showLeftModal}>
+            <div className={`openButton ${setButtonState()}`} onClick={showLeftModal}>
               <div className={`left ${modalState !== 0 ? 'move' : ''}`}></div>
             </div>
           </div>
@@ -223,7 +233,7 @@ export const Menu: React.FC = (props: any) => {
             <ShortCutKioskOrder setMarkerSetting={setMarkerSetting} />
           </div>
         </div>
-      </BrowserView>
+      }
     </>
   );
 };
