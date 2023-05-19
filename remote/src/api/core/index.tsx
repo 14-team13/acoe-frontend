@@ -10,15 +10,15 @@ const request = axios.create({
   baseURL: process.env.REACT_APP_API_HOST + ":9090", // Replace with your API base URL
   headers: {
     'Content-Type': 'application/json',
-    "Access-Control-Allow-Origin": `http://acoe.co.kr`,
-    'Access-Control-Allow-Credentials':"true",
+    // "Access-Control-Allow-Origin": `http://acoe.co.kr`,
+    // 'Access-Control-Allow-Credentials':"true",
     'x-cors-api-key': process.env.REACT_APP_CORS
   }
 });
 
 //요청 타임아웃 설정
 request.defaults.timeout = 2500;
-// request.defaults.withCredentials = true;
+request.defaults.withCredentials = true; 
 // request.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
 //요청 인터셉터 추가
