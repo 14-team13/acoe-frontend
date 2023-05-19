@@ -60,6 +60,10 @@
   justify-content: space-between;
 }
 
+.bg-primary{
+  background: #2F44FF;
+}
+
 .fc-primary {
   color: #2F44FF;
 }
@@ -163,6 +167,10 @@
   padding-top: 25px;
 }
 
+.pdb25 {
+  padding-bottom: 25px;
+}
+
 .mgl5 {
   margin-left: 5px
 }
@@ -209,6 +217,10 @@
 
 .mgl16 {
   margin-left: 16px
+}
+
+.mgl20 {
+  margin-left: 20px
 }
 
 .mgl25 {
@@ -269,6 +281,10 @@
 
 .mgt24 {
   margin-top: 24px
+}
+
+.mgt70 {
+  margin-top: 70px
 }
 
 .mgr4 {
@@ -333,6 +349,9 @@
   margin-bottom: 16px
 }
 
+.mgb20 {
+  margin-bottom: 20px
+}
 
 .mgb25 {
   margin-bottom: 25px
@@ -394,7 +413,7 @@
 }
 
 .search {
-  width: 390px;
+  width: 100%;
   margin-right: 24px;
   display: flex;
   flex-direction: row;
@@ -464,7 +483,7 @@
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px;
   border-radius: 24px;
   margin-top: 8px;
-  padding: 16px 16px 8px 16px;
+  padding: 16px 16px 8px 0;
   display: flex;
   flex-wrap: wrap;
   align-content: space-between;
@@ -479,12 +498,8 @@
   border-radius: 12px;
   display: flex;
   margin-bottom: 8px;
+  margin-left : 17px;
 }
-
-.franchise-card:nth-child(even) {
-  margin-left: 20px;
-}
-
 
 .franchise-card .franchise-img {
   position: inherit;
@@ -584,12 +599,19 @@
 
 .cafe-modal .search {
   height: 33px;
-  width: 100%;
+  width: inherit;
   display: flex;
   align-items: center;
+  justify-content: space-around;
   /* justify-content: space-between; */
-  padding: 15px 0px 12px 20px;
-  border-bottom: 1px solid rgb(240, 241, 245);
+  padding: 15px 0px 25px 20px;
+}
+
+.cafe-modal .search .outline{
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 5px;
+  width: 283px;
 }
 
 
@@ -926,7 +948,7 @@
 }
 
 .cafe-card .bottom-wrap {
-  width: inherit;
+  width: auto;
   height: 56px;
   display: flex;
   justify-content: space-between;
@@ -1105,6 +1127,7 @@
   color: black !important;
   z-index: 3 !important;
   font-size: inherit !important;
+  border-color: white !important;
 }
 
 .ol-zoom-in:hover {
@@ -1132,6 +1155,8 @@
   color: black !important;
   z-index: 3 !important;
   font-size: inherit !important;
+  border-color: white !important;
+  outline: none !important;
 }
 
 .ol-zoom-out:focus {
@@ -1147,6 +1172,9 @@
   color: #2F44FF !important;
 }
 
+.ol-rotate-reset{
+  display: none !important;
+}
 
 .mb-wrap-search {
   overflow-x: auto;
@@ -1154,7 +1182,7 @@
 }
 
 .mb-search input {
-  margin-right: 24px;
+  /* margin-right: 24px; */
   border: none;
 }
 
@@ -1164,6 +1192,26 @@
 
 .mb-search input:focus {
   outline: none;
+}
+
+.mb-card{
+  display: flex;
+  /* flex-direction: row; */
+  /* justify-content: space-between; */
+  align-items: center;
+  position: relative;
+  width: 80vw;
+  /* height: 54px; */
+  left: 5vw;
+  /* background: #FFFFFF; */
+  /* box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); */
+  border-radius: 12px;
+  /* padding: 0 50px; */
+  /* width: 70vw; */
+  /* height: inherit; */
+  position: fixed;
+  bottom: 0.3rem;
+  /* right: 1.2rem;*/
 }
 
 .mb-container {
@@ -1278,7 +1326,7 @@
 .mb-cafe-modal {
   box-sizing: border-box;
   width: 100vw;
-  /* height: 100vh; */
+  height: 100vh;
   background-color: white;
   border-left: 1px solid rgb(240, 241, 245);
   overflow-y: hidden;
@@ -1308,4 +1356,22 @@
   width : 20px;
   height : 20px;
   fill: red;
+}
+
+.not-found .not-found-box{
+  background: #FAFAFC;
+  border-radius: 8px;
+  padding: 20px;
+  margin : 0 15px;
+  height: 100vh;
+}
+
+.mb-scroll{
+  overflow: auto;
+  height: 100%;
+}
+
+.scroll{
+  overflow: auto;
+  height: 88%;
 }
