@@ -201,6 +201,10 @@ export const Menu: React.FC = (props: any) => {
               />
               : null}
             <NavContainer logoCafes={logoCafes} setMarkerSetting={setMarkerSetting} />
+            <div className="mb-short-cut">
+              <ShortCutAppOrder setMarkerSetting={setMarkerSetting} />
+              <ShortCutKioskOrder setMarkerSetting={setMarkerSetting} />
+             </div>
             {mobileModalState === 4 ?  // 하단 카페 정보
               <div className = "mb-card">
                 <CafeCard

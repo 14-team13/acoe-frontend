@@ -1,3 +1,4 @@
+import { isMobile } from 'react-device-detect';
 
 const ShortCutKioskOrder = (props) => {
 
@@ -6,9 +7,9 @@ const ShortCutKioskOrder = (props) => {
   }
 
   return (
-    <div className="short-cut-component flex-column mgb5" onClick={showKioskOrder}>
+    <div className={`flex-column mgb5 ${isMobile? 'mb-short-cut-component' : 'short-cut-component'}`} onClick={showKioskOrder}>
       <div className = 'kiosk-svg' />
-      <div className="fw700 fs12 lh18">키오스크</div>
+      {!isMobile ? <div className="fw700 fs12 lh18">키오스크</div> : null}
     </div>
   );
 };

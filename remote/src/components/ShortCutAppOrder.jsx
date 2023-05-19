@@ -1,3 +1,4 @@
+import { isMobile } from 'react-device-detect';
 
 const ShortCutAppOrder = (props) => {
 
@@ -6,9 +7,9 @@ const ShortCutAppOrder = (props) => {
   }
 
   return (
-    <div className="short-cut-component flex-column mgb5" onClick={showAppOrder}>
-      <div className = 'app-svg' />
-      <div className="fw700 fs12 lh18" style = {{wordBreak: "keep-all"}}>앱 주문</div>
+    <div className={`flex-column mgb5 ${isMobile? 'mb-short-cut-component' : 'short-cut-component'}`} onClick={showAppOrder}>
+      <div className='app-svg' />
+      {!isMobile ? <div className="fw700 fs12 lh18" style={{ wordBreak: "keep-all" }}>앱 주문</div> : null}
     </div>
   );
 };
