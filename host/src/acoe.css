@@ -60,6 +60,10 @@
   justify-content: space-between;
 }
 
+.bg-primary{
+  background: #2F44FF;
+}
+
 .fc-primary {
   color: #2F44FF;
 }
@@ -163,6 +167,10 @@
   padding-top: 25px;
 }
 
+.pdb25 {
+  padding-bottom: 25px;
+}
+
 .mgl5 {
   margin-left: 5px
 }
@@ -209,6 +217,10 @@
 
 .mgl16 {
   margin-left: 16px
+}
+
+.mgl20 {
+  margin-left: 20px
 }
 
 .mgl25 {
@@ -333,6 +345,9 @@
   margin-bottom: 16px
 }
 
+.mgb20 {
+  margin-bottom: 20px
+}
 
 .mgb25 {
   margin-bottom: 25px
@@ -584,12 +599,19 @@
 
 .cafe-modal .search {
   height: 33px;
-  width: 100%;
+  width: inherit;
   display: flex;
   align-items: center;
+  justify-content: space-around;
   /* justify-content: space-between; */
-  padding: 15px 0px 12px 20px;
-  border-bottom: 1px solid rgb(240, 241, 245);
+  padding: 15px 0px 25px 20px;
+}
+
+.cafe-modal .search .outline{
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 5px;
+  width: 283px;
 }
 
 

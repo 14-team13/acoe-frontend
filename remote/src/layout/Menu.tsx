@@ -97,7 +97,7 @@ export const Menu: React.FC = (props: any) => {
 
   useEffect(() => {
     if(clickFranchise){
-      // 검색한 데이터에서 프랜차이즈 찾기, 전체에서 찾기?  
+      // 전체에서 찾기 cafeBasicDataRef.current  
       const _cafeData = cafeBasicDataRef.current.filter((item: any) => item.franchise && item.franchise.franchiseId === clickFranchise.franchiseId)
       setCafeData([..._cafeData])
     }
@@ -146,10 +146,8 @@ export const Menu: React.FC = (props: any) => {
     const response = await getCafeKeyword(cafeTitle); 
     if (response.data.length > 0) {
       const _data = response.data.filter((item: any) => item.useYn)
-      cafeBasicDataRef.current = JSON.parse(JSON.stringify(_data))
       setCafeData(_data)
     } else {
-      cafeBasicDataRef.current = []; 
       setCafeData([])
     }
   }
@@ -163,7 +161,7 @@ export const Menu: React.FC = (props: any) => {
             <div className="mg16 mb-hambergerSvg" onClick={props.mobileShowLogin} />
             <input className="fs16 fw700 lh24 mgr50" type="text"
               onFocus={() => setMobileModalState(2)}
-              value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색하세요." onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
+              value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름을 검색하세요." onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
             <div className="mgr10 mb-searchSvg" />
           </div>
           {mobileModalState !== 1 ?

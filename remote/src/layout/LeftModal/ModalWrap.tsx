@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import searchSvg from 'images/search.svg';
+import acoe_white from 'images/acoe_white.svg';
 import xSvg from 'images/x.svg';
 import CafeCard from 'components/CafeCard';
 import leftModalSvg from 'images/leftModal.svg';
@@ -73,7 +74,7 @@ const ModalWrap = (props: any) => {
         <div className="mb-cafe-modal">
           <div className="search">
             <img className="" src={leftModalSvg} onClick={() => setMobileModalState(1)} />
-            <input className="mgl50" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
+            <input className="mgl50" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름을 검색하세요." onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
             {searchCafeTxt !== '' ? <img className="mgl20 close-image" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
           </div>
           <div className="cafes">
@@ -157,10 +158,15 @@ const ModalWrap = (props: any) => {
         : null}
       {!isMobile && modalState !== 0 ?
         <div className="cafe-modal">
-          <div className="search">
-            <img className="img24" src={searchSvg} />
-            <input className="mgl15" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름 검색" onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
-            {searchCafeTxt !== '' ? <img className="mgl15 img12" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
+          <div className = "bg-primary">
+            <img className = "mgt24 mgl15 mgb16" src={acoe_white} />
+            <div className="search">
+              <div className = "flex-row-center outline">
+                <img className="img24 mgl5" src={searchSvg} />
+                <input className="mgl10" type="text" value={searchCafeTxt} onChange={(e) => setSearchCafeTxt(e.target.value)} placeholder="카페 이름을 검색하세요." onKeyDown={(e) => { if (e.key === 'Enter') { search() } }} />
+                {searchCafeTxt !== '' ? <img className="mgl15 img12" onClick={() => setSearchCafeTxt('')} src={xSvg} /> : null}
+              </div>
+            </div>
           </div>
           <div className="cafes">
             {logoCafes.map((logoCafe: any, i: number) => (
