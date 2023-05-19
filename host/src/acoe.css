@@ -1147,6 +1147,9 @@
   color: #2F44FF !important;
 }
 
+.ol-rotate-reset{
+  display: none !important;
+}
 
 .mb-wrap-search {
   overflow-x: auto;
