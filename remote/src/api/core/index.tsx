@@ -11,7 +11,6 @@ const request = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': 'http://acoe.co.kr'
-    // 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'
   }
 });
 
@@ -71,7 +70,14 @@ export const Axios = () => {
 
   const init = (): Instance => {
     if (session === null) {
-      session = axios.create({ baseURL: process.env.REACT_APP_API_HOST });
+      session = axios.create(
+        { baseURL: process.env.REACT_APP_API_HOST,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'http://acoe.co.kr'
+          }       
+        }
+      );
 
       session.defaults.timeout = 2500;
       session.defaults.withCredentials = true;
