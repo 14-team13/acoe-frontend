@@ -74,7 +74,8 @@ export const Axios = () => {
         { baseURL: process.env.REACT_APP_API_HOST,
           headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'http://acoe.co.kr'
+            'Access-Control-Allow-Origin': 'http://acoe.co.kr',
+            'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Access-Control-Allow-Origin, Access-Control-Request-Method, Content-Type, Authorization, X-Requested-With'
           }       
         }
       );
