@@ -76,7 +76,8 @@ export const Axios = () => {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': 'http://acoe.co.kr',
             'Origin' : 'http://acoe.co.kr',
-            'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Access-Control-Allow-Origin, Access-Control-Request-Method, Content-Type, Authorization, X-Requested-With'
+            'Access-Control-Allow-Headers': 'Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With'
+
           }       
         }
       );
