@@ -79,6 +79,7 @@ export const Axios = () => {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': 'http://acoe.co.kr',
+          'Origin' : 'http://acoe.co.kr',
           'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Access-Control-Allow-Origin, Access-Control-Request-Method, Content-Type, Authorization, X-Requested-With'
         }         
       });
