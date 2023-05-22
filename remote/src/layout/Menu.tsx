@@ -151,7 +151,8 @@ export const Menu: React.FC = (props: any) => {
     const response = await getCafesList();
     if (response.data.length > 0) {
       // const _data = response.data.filter((item: any) => item.useYn)
-      const _data = response.data
+      
+      const _data = response.data.slice(1,50)
       cafeBasicDataRef.current = JSON.parse(JSON.stringify(_data))
       setCafeData(_data)
       console.log(_data)
