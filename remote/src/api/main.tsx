@@ -35,3 +35,10 @@ export const getCafeKeyword = (cafeTitle: string) => {
     // }
   });
 }
+
+export const getCafeBlog = (cafeNm: string) => {
+  return request({
+    method: 'GET',
+    url: '/main/cafe/blogs/' + cafeNm, // 수정필요
+  });
+}

@@ -10,13 +10,21 @@ import NaverFinderComponent from 'components/NaverFinderComponent';
 import AppOrderDiscountComponent from 'components/AppOrderDiscountComponent';
 import KioskOrderDiscountComponent from 'components/KioskOrderDiscountComponent';
 import { isMobile } from 'react-device-detect';
-import { getCafeInfo } from 'api/main';
+import { getCafeInfo, getCafeBlog} from 'api/main';
 import NotFoundComponent from 'components/NotFoundComponent';
 
 interface menu {
   menuNm: string;
   price: number;
   discountAmt: number
+}
+
+interface blog{
+  blogLink: string;
+  blogNm: string;
+  desc: string;
+  postDt: string;
+  title: string;
 }
 
 const ModalWrap = (props: any) => {
@@ -27,7 +35,7 @@ const ModalWrap = (props: any) => {
   const [cafeID, setCafeID] = useState<any>()
   const [selectedCafe, setSelectedCafe] = useState<any>(); // type 체크 필요 
   const [selectedMenu, setSelectedMenu] = useState<menu[]>([]);
-  const [cafeBlogData, setCafeBlogData] = useState<any[]>([])
+  const [cafeBlogData, setCafeBlogData] = useState<blog[]>([])
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const _getCafeInfo = async (cafeID: number) => {
@@ -44,7 +52,13 @@ const ModalWrap = (props: any) => {
   }
 
   const _getCafeBlog = async (cafeNm: string) => {
-
+    const response = await getCafeBlog(cafeNm); 
+    if (response.status === 200) {
+      console.log(response.data)
+      setCafeBlogData(response.data)
+    }else{
+      setCafeBlogData([])
+    }
   }
 
   useEffect(() => {
@@ -160,11 +174,11 @@ const ModalWrap = (props: any) => {
               {cafeBlogData.map((item: any, i: number) => (
                 <BlogReviewComponent
                   key={i}
-                  bloggername={item.bloggername}
+                  blogNm={item.blogNm}
                   title={item.title}
-                  description={item.description}
-                  postdate={item.postdate}
-                  link={item.link}
+                  desc={item.desc}
+                  postDt={item.postDt}
+                  blogLink={item.blogLink}
                 />
               ))}
             </div>
@@ -256,11 +270,11 @@ const ModalWrap = (props: any) => {
               {cafeBlogData.map((item: any, i: number) => (
                 <BlogReviewComponent
                   key={i}
-                  bloggername={item.bloggername}
+                  blogNm={item.blogNm}
                   title={item.title}
-                  description={item.description}
-                  postdate={item.postdate}
-                  link={item.link}
+                  desc={item.desc}
+                  postDt={item.postDt}
+                  blogLink={item.blogLink}
                 />
               ))}
             </div>
