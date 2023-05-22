@@ -59,9 +59,9 @@ const CafesManagement = (props: any) => {
           setShowFranchise(false); 
           setFranchiseValue("해당없음")
           for (let i = 0; i < 5; i++) {
-            if (response.data.menuList[i] && response.data.menuList[i].menuNm) {
+            if (response.data.menuList[i] && response.data.menuList[i].regDttm) {
               let item = response.data.menuList[i];
-              response.data.menuList[i] = { 'menuNm': item.menuNm, 'price': item.price }
+              response.data.menuList[i] = { 'menuId' : item.menuId, 'menuNm': item.menuNm, 'price': item.price }
             } else {
               response.data.menuList[i] = { 'menuNm': '', 'price': '' }
             }
@@ -163,11 +163,13 @@ const CafesManagement = (props: any) => {
       let response = await postAdminCafeInfo(JSON.parse(JSON.stringify(formData)));
       if (response.status === 200) {
         setCafeMngAdminMain(true)
+        setActivePage(1)
       }
     } else {
       let response = await putAdminCafeInfo(JSON.parse(JSON.stringify(formData)), formData.cafeId);
       if (response.status === 200) {
         setCafeMngAdminMain(true)
+        setActivePage(1)
       }
     }
   };
