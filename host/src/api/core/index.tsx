@@ -10,11 +10,10 @@ import { API_HOST } from 'constant';
 import requestRefreshToken from './requestRefreshToken';
 
 const request = axios.create({
-  baseURL: process.env.REACT_APP_API_HOST + ":9090", // Replace with your API base URL
+  // baseURL: process.env.REACT_APP_API_HOST + ":9090", // Replace with your API base URL
+  baseURL: '', 
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'http://acoe.co.kr',
-    'Origin' : 'http://acoe.co.kr',
     'Access-Control-Allow-Headers': 'Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With'
   }
 });
@@ -79,11 +78,7 @@ export const Axios = () => {
       // session = axios.create({ baseURL: API_HOST });
       session = axios.create({ baseURL: process.env.REACT_APP_API_HOST,
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://acoe.co.kr',
-          'Origin' : 'http://acoe.co.kr',
-          'Access-Control-Allow-Headers': 'Host, Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-XSRF-TOKEN, Origin, Access-Control-Request-Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin, access-control-allow-origin, Access-Control-Allow-Credentials, access-control-allow-credentials, Access-Control-Allow-Headers, access-control-allow-headers, Access-Control-Allow-Methods, access-control-allow-methods',
-          
+          'Content-Type': 'application/json',   
         }         
       });
       
