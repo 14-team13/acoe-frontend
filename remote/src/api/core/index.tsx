@@ -71,7 +71,8 @@ export const Axios = () => {
   const init = (): Instance => {
     if (session === null) {
       session = axios.create(
-        { baseURL: process.env.REACT_APP_API_HOST,
+        { 
+          baseURL: process.env.REACT_APP_API_HOST + ":9090",
           headers: {
             'Content-Type': 'application/json',
           }       

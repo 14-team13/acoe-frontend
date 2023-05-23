@@ -10,8 +10,8 @@ import { API_HOST } from 'constant';
 import requestRefreshToken from './requestRefreshToken';
 
 const request = axios.create({
-  // baseURL: process.env.REACT_APP_API_HOST + ":9090", // Replace with your API base URL
-  baseURL: '', 
+  baseURL: process.env.REACT_APP_API_HOST + ":9090", // Replace with your API base URL
+  // baseURL: '', 
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Headers': 'Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With'
@@ -76,7 +76,7 @@ export const Axios = () => {
   const init = (): Instance => {
     if (session === null) {
       // session = axios.create({ baseURL: API_HOST });
-      session = axios.create({ baseURL: process.env.REACT_APP_API_HOST,
+      session = axios.create({ baseURL: process.env.REACT_APP_API_HOST + ":9090",
         headers: {
           'Content-Type': 'application/json',   
         }         
