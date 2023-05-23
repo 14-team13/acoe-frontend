@@ -13,7 +13,7 @@ module.exports = function (config, env) {
           remote:
           isDevelopment ?
             'remote@http://localhost:3001/remoteEntry.js' :
-            'remote@https://acoe.vercel.app/:3001/remoteEntry.js'
+            'remote@https://acoe-remote.vercel.app/remoteEntry.js'
         },
         exposes: {
           "./atoms": "./src/store/atoms",
