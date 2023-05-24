@@ -8,7 +8,7 @@ import axios, {
 
 const request = axios.create({
   // baseURL: '', // Replace with your API base URL
-  baseURL: process.env.REACT_APP_API_HOST + ":9090", // Replace with your API base URL
+  baseURL: process.env.REACT_APP_API_HOST, // Replace with your API base URL
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Headers': 'Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With'
@@ -73,7 +73,7 @@ export const Axios = () => {
     if (session === null) {
       session = axios.create(
         { 
-          baseURL: process.env.REACT_APP_API_HOST + ":9090",
+          baseURL: process.env.REACT_APP_API_HOST,
           headers: {
             'Content-Type': 'application/json',
           }       
