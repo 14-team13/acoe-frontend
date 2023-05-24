@@ -115,7 +115,6 @@ const Maps = (props) => {
         item  : marker
       });
 
-      console.log(marker)
       if(rand(1, 5) === 1){
         feature.setStyle(markerStyle);
       }else if(rand(1, 5) === 2){
