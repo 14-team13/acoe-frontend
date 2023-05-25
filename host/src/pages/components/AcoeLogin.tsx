@@ -26,7 +26,8 @@ const AcoeLogin = (props: any) => {
       </picture>
       <div className="fw700 fs16 mgt3 lh24">내 주변 텀블러 할인 금액</div>
       <div className="fw700 fs16 mgb15 lh24"><span className="fc-primary">ACOE</span>에서 찾아보세요!</div>
-      <div className="login-button kakao" onClick={props.loginKakao}>
+      {/* <div className="login-button google" onClick={props.startACOE}>ACOE와 시작하기</div> */}
+      {/* <div className="login-button kakao" onClick={props.loginKakao}>
         <picture>
           <source srcSet={kakaoWebp} type="image/webp" />
           <img className="acoe-image" src={kakaoSvg} />
@@ -39,7 +40,7 @@ const AcoeLogin = (props: any) => {
           <img className="acoe-image" src={googleSvg} />
         </picture>
         <div className="fw500 fs16 lh36 mgl15">Google로 시작하기</div>
-      </div>
+      </div> */}
     </React.Fragment>
   );
 };
