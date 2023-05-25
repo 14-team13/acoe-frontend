@@ -9,9 +9,14 @@ import Point from 'ol/geom/Point';
 import Feature from 'ol/Feature';
 import { fromLonLat } from 'ol/proj';
 import { Icon, Style } from 'ol/style';
-import C_tumbler1 from '../../images/C_tumbler1.svg'
-import C_tumbler2 from '../../images/C_tumbler2.svg'
-import C_tumbler3 from '../../images/C_tumbler3.svg'
+import C_tumbler1 from '../../images/mk-tumbler1.svg'
+import C_tumbler2 from '../../images/mk-tumbler2.svg'
+import C_tumbler3 from '../../images/mk-tumbler3.svg'
+import C_tumbler4 from '../../images/mk-starbucks.svg'
+import C_tumbler5 from '../../images/mk-mega.svg'
+import C_tumbler6 from '../../images/mk-paul.svg'
+import C_tumbler7 from '../../images/mk-twosome.svg'
+import C_tumbler8 from '../../images/mk-ediya.svg'
 
 const Maps = (props) => {
   const mapRef = useRef(null);
@@ -64,7 +69,7 @@ const Maps = (props) => {
         anchorYUnits: 'pixels',
         src: C_tumbler1,
         //src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(C_tumbler1),
-        scale: 0.09,
+        scale: 0.6,
         className :"marker-icon"
       })),
     });
@@ -76,7 +81,7 @@ const Maps = (props) => {
         anchorYUnits: 'pixels',
         src: C_tumbler2,
         //src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(C_tumbler1),
-        scale: 0.09,
+        scale: 0.6,
         className :"marker-icon"
       })),
     });
@@ -88,11 +93,70 @@ const Maps = (props) => {
         anchorYUnits: 'pixels',
         src: C_tumbler3,
         //src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(C_tumbler1),
-        scale: 0.09,
+        scale: 0.6,
         className :"marker-icon"
       })),
     });
 
+    const markerStyle4 = new Style({
+      image: new Icon(/** @type {olx.style.IconOptions} */({
+        anchor: [0.5, 2],
+        anchorXUnits: 'pixels',
+        anchorYUnits: 'pixels',
+        src: C_tumbler4,
+        //src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(C_tumbler1),
+        scale: 0.6,
+        className :"marker-icon"
+      })),
+    });
+
+    const markerStyle5 = new Style({
+      image: new Icon(/** @type {olx.style.IconOptions} */({
+        anchor: [0.5, 2],
+        anchorXUnits: 'pixels',
+        anchorYUnits: 'pixels',
+        src: C_tumbler5,
+        //src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(C_tumbler1),
+        scale: 0.6,
+        className :"marker-icon"
+      })),
+    });
+
+    const markerStyle6 = new Style({
+      image: new Icon(/** @type {olx.style.IconOptions} */({
+        anchor: [0.5, 2],
+        anchorXUnits: 'pixels',
+        anchorYUnits: 'pixels',
+        src: C_tumbler6,
+        //src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(C_tumbler1),
+        scale: 0.6,
+        className :"marker-icon"
+      })),
+    });
+
+    const markerStyle7 = new Style({
+      image: new Icon(/** @type {olx.style.IconOptions} */({
+        anchor: [0.5, 2],
+        anchorXUnits: 'pixels',
+        anchorYUnits: 'pixels',
+        src: C_tumbler7,
+        //src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(C_tumbler1),
+        scale: 0.6,
+        className :"marker-icon"
+      })),
+    });
+
+    const markerStyle8 = new Style({
+      image: new Icon(/** @type {olx.style.IconOptions} */({
+        anchor: [0.5, 2],
+        anchorXUnits: 'pixels',
+        anchorYUnits: 'pixels',
+        src: C_tumbler8,
+        //src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(C_tumbler1),
+        scale: 0.6,
+        className :"marker-icon"
+      })),
+    });
 
 
     mapObj.on("click", (evt) => {
@@ -115,12 +179,31 @@ const Maps = (props) => {
         item  : marker
       });
 
-      if(rand(1, 5) === 1){
-        feature.setStyle(markerStyle);
-      }else if(rand(1, 5) === 2){
-        feature.setStyle(markerStyle2);
-      }else{
-        feature.setStyle(markerStyle3);
+   
+      switch (rand(1, 8)) {
+        case 1:
+          feature.setStyle(markerStyle);
+          break;
+        case 2:
+          feature.setStyle(markerStyle2);
+          break;
+        case 3:
+          feature.setStyle(markerStyle3);
+        break;
+        case 4:
+          feature.setStyle(markerStyle4);
+        break;
+        case 5:
+          feature.setStyle(markerStyle5);
+        break;
+        case 6:
+          feature.setStyle(markerStyle6);
+        break;
+        case 7:
+          feature.setStyle(markerStyle7);
+          break;
+        default:
+          feature.setStyle(markerStyle8);
       }
       
       return feature;
