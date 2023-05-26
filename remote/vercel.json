@@ -1,11 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/main/:path*",
+      "source": "/api/main/:path*",
       "destination": "https://acoe.co.kr/api/:path*"
     },
     {
-      "source": "/main/:path*/",
+      "source": "/api//main/:path*/",
       "destination": "https://acoe.co.kr/api/:path*/"
     }
   ]
