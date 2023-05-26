@@ -5,7 +5,7 @@
       "destination": "https://acoe.co.kr/api/:path*"
     },
     {
-      "source": "/api//main/:path*/",
+      "source": "/api/main/:path*/",
       "destination": "https://acoe.co.kr/api/:path*/"
     }
   ]
