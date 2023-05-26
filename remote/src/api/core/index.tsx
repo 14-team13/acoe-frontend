@@ -17,7 +17,7 @@ const request = axios.create({
 
 //요청 타임아웃 설정
 request.defaults.timeout = 5000;
-request.defaults.withCredentials = false; 
+request.defaults.withCredentials = true; 
 // request.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
 //요청 인터셉터 추가
