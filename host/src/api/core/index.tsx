@@ -14,7 +14,7 @@ const request = axios.create({
   // baseURL: '', 
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Headers': 'Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With'
+    'Access-Control-Allow-Headers': '*'
   }
 });
 

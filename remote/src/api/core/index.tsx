@@ -11,7 +11,7 @@ const request = axios.create({
   baseURL: process.env.REACT_APP_API_HOST, // Replace with your API base URL
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Headers': 'Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With'
+    'Access-Control-Allow-Headers': '*'
   }
 });
 
