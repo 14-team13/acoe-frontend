@@ -156,6 +156,8 @@ const CafesManagement = (props: any) => {
     event.preventDefault();
     if(showFranchise){
       delete formData.menuList;
+      formData.franchise = {} 
+      formData.franchise.franchiseId = formData.franchiseId;
     }else{
       delete formData.franchise;
     }
