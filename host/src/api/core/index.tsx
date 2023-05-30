@@ -6,7 +6,7 @@ const request = axios.create({
   baseURL: isDevelopment? '' : process.env.REACT_APP_API_HOST,
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Headers': '*'
+    'Access-Control-Allow-Headers': 'Authorization, Authorization-refresh, Cache-Control, Content-Type'
   }
 });
 
