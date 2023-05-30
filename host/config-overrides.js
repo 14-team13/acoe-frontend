@@ -12,8 +12,8 @@ module.exports = function (config, env) {
         remotes: {
           remote:
           isDevelopment ?
-            'remote@https://localhost:3001/remoteEntry.js' :
-            'remote@https://acoe.co.kr:3001/remoteEntry.js'
+            'remote@http://localhost:3001/remoteEntry.js' :
+            'remote@https://acoe-remote.vercel.app/remoteEntry.js'
         },
         exposes: {
           "./atoms": "./src/store/atoms",
@@ -50,6 +50,7 @@ module.exports = function (config, env) {
         "@utils": path.resolve(__dirname, "src/utils"),
         "@api": path.resolve(__dirname, "src/api")
       }),
+      
     )(config, env)
   );
 };

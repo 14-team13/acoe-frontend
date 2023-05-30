@@ -1,20 +1,19 @@
-import axios, {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from 'axios';
+import axios from 'axios';
 // import jwt_decode from 'jwt-decode';
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 
 const request = axios.create({
-  baseURL: process.env.REACT_APP_API_HOST, // Replace with your API base URL
+  // baseURL: '', // Replace with your API base URL
+  baseURL: isDevelopment? '' : process.env.REACT_APP_API_HOST,
   headers: {
     'Content-Type': 'application/json',
+    'Access-Control-Allow-Headers': 'https://acoe.vercel.app '
   }
 });
 
 //요청 타임아웃 설정
-request.defaults.timeout = 2500;
+request.defaults.timeout = 5000;
 request.defaults.withCredentials = true; 
 // request.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
@@ -48,60 +47,3 @@ request.interceptors.response.use(
 );
 
 export default request; //axios 인스턴스를 내보낸다.
-
-interface InstanceResponse {
-  (url: string, config?: AxiosRequestConfig<unknown> | undefined):
-    | Promise<AxiosResponse<any, any>>
-    | undefined;
-}
-
-interface Instance {
-  get: InstanceResponse;
-  post: InstanceResponse;
-  put: InstanceResponse;
-  patch: InstanceResponse;
-  delete: InstanceResponse;
-}
-
-export const Axios = () => {
-  let instance: Instance | null = null;
-  let session: AxiosInstance | null = null;
-
-  const init = (): Instance => {
-    if (session === null) {
-      session = axios.create(
-        { baseURL: process.env.REACT_APP_API_HOST,
-          headers: {
-            'Content-Type': 'application/json',
-          }       
-        }
-      );
-
-      session.defaults.timeout = 2500;
-      session.defaults.withCredentials = true;
-
-    
-    }
-    return {
-      get: (...params: Parameters<AxiosInstance['get']>) =>
-        session?.get(...params),
-      post: (...params: Parameters<AxiosInstance['post']>) =>
-        session?.post(...params),
-      put: (...params: Parameters<AxiosInstance['put']>) =>
-        session?.put(...params),
-      patch: (...params: Parameters<AxiosInstance['patch']>) =>
-        session?.patch(...params),
-      delete: (...params: Parameters<AxiosInstance['delete']>) =>
-        session?.delete(...params),
-    };
-  };
-
-  return {
-    getInstance: (): Instance => {
-      if (!instance) {
-        instance = init();
-      }
-      return instance;
-    },
-  };
-};

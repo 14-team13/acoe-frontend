@@ -75,6 +75,11 @@ const Main = () => {
     setIsLogin(true)
   }
 
+  const startACOE = () => {
+    setShowLogin(false);
+    setIsLogin(true)
+  }
+
   useLayoutEffect(() => {
     // const token = localStorage.getItem('accessToken');
     // if (token) {
@@ -82,6 +87,7 @@ const Main = () => {
     // } else {
     //   setIsLogin(false)
     // }
+    setShowLogin(true);
   }, [])
 
   const closeLogin = () => {
@@ -163,7 +169,7 @@ const Main = () => {
         {showLogin ? (
           <div className="bg-black">
             <div className="login-box">
-              <AcoeLogin closeLogin={closeLogin} loginKakao={loginKakao} loginGoogle={loginGoogle} />
+              <AcoeLogin closeLogin={closeLogin} loginKakao={loginKakao} loginGoogle={loginGoogle} startACOE = {startACOE} />
             </div>
           </div>
         ) : null}

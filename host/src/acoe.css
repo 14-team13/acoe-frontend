@@ -508,6 +508,12 @@
   height: 42px;
 }
 
+.franchise-card .franchise-img img{
+  width: inherit;
+  height: inherit;
+}
+
+
 .franchise-card .franchise-name {
   color: #91909C;
   font-family: 'Pretendard';
@@ -771,7 +777,7 @@
   flex-direction: column;
   align-items: center;
   width: 450px;
-  height: 500px;
+  /* height: 500px; */
   background: #FFFFFF;
   border-radius: 24px;
   position: relative;

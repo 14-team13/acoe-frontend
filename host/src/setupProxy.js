@@ -15,7 +15,7 @@ module.exports = (app) => {
     ),
     app.use(
       createProxyMiddleware('/api', {
-        target: 'https://acoe.co.kr/',
+        target: 'https://acoe.co.kr/api/',
         changeOrigin: true,
       }),
     )

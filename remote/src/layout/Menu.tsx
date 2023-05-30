@@ -152,10 +152,9 @@ export const Menu: React.FC = (props: any) => {
     if (response.data.length > 0) {
       // const _data = response.data.filter((item: any) => item.useYn)
       
-      const _data = response.data.slice(1,50)
+      const _data = response.data.slice(1,100)
       cafeBasicDataRef.current = JSON.parse(JSON.stringify(_data))
       setCafeData(_data)
-      console.log(_data)
     } else {
       cafeBasicDataRef.current = [];
       setCafeData([])
