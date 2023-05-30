@@ -8,7 +8,7 @@ const request = axios.create({
   baseURL: isDevelopment? '' : process.env.REACT_APP_API_HOST,
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Headers': 'https://acoe.vercel.app '
+    'Access-Control-Allow-Headers': 'Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization'
   }
 });
 
