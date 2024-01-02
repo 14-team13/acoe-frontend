@@ -11,7 +11,7 @@ const request = axios.create({
 });
 
 request.defaults.timeout = 5000;
-request.defaults.withCredentials = true; 
+request.defaults.withCredentials = false; 
 
 request.interceptors.request.use(
   (config) => {
